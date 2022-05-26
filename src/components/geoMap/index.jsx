@@ -26,7 +26,7 @@ const MapComponent = ({ points, geolocation }) => {
     }
   }, [navigator, actualLat, actualLon, actualAlt]);
 
-  if(geolocation && !actualAlt && !actualLon && !actualAlt) return <Spinner>Loading...</Spinner>
+  if(geolocation && !actualAlt && !actualLon && !actualAlt) return <Spinner/>
 
   const center = [actualLat, actualLon, actualAlt]
 

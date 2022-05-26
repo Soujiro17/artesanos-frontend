@@ -2,7 +2,7 @@ import Carousel from './carousel'
 import Header from './header'
 import HeaderLogo from './headerLogo'
 import Navbar from './navbar'
-import Categories from './categories'
+import Listar from './listar'
 import SectionHeader from './sectionHeader'
 import Section from './section'
 import SectionCategories from './sectionCategories'
@@ -15,7 +15,7 @@ export{
     HeaderLogo,
     Navbar,
     Carousel,
-    Categories,
+    Listar,
     SectionHeader,
     Section,
     SectionCategories,

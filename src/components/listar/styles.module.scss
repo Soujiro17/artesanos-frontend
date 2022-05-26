@@ -1,0 +1,86 @@
+@import '../../constants/colors.scss';
+
+.listar{
+    padding: 2%;
+    .items{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-rows: auto;
+        gap: 10px;
+
+        .item_link{
+            transition: .2s all;
+            height: 100%;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            .item_img{
+                height: 100%;
+                width: 100%;
+            }
+            .item_name{
+                visibility: hidden;
+                position: absolute;
+                bottom: 0%;
+                left: 0%;
+                width: 100%;
+                min-height: 3rem;
+                max-height: 4rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                word-wrap: break-word;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: rgba(200, 200, 200, .7);
+                color: $white;
+                border: 1px solid $black;
+            }
+            &:hover{
+                transform: scale(1.02);
+                .item_name{
+                    visibility: initial;
+                }
+                &::before{
+                    position: absolute;
+                    top: 0%;
+                    left: 0%;
+                    height: 100%;
+                    width: 100%;
+                    z-index: 10;
+                    content: '';
+                    opacity: .5;
+                    background-color: rgba(255, 255, 255, .5);
+                }
+            }
+            &:active{
+                transform: scale(0.99);
+            }
+        }
+    }
+
+    .paginas{
+        margin-top: 2rem;
+        border-top: 2px solid $black;
+        display: flex;
+        height: 4rem;
+        align-items: center;
+        justify-content: center;
+
+        .pagina{
+            height: 2rem;
+            width: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: $gray;
+            margin: .5rem;
+            cursor: pointer;
+            transition: .2s all;
+            &:hover{
+                background-color: rgba(0, 0, 0, .15);;
+            }
+        }
+    }
+}
