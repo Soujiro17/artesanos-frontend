@@ -3,11 +3,13 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-route
 import useAuth from '../hooks/useAuth'
 import Home from '../pages/home'
 
+// comentario para commit 
+
 const AppRouter = () => {
   return (
     <BrowserRouter>
         <Routes>
-            <Route path='/' element = {<Home />} />
+            <Route path='/' element = {<Home />} /> 
         </Routes>
     </BrowserRouter>
   )
