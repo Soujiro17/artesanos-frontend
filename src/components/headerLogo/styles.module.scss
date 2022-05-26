@@ -4,5 +4,21 @@
     height: 10vh;
     text-align: center;
     line-height: 10vh;
+    padding: .5rem;
+}
+
+.borderTop{
+    border-top: 2px solid $black;
+}
+
+.borderBottom{
     border-bottom: 2px solid $black;
+}
+
+.left{
+    text-align: left;
+}
+
+.right{
+    text-align: right;
 }

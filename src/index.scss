@@ -30,6 +30,10 @@ code {
   border-radius: .4rem;
   cursor: pointer;
   border: 1px solid $black;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  letter-spacing: .5px;
+  text-transform: capitalize;
 
   transition: .2s all;
   &:active{
