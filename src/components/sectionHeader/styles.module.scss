@@ -1,0 +1,21 @@
+@import '../../constants/colors.scss';
+
+.section_header{
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .line{
+        width: 90%;
+        height: .4rem;
+        background-color: $black;
+    }
+
+    .name{
+        margin-top: 3rem;
+        font-size: calc(2rem + .4vh);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+}
