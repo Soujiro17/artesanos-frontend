@@ -1,5 +1,11 @@
-import Header from './Header'
+import Carousel from './carousel'
+import Header from './header'
+import HeaderLogo from './headerLogo'
+import Navbar from './navbar'
 
 export{
-    Header
+    Header,
+    HeaderLogo,
+    Navbar,
+    Carousel
 }

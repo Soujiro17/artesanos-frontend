@@ -1,0 +1,9 @@
+@import '../../constants/colors.scss';
+
+.nav_item{
+    cursor: pointer;
+    a{
+        text-decoration: none;
+        color: $black;
+    }
+}

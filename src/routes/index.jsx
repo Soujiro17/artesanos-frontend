@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
-import Home from '../pages/Home'
+import Home from '../pages/home'
 
 const AppRouter = () => {
   return (

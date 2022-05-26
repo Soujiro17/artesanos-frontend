@@ -1,8 +1,13 @@
 import React from 'react'
+import { Navbar, HeaderLogo } from '..'
+import styles from './styles.module.scss'
 
 const Header = () => {
   return (
-    <header>Header</header>
+    <header className={styles.header}>
+      <HeaderLogo />
+      <Navbar />
+    </header>
   )
 }
 
