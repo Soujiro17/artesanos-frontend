@@ -4,6 +4,8 @@ import useAuth from '../hooks/useAuth'
 import Home from '../pages/home'
 import Categorias from '../pages/categorias'
 import Artesanos from '../pages/artesanos'
+import Producto from '../pages/producto'
+import Categoria from '../pages/categoria'
 
 const AppRouter = () => {
 
@@ -12,6 +14,8 @@ const AppRouter = () => {
         <Routes>
             <Route path='/' element = {<Home />} /> 
             <Route path='/categorias' element = {<Categorias />} />
+            <Route path='/categorias/:id' element = {<Categoria />} />
+            <Route path='/producto/:id' element = {<Producto />} />
             <Route path='/artesanos' element = {<Artesanos />} />
         </Routes>
     </BrowserRouter>

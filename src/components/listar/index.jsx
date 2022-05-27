@@ -29,8 +29,9 @@ const Listar = ({ filtros: Filtros, title, path = "", endpoint }) => {
   const navigate = useNavigate()
 
   const handlePages = async (value) => {
+    
     await axiosPublic
-      .get(`/${endpoint}?page=${value}`)
+      .get(`/${endpoint}?page=${value}${subTitle? `&id=${subTitle}` : ''}`)
       .then((res) => setData(res.data))
       .catch((err) =>
         toast.error("Error al cambiar de página, vuelve a intentarlo más tarde")
@@ -42,9 +43,9 @@ const Listar = ({ filtros: Filtros, title, path = "", endpoint }) => {
   useEffect(() => {
     async function getResources() {
       await axiosPublic
-        .get(`/${endpoint}`)
+        .get(`/${endpoint}${subTitle? `?id=${subTitle}` : ''}`)
         .then((res) => setData(res.data))
-        .catch((err) => toast.error("Error al obtener los recursos"));
+        .catch((err) => toast.error(`Error al obtener los recursos: ${err.message}`));
     }
     getResources();
   }, []);
@@ -62,7 +63,7 @@ const Listar = ({ filtros: Filtros, title, path = "", endpoint }) => {
           {data?.docs?.length > 0 ? (
             data?.docs.map((doc, i) => (
               <Link
-                to={`${path}${doc.url || doc.nombre}`}
+                to={`${path}${doc.url?.toLowerCase() || `${doc._id}?name=${doc.nombre}`}`}
                 className={styles.item_link}
                 key={doc._id || i}
               >

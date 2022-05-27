@@ -1,11 +1,14 @@
 import React from 'react'
 import styles from './styles.module.scss'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const ListarHeader = ({ title }) => {
+
+  const navigate = useNavigate()
+
   return (
     <div className={styles.listar_header}>
-        <Link to="/">
+        <Link to = {-1} >
             <img src='/img/right_arrow.svg' className={styles.arrow} />
         </Link>
         {title}
