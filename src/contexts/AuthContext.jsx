@@ -6,10 +6,7 @@ export const AuthContext = React.createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(null);
-  const [categorias, setCategorias] = useState({
-    total: 0,
-    categorias: []
-  })
+  const [categorias, setCategorias] = useState({})
 
 
   const getCategorias = async () => {

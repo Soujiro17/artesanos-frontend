@@ -4,8 +4,10 @@
     padding: 2%;
     .items{
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        grid-template-rows: auto;
+        align-items: center;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 25%));
+        grid-template-rows: 1fr 1fr;
         gap: 10px;
 
         .item_link{
@@ -81,6 +83,10 @@
             &:hover{
                 background-color: rgba(0, 0, 0, .15);;
             }
+        }
+
+        .current{
+            background-color: green;
         }
     }
 }

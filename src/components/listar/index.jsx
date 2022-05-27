@@ -1,17 +1,53 @@
-import React from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { axiosPublic } from "../../services/axios";
 import ListarHeader from "../listarHeader";
 import styles from "./styles.module.scss";
 
-const Listar = ({ filtros: Filtros, title, data, path = "", total }) => {
-  /* 
+/* 
     Agregar media query para mostrar los nombres de los artesanos
     en mobile 
   */
 
-  const [searchParams] = useSearchParams();
+const initialDataState = {
+  docs: [],
+  totalDocs: 0,
+  totalPages: 0,
+  hasPrevPage: null,
+  hasNextPage: null,
+  prevPage: 0,
+  page: 0,
+  nextPage: 0,
+};
 
+const Listar = ({ filtros: Filtros, title, path = "", endpoint }) => {
+  const [data, setData] = useState(initialDataState);
+
+  const [searchParams] = useSearchParams();
   const subTitle = searchParams.get("id");
+  const navigate = useNavigate()
+
+  const handlePages = async (value) => {
+    await axiosPublic
+      .get(`/${endpoint}?page=${value}`)
+      .then((res) => setData(res.data))
+      .catch((err) =>
+        toast.error("Error al cambiar de página, vuelve a intentarlo más tarde")
+      );
+
+    navigate(`?page=${value}`)
+  };
+
+  useEffect(() => {
+    async function getResources() {
+      await axiosPublic
+        .get(`/${endpoint}`)
+        .then((res) => setData(res.data))
+        .catch((err) => toast.error("Error al obtener los recursos"));
+    }
+    getResources();
+  }, []);
 
   return (
     <>
@@ -23,19 +59,19 @@ const Listar = ({ filtros: Filtros, title, data, path = "", total }) => {
           </div>
         )}
         <div className={styles.items}>
-          {data?.length > 0 ? (
-            data.map((dataItem, i) => (
+          {data?.docs?.length > 0 ? (
+            data?.docs.map((doc, i) => (
               <Link
-                to={`${path}${dataItem.url || dataItem.nombre}`}
+                to={`${path}${doc.url || doc.nombre}`}
                 className={styles.item_link}
-                key = {data._id || i}
+                key={doc._id || i}
               >
                 <img
-                  src={dataItem.picture_url || "/img/not_found_default.jpg"}
+                  src={doc.picture_url || "/img/not_found_default.jpg"}
                   className={styles.item_img}
                   alt=""
                 />
-                <div className={styles.item_name}>{dataItem.nombre}</div>
+                <div className={styles.item_name}>{doc.nombre}</div>
               </Link>
             ))
           ) : (
@@ -43,10 +79,31 @@ const Listar = ({ filtros: Filtros, title, data, path = "", total }) => {
           )}
         </div>
         <div className={styles.paginas}>
-          <div className={styles.pagina}>1</div>
-          <div className={styles.pagina}>2</div>
-          <div className={styles.pagina}>3</div>
-          <div className={styles.pagina}>4</div>
+          {data.hasPrevPage ? (
+            <div
+              className={styles.pagina}
+              onClick={() => handlePages(data.prevPage)}
+            >
+              {data.prevPage}
+            </div>
+          ) : null}
+          <div className={`${styles.pagina} ${styles.current}`}>
+            {data.page || 1}
+          </div>
+          {data.hasNextPage ? (
+            <div
+              className={styles.pagina}
+              onClick={() => handlePages(data.nextPage)}
+            >
+              {data.nextPage}
+            </div>
+          ) : null}
+          {data.totalPages > 3 ? (
+            <>
+              ...
+              <div className={styles.pagina} onClick={() => handlePages(data.totalPages)}>{data.totalPages}</div>
+            </>
+          ) : null}
         </div>
       </div>
     </>

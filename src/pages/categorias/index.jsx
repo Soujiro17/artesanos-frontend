@@ -16,7 +16,7 @@ const Categorias = () => {
   */
 
   return (
-      <Listar filtros={FiltrosCategorias} title = "Categorías" data = {categorias.categorias} total = {categorias.total} path = "?id="/>
+      <Listar filtros={FiltrosCategorias} title = "Categorías" {...categorias} path = "?id=" endpoint="categoria"/>
   )
 }
 

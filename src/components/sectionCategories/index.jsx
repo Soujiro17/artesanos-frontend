@@ -4,9 +4,6 @@ import styles from "./styles.module.scss";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
-const imgUrl =
-  "https://www.abaenglish.com/es/wp-content/uploads/sites/2/2019/07/artesano-en-taller.jpg";
-
 const SectionCategories = () => {
   const { categorias } = useAuth();
 
@@ -16,10 +13,10 @@ const SectionCategories = () => {
         <p>Categorías (de la A-Z)</p>
       </div>
       <div className={styles.content}>
-        {categorias.categorias.length > 0 ? (
-          categorias.categorias.map((categoria) => (
+        {categorias?.docs?.length > 0 ? (
+          categorias?.docs?.map((categoria) => (
             <Link
-              to={`/categoria?name=${categoria.nombre.toLowerCase()}`}
+              to={`/categorias?id=${categoria.nombre.toLowerCase()}`}
               className={styles.categoria_wrapper}
               key={categoria._id}
             >
