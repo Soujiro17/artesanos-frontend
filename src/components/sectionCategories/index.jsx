@@ -16,15 +16,15 @@ const SectionCategories = () => {
         <p>Categorías (de la A-Z)</p>
       </div>
       <div className={styles.content}>
-        {categorias.length > 0 ? (
-          categorias.map((categoria) => (
+        {categorias.categorias.length > 0 ? (
+          categorias.categorias.map((categoria) => (
             <Link
               to={`/categoria?name=${categoria.nombre.toLowerCase()}`}
               className={styles.categoria_wrapper}
               key={categoria._id}
             >
               <img
-                src={categoria.picture || imgUrl}
+                src={categoria.picture || '/img/not_found_default.jpg'}
                 alt=""
                 className={styles.categoria_img}
               />
