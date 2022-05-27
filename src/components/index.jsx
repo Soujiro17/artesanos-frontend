@@ -9,6 +9,7 @@ import SectionCategories from './sectionCategories'
 import Map from './geoMap'
 import SectionMap from './sectionMap'
 import Spinner from './spinner'
+import ListarHeader from './listarHeader'
 
 export{
     Header,
@@ -21,5 +22,6 @@ export{
     SectionCategories,
     Map,
     SectionMap,
-    Spinner
+    Spinner,
+    ListarHeader
 }

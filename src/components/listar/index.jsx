@@ -1,52 +1,44 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import ListarHeader from '../listarHeader'
 import styles from './styles.module.scss'
+import { productos } from '../../data/productos'
 
-const items = [
-  {
-    imageUrl: 'https://www.unir.net/wp-content/uploads/2016/05/shutterstock_116554585.jpg',
-    url: '#',
-    name: 'Artesano'
-  },
-  {
-    imageUrl: 'https://www.unir.net/wp-content/uploads/2016/05/shutterstock_116554585.jpg',
-    url: '#',
-    name: 'Artesano'
-  },
-  {
-    imageUrl: 'https://www.unir.net/wp-content/uploads/2016/05/shutterstock_116554585.jpg',
-    url: '#',
-    name: 'Artesano'
-  },
-  {
-    imageUrl: 'https://www.unir.net/wp-content/uploads/2016/05/shutterstock_116554585.jpg',
-    url: '#',
-    name: 'Artesano'
-  },
-  {
-    imageUrl: 'https://www.unir.net/wp-content/uploads/2016/05/shutterstock_116554585.jpg',
-    url: '#',
-    name: 'Artesano'
-  },
-]
+const Listar = ({ filtros: Filtros, title }) => {
 
-const Listar = () => {
+  /* 
+    Agregar media query para mostrar los nombres de los artesanos
+    en mobile 
+  */
+
   return (
-    <div className={styles.listar}>
-      <div className={styles.items}>
-        {items.map(item => 
-          <Link to={item.url} className = {styles.item_link}>
-            <img src={item.imageUrl} className = {styles.item_img} alt = "" />
-            <div className={styles.item_name}>{item.name}</div>
-          </Link>)}
+    <>
+      {
+        title && <ListarHeader title={title} />
+      }
+      <div className={styles.listar}>
+        {
+          Filtros && (
+          <div className={styles.filtros}>
+            <Filtros />
+          </div>
+          )
+        }
+        <div className={styles.items}>
+          {productos.map(item => 
+            <Link to={item.url} className = {styles.item_link}>
+              <img src={item.imageUrl} className = {styles.item_img} alt = "" />
+              <div className={styles.item_name}>{item.name}</div>
+            </Link>)}
+        </div>
+        <div className={styles.paginas}>
+          <div className={styles.pagina}>1</div>
+          <div className={styles.pagina}>2</div>
+          <div className={styles.pagina}>3</div>
+          <div className={styles.pagina}>4</div>
+        </div>
       </div>
-      <div className={styles.paginas}>
-        <div className={styles.pagina}>1</div>
-        <div className={styles.pagina}>1</div>
-        <div className={styles.pagina}>1</div>
-        <div className={styles.pagina}>1</div>
-      </div>
-    </div>
+    </>
   )
 }
 

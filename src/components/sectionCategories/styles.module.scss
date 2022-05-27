@@ -15,12 +15,12 @@
 .content{
     padding: 2%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15%, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(15%, 1fr));
     gap: 10px;
     grid-template-rows: auto;
     .categoria_wrapper{
-        transform: scale(1);
         transition: .2s all;
+        position: relative;
         &:hover{
             transform: scale(1.03);
             z-index: 10;
@@ -33,6 +33,18 @@
             height: 100%;
             width: 100%;
             object-fit: cover;
+        }
+        .categoria_nombre{
+            position: absolute;
+            bottom: 0%;
+            left: 0%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .5);
+            color: $white;
         }
     }
 }

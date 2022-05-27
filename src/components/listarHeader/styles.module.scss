@@ -1,0 +1,21 @@
+@import '../../constants/colors.scss';
+
+.listar_header{
+    height: 15vh;
+    border-bottom: 2px solid $black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(2rem + .5vw);
+    text-transform: capitalize;
+    position: relative;
+    .arrow{
+        height: 50%;
+        position: absolute;
+        left: 5%;
+        top: 0%;
+        bottom: 0%;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+}

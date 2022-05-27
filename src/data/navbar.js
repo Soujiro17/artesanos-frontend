@@ -5,11 +5,11 @@ export const nav_items = [
     },
     {
         name: 'Categorías',
-        url: '/'
+        url: '/categorias'
     },
     {
         name: 'Artesanos',
-        url: '/'
+        url: '/artesanos'
     },
     {
         name: 'Geolocalizar',
