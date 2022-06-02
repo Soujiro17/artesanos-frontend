@@ -6,6 +6,7 @@ import Categorias from '../pages/categorias'
 import Artesanos from '../pages/artesanos'
 import Producto from '../pages/producto'
 import Categoria from '../pages/categoria'
+import Login from '../pages/login'
 
 const AppRouter = () => {
 
@@ -17,6 +18,7 @@ const AppRouter = () => {
             <Route path='/categorias/:id' element = {<Categoria />} />
             <Route path='/producto/:id' element = {<Producto />} />
             <Route path='/artesanos' element = {<Artesanos />} />
+            <Route path='/login' element = {<Login />} />
         </Routes>
     </BrowserRouter>
   )

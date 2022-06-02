@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "prepare": "git pull origin main && npm i && exit",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -15,6 +16,7 @@
     "react-dom": "^18.0.0",
     "react-hook-form": "^7.31.2",
     "react-leaflet": "^4.0.0",
+    "react-query": "^3.39.1",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.3.0",
     "react-toastify": "^9.0.1",

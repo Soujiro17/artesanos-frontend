@@ -19,4 +19,8 @@ export const nav_items = [
         name: 'Acerca de',
         url: '/'
     },
+    {
+        name: 'Iniciar sesión',
+        url: '/login'
+    },
 ]

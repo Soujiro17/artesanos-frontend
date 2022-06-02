@@ -1,0 +1,21 @@
+.container{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .login_form{
+        height: 60%;
+        width: 40%;
+        min-height: 300px;
+        min-width: 250px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2%;
+        border-radius: .7rem;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.329);
+        gap: 10px;
+    }
+}
