@@ -3,7 +3,7 @@ import React from 'react'
 import { SectionHeader } from '..'
 import styles from './styles.module.scss'
 
-const Section = ({ name, children, className }) => {
+const Section = ({ name, children, className, id }) => {
 
   const sectionClassname = clsx({
     [styles.section]: true,
@@ -11,7 +11,7 @@ const Section = ({ name, children, className }) => {
   })
 
   return (
-    <section className={sectionClassname}>
+    <section className={sectionClassname} id = {id}>
         <SectionHeader name={name}/>
         <div className={styles.section_body}>
             {children}
