@@ -1,6 +1,15 @@
 @import '../../constants/colors.scss';
 
-.spinner_wrapper{
+.spinner{
+        height: 3.5rem;
+        width: 3.5rem;
+        border-radius: 100%;
+        border: 6px solid rgba(0, 0, 0, .1);
+        border-left-color: $white;
+        animation: spin 1s infinite linear;
+}
+
+.fullscreen {
     position: fixed;
     top: 0%;
     left: 0%;
@@ -11,14 +20,6 @@
     justify-content: center;
     z-index: 1000;
     background-color: rgba(255, 255, 255, .4);
-    .spinner{
-        height: 3.5rem;
-        width: 3.5rem;
-        border-radius: 100%;
-        border: 6px solid rgba(0, 0, 0, .1);
-        border-left-color: $white;
-        animation: spin 1s infinite linear;
-    }
 }
 
 
