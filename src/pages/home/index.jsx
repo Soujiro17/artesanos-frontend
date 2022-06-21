@@ -1,11 +1,9 @@
 import React from 'react'
 import styles from './styles.module.scss'
-import { Header, Carousel, SectionCategories, SectionMap, HeaderLogo, Spinner } from '../../components'
+import { Header, Carousel, SectionCategories, SectionMap, HeaderLogo } from '../../components'
 import { imgs } from '../../data/imgs'
 
 const Home = () => {
-
-
   return (
     <>
       <Header /> {/* 17vh */}
