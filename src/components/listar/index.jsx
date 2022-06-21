@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import { axiosPublic } from "../../services/axios";
+import { useQuery, useQueryClient } from "react-query";
+import { Link, useSearchParams } from "react-router-dom";
 import ListarHeader from "../listarHeader";
 import styles from "./styles.module.scss";
 
 /* 
     Agregar media query para mostrar los nombres de los artesanos
     en mobile 
-  */
+*/
 
 const initialDataState = {
   docs: [],
@@ -21,37 +20,25 @@ const initialDataState = {
   nextPage: 0,
 };
 
-const Listar = ({ filtros: Filtros, title, path = "", endpoint }) => {
-  const [data, setData] = useState(initialDataState);
+const Listar = ({ filtros: Filtros, title, path = "", fetchFunction }) => {
+  const [page, setPage] = useState(1)
 
   const [searchParams] = useSearchParams();
   const subTitle = searchParams.get("id");
-  const navigate = useNavigate()
 
-  const handlePages = async (value) => {
-    
-    await axiosPublic
-      .get(`/${endpoint}?page=${value}${subTitle? `&id=${subTitle}` : ''}`)
-      .then((res) => setData(res.data))
-      .catch((err) =>
-        toast.error("Error al cambiar de página, vuelve a intentarlo más tarde")
-      );
+  const queryClient = useQueryClient()
 
-    navigate(`?page=${value}`)
-  };
+  const { data } = useQuery([title, page], fetchFunction, {
+    initialDataState: initialDataState
+  })
 
   useEffect(() => {
-
-    const controller = new AbortController()
-    async function getResources() {
-      await axiosPublic
-        .get(`/${endpoint}${subTitle? `?id=${subTitle}` : ''}`, { signal: controller.signal})
-        .then((res) => setData(res.data))
-        // .catch((err) => toast.error(`Error al obtener los recursos: ${err.message}`));
+    if(data?.hasNextPage){
+      queryClient.prefetchQuery([type, page], () => 
+        fetchFunction()
+      )
     }
-    getResources();
-    return () => controller.abort()
-  }, []);
+  }, [data, page, queryClient])
 
   return (
     <>
@@ -83,31 +70,19 @@ const Listar = ({ filtros: Filtros, title, path = "", endpoint }) => {
           )}
         </div>
         <div className={styles.paginas}>
-          {data.hasPrevPage ? (
-            <div
-              className={styles.pagina}
-              onClick={() => handlePages(data.prevPage)}
+        {
+          [...Array(data?.totalPages)].map((item, i) =>{
+
+            return(<div
+              className={`${styles.pagina} ${page === i + 1? styles.current : null}`}
+              onClick={() => setPage(i + 1)}
+              key = {i}
             >
-              {data.prevPage}
-            </div>
-          ) : null}
-          <div className={`${styles.pagina} ${styles.current}`}>
-            {data.page || 1}
-          </div>
-          {data.hasNextPage ? (
-            <div
-              className={styles.pagina}
-              onClick={() => handlePages(data.nextPage)}
-            >
-              {data.nextPage}
-            </div>
-          ) : null}
-          {data.totalPages > 3 ? (
-            <>
-              ...
-              <div className={styles.pagina} onClick={() => handlePages(data.totalPages)}>{data.totalPages}</div>
-            </>
-          ) : null}
+              {i+1}
+            </div>)
+          }
+          )
+        }
         </div>
       </div>
     </>

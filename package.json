@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "prepare": "git pull origin main && npm i && exit",
     "build": "vite build",
     "preview": "vite preview"
   },

@@ -13,7 +13,7 @@ export const nav_items = [
     },
     {
         name: 'Geolocalizar',
-        url: '/'
+        url: '#geolocalizar',
     },
     {
         name: 'Acerca de',
