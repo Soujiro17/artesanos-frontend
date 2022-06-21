@@ -41,13 +41,16 @@ const Listar = ({ filtros: Filtros, title, path = "", endpoint }) => {
   };
 
   useEffect(() => {
+
+    const controller = new AbortController()
     async function getResources() {
       await axiosPublic
-        .get(`/${endpoint}${subTitle? `?id=${subTitle}` : ''}`)
+        .get(`/${endpoint}${subTitle? `?id=${subTitle}` : ''}`, { signal: controller.signal})
         .then((res) => setData(res.data))
-        .catch((err) => toast.error(`Error al obtener los recursos: ${err.message}`));
+        // .catch((err) => toast.error(`Error al obtener los recursos: ${err.message}`));
     }
     getResources();
+    return () => controller.abort()
   }, []);
 
   return (
