@@ -10,18 +10,28 @@ import Map from './geoMap'
 import SectionMap from './sectionMap'
 import Spinner from './spinner'
 import ListarHeader from './listarHeader'
+import AdminHeader from './adminHeader'
+import AdminCategorias from './adminCategorias'
+import AdminPymes from './adminPymes'
+import AdminRedesSociales from './adminRedesSociales'
+import AdminRubros from './adminRubros'
 
-export{
-    Header,
-    HeaderLogo,
-    Navbar,
-    Carousel,
-    Listar,
-    SectionHeader,
-    Section,
-    SectionCategories,
-    Map,
-    SectionMap,
-    Spinner,
-    ListarHeader
+export {
+  Header,
+  HeaderLogo,
+  Navbar,
+  Carousel,
+  Listar,
+  SectionHeader,
+  Section,
+  SectionCategories,
+  Map,
+  SectionMap,
+  Spinner,
+  ListarHeader,
+  AdminHeader,
+  AdminCategorias,
+  AdminPymes,
+  AdminRedesSociales,
+  AdminRubros
 }

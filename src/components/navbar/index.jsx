@@ -1,16 +1,18 @@
-import React from "react";
-import { nav_items } from "../../data/navbar";
-import NavbarItem from "../navbarItem";
+import React from 'react'
+import NavbarItem from '../navbarItem'
 import styles from './styles.module.scss'
+import useNavbarItems from '../../hooks/useNavbarItems'
 
 const Navbar = () => {
+  const navItems = useNavbarItems()
+
   return (
     <nav className={styles.navbar}>
       <ul className={styles.nav_list}>
-        {nav_items.map((item, i) => <NavbarItem {...item} key = {i} />)}
+        {navItems.map((item, i) => <NavbarItem {...item} key={i} />)}
       </ul>
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

@@ -1,0 +1,23 @@
+@import '../../constants/colors.scss';
+
+.header{
+    text-align: center;
+    .header_title{
+        font-size: calc(1.2rem + .1vw);
+        text-transform: uppercase;
+        border: 1px solid $black;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    .nav_list{
+        display: flex;
+        justify-content: space-around;
+        .nav_list_item{
+            display: inline-block;
+            a{
+                text-decoration: none;
+                color: $black;
+            }
+        }
+    }
+}

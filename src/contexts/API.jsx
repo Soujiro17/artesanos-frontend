@@ -1,12 +1,10 @@
 
-import React from 'react'
-import { createContext } from 'react'
+import React, { createContext } from 'react'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 
 export const ApiContext = createContext({})
 
 const APIProvider = ({ children }) => {
-
   const axiosPrivate = useAxiosPrivate()
 
   const getCategorias = async (page = 1, limit = 10) => {
@@ -34,14 +32,9 @@ const APIProvider = ({ children }) => {
   }
 
   return (
-    <ApiContext.Provider 
-      value={{
-        getCategorias,
-        getArtesanos,
-        getProductoById,
-        getCategoriaById
-      }}
-    >{ children }</ApiContext.Provider>
+    <ApiContext.Provider value={{ getCategorias, getArtesanos, getProductoById, getCategoriaById }}>
+      {children}
+    </ApiContext.Provider>
   )
 }
 
