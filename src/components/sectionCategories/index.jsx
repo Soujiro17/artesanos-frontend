@@ -10,7 +10,7 @@ import Spinner from '../spinner'
 const SectionCategories = () => {
   const { getCategorias } = useApi()
 
-  const { data, isLoading, isError } = useQuery('categorias', () => getCategorias())
+  const { data, isLoading, isError } = useQuery('categorias', () => getCategorias({ query: { pagination: false } }))
 
   return (
     <Section name='CATEGORÍAS'>
@@ -33,7 +33,7 @@ const SectionCategories = () => {
                           key={categoria._id}
                         >
                           <img
-                            src={categoria.picture || '/img/not_found_default.jpg'}
+                            src={categoria.picture_url || '/img/not_found_default.jpg'}
                             alt=''
                             className={styles.categoria_img}
                           />

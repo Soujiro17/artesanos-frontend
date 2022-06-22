@@ -1,14 +1,15 @@
 
 import React, { createContext } from 'react'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
+import { toQuery } from '../utilities/toQuery'
 
 export const ApiContext = createContext({})
 
 const APIProvider = ({ children }) => {
   const axiosPrivate = useAxiosPrivate()
 
-  const getCategorias = async (page = 1, limit = 10) => {
-    const { data } = await axiosPrivate.get(`/categoria?page=${page}&limit=${limit}`)
+  const getCategorias = async ({ page = 1, limit = 10, query = {} }) => {
+    const { data } = await axiosPrivate.get(`/categoria?page=${page}&limit=${limit}${toQuery(query)}`)
 
     return data
   }
@@ -19,8 +20,8 @@ const APIProvider = ({ children }) => {
     return data
   }
 
-  const getArtesanos = async (page = 1, limit = 10) => {
-    const { data } = await axiosPrivate.get(`/artesano?page=${page}&limit=${limit}`)
+  const getArtesanos = async ({ page = 1, limit = 10, query = {} }) => {
+    const { data } = await axiosPrivate.get(`/artesano?page=${page}&limit=${limit}${toQuery(query)}`)
 
     return data
   }

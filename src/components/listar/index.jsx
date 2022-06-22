@@ -28,19 +28,17 @@ const Listar = ({ filtros: Filtros, title, path = '', fetchFunction }) => {
 
   const queryClient = useQueryClient()
 
-  const { data } = useQuery([title?.toLowerCase(), page], () => fetchFunction(), {
+  const { data } = useQuery([title?.toLowerCase(), page], () => fetchFunction({ page }), {
     initialDataState
   })
 
   useEffect(() => {
     if (data?.hasNextPage) {
       queryClient.prefetchQuery([title?.toLowerCase(), page], () =>
-        fetchFunction()
+        fetchFunction({ page })
       )
     }
   }, [data, page, queryClient])
-
-  console.log(data?.docs)
 
   return (
     <>
