@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
@@ -7,7 +7,9 @@ import Spinner from '../spinner'
 import { toFormData } from '../../utilities/toFormData'
 
 const AdminCategorias = () => {
-  const { register, formState: { errors }, handleSubmit } = useForm()
+  const [isUpdating, setIsUpdating] = useState(false)
+  const [id, setId] = useState('')
+  const { register, formState: { errors }, handleSubmit, setValue } = useForm()
 
   const api = useApi()
 
@@ -32,6 +34,18 @@ const AdminCategorias = () => {
     mutateCrearCategria(formData)
   }
 
+  const handleOnClickSet = (_id, nombre) => {
+    setValue('nombre', nombre)
+    setIsUpdating(true)
+    setId(_id)
+  }
+
+  const clearFields = () => {
+    setValue('nombre', '')
+    setIsUpdating(false)
+    setId('')
+  }
+
   return (
     <>
       <div>
@@ -41,7 +55,8 @@ const AdminCategorias = () => {
           {errors.nombre && <span>Nombre es requerido</span>}
           <input defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre categoría' />
           <input defaultValue={null} {...register('foto')} type='file' accept='image/*' />
-          <button type='submit'>Agregar categoría</button>
+          <button type='submit'>{isUpdating ? 'Actualizar categoría' : 'Agregar categoría'}</button>
+          {isUpdating && <button onClick={clearFields}>Limpiar</button>}
         </form>
       </div>
       <div>
@@ -50,7 +65,7 @@ const AdminCategorias = () => {
             {
               isLoadingCategorias
                 ? <Spinner />
-                : categorias?.docs?.map(categoria => <li key={categoria.nombre}>{categoria.nombre}</li>)
+                : categorias?.docs?.map(categoria => <li key={categoria._id} onClick={() => handleOnClickSet(categoria._id, categoria.nombre)}>{categoria.nombre}</li>)
             }
           </ul>
         </div>
