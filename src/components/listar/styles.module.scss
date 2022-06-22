@@ -6,7 +6,7 @@
         display: grid;
         align-items: center;
         justify-content: center;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 25%));
+        grid-template-columns: repeat(auto-fit, minmax(250px, 25%));
         grid-template-rows: 1fr 1fr;
         gap: 10px;
 
@@ -16,9 +16,15 @@
             width: 100%;
             position: relative;
             z-index: 1;
+            border: 1px solid $black;
             .item_img{
                 height: 100%;
                 width: 100%;
+                min-width: 250px;
+                max-height: 350px;
+                object-fit: cover;
+                object-position: center;
+                image-rendering: optimizeSpeed;
             }
             .item_name{
                 visibility: hidden;
@@ -37,7 +43,7 @@
                 justify-content: center;
                 background-color: rgba(200, 200, 200, .7);
                 color: $white;
-                border: 1px solid $black;
+                border-top: 1px solid $black;
             }
             &:hover{
                 transform: scale(1.02);

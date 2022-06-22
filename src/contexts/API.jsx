@@ -13,6 +13,12 @@ const APIProvider = ({ children }) => {
     return data
   }
 
+  const crearCategoria = async (values) => {
+    const { data } = await axiosPrivate.post('/categoria', values)
+
+    return data
+  }
+
   const getArtesanos = async (page = 1, limit = 10) => {
     const { data } = await axiosPrivate.get(`/artesano?page=${page}&limit=${limit}`)
 
@@ -32,7 +38,14 @@ const APIProvider = ({ children }) => {
   }
 
   return (
-    <ApiContext.Provider value={{ getCategorias, getArtesanos, getProductoById, getCategoriaById }}>
+    <ApiContext.Provider value={{
+      getCategorias,
+      crearCategoria,
+      getArtesanos,
+      getProductoById,
+      getCategoriaById
+    }}
+    >
       {children}
     </ApiContext.Provider>
   )

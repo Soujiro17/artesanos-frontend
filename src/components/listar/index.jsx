@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useQuery, useQueryClient } from "react-query";
-import { Link, useSearchParams } from "react-router-dom";
-import ListarHeader from "../listarHeader";
-import styles from "./styles.module.scss";
+import React, { useEffect, useState } from 'react'
+import { useQuery, useQueryClient } from 'react-query'
+import { Link, useSearchParams } from 'react-router-dom'
+import ListarHeader from '../listarHeader'
+import styles from './styles.module.scss'
 
-/* 
+/*
     Agregar media query para mostrar los nombres de los artesanos
-    en mobile 
+    en mobile
 */
 
 const initialDataState = {
@@ -17,28 +17,30 @@ const initialDataState = {
   hasNextPage: null,
   prevPage: 0,
   page: 0,
-  nextPage: 0,
-};
+  nextPage: 0
+}
 
-const Listar = ({ filtros: Filtros, title, path = "", fetchFunction }) => {
+const Listar = ({ filtros: Filtros, title, path = '', fetchFunction }) => {
   const [page, setPage] = useState(1)
 
-  const [searchParams] = useSearchParams();
-  const subTitle = searchParams.get("id");
+  const [searchParams] = useSearchParams()
+  const subTitle = searchParams.get('id')
 
   const queryClient = useQueryClient()
 
-  const { data } = useQuery([title, page], fetchFunction, {
-    initialDataState: initialDataState
+  const { data } = useQuery([title?.toLowerCase(), page], () => fetchFunction(), {
+    initialDataState
   })
 
   useEffect(() => {
-    if(data?.hasNextPage){
-      queryClient.prefetchQuery([type, page], () => 
+    if (data?.hasNextPage) {
+      queryClient.prefetchQuery([title?.toLowerCase(), page], () =>
         fetchFunction()
       )
     }
   }, [data, page, queryClient])
+
+  console.log(data?.docs)
 
   return (
     <>
@@ -50,43 +52,46 @@ const Listar = ({ filtros: Filtros, title, path = "", fetchFunction }) => {
           </div>
         )}
         <div className={styles.items}>
-          {data?.docs?.length > 0 ? (
-            data?.docs.map((doc, i) => (
-              <Link
-                to={`${path}${doc.url?.toLowerCase() || `${doc._id}?name=${doc.nombre}`}`}
-                className={styles.item_link}
-                key={doc._id || i}
-              >
-                <img
-                  src={doc.picture_url || "/img/not_found_default.jpg"}
-                  className={styles.item_img}
-                  alt=""
-                />
-                <div className={styles.item_name}>{doc.nombre}</div>
-              </Link>
-            ))
-          ) : (
-            <p className="error">No hay elementos para mostrar</p>
-          )}
+          {data?.docs?.length > 0
+            ? (
+                data?.docs.map((doc, i) => (
+                  <Link
+                    to={`${path}${doc.url?.toLowerCase() || `${doc._id}?name=${doc.nombre}`}`}
+                    className={styles.item_link}
+                    key={doc._id || i}
+                  >
+                    <img
+                      src={doc.picture_url || '/img/not_found_default.jpg'}
+                      className={styles.item_img}
+                      alt=''
+                    />
+                    <div className={styles.item_name}>{doc.nombre}</div>
+                  </Link>
+                ))
+              )
+            : (
+              <p className='error'>No hay elementos para mostrar</p>
+              )}
         </div>
         <div className={styles.paginas}>
-        {
-          [...Array(data?.totalPages)].map((item, i) =>{
-
-            return(<div
-              className={`${styles.pagina} ${page === i + 1? styles.current : null}`}
-              onClick={() => setPage(i + 1)}
-              key = {i}
-            >
-              {i+1}
-            </div>)
+          {
+          [...Array(data?.totalPages)].map((item, i) => {
+            return (
+              <div
+                className={`${styles.pagina} ${page === i + 1 ? styles.current : null}`}
+                onClick={() => setPage(i + 1)}
+                key={i}
+              >
+                {i + 1}
+              </div>
+            )
           }
           )
         }
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Listar;
+export default Listar
