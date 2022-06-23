@@ -19,27 +19,25 @@ const AdminCategorias = () => {
 
   const { data: categorias, isLoading: isLoadingCategorias } = useQuery('categorias', () => api.getCategorias({ query: { pagination: false } }))
 
-  /*
-
-    UTILIZAR COMPRESS JS PARA BAJAR EL PESO DE LAS IMÁGENES POR FAVOR
-
-  */
-
-  const { mutate: mutateCrearCategria, isLoadingCreate } = useMutation(api.crearCategoria, mutatorConfig.create)
-  const { mutate: mutateActualizarCategoria, isLoadingUpdate } = useMutation(api.actualizarCategoria, mutatorConfig.update)
-  const { mutate: mutateEliminarCategoria, isLoadingDelete } = useMutation(api.eliminarCategoria, mutatorConfig.delete)
+  const { mutate: mutateCrearCategria, isLoading: isLoadingCreate } = useMutation(api.crearCategoria, mutatorConfig.create)
+  const { mutate: mutateActualizarCategoria, isLoading: isLoadingUpdate } = useMutation(api.actualizarCategoria, mutatorConfig.update)
+  const { mutate: mutateEliminarCategoria, isLoading: isLoadingDelete } = useMutation(api.eliminarCategoria, mutatorConfig.delete)
 
   const onSubmit = (data) => {
     const img = data.foto[0]
     const formData = toFormData({ ...data, foto: img })
 
-    if (id) return mutateActualizarCategoria({ values: formData, _id: id })
+    if (id) mutateActualizarCategoria({ values: formData, _id: id })
+    else mutateCrearCategria({ values: formData })
 
-    return mutateCrearCategria(formData)
+    setId('')
+    setValue('nombre', '')
+    setIsUpdating(false)
   }
 
   const handleOnClickSet = (_id, nombre) => {
     setValue('nombre', nombre)
+    setValue('foto', null)
     setIsUpdating(true)
     setId(_id)
   }

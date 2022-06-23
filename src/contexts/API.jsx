@@ -16,7 +16,7 @@ const APIProvider = ({ children }) => {
     return data
   }
 
-  const crearCategoria = async (values) => {
+  const crearCategoria = async ({ values }) => {
     const { data } = await axiosPrivate.post('/categoria', values)
 
     return data

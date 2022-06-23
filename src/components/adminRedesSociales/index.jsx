@@ -11,7 +11,7 @@ const AdminRedesSociales = () => {
   const [isUpdating, setIsUpdating] = useState(false)
   const [id, setId] = useState('')
 
-  const mutatorConfig = useMutatorConfig('Red social', '')
+  const mutatorConfig = useMutatorConfig('Red social', 'redes_sociales')
 
   const { register, formState: { errors }, handleSubmit, setValue } = useForm()
 
