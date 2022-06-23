@@ -19,6 +19,12 @@ const AdminCategorias = () => {
 
   const { data: categorias, isLoading: isLoadingCategorias } = useQuery('categorias', () => api.getCategorias({ query: { pagination: false } }))
 
+  /*
+
+    UTILIZAR COMPRESS JS PARA BAJAR EL PESO DE LAS IMÁGENES POR FAVOR
+
+  */
+
   const { mutate: mutateCrearCategria, isLoadingCreate } = useMutation(api.crearCategoria, mutatorConfig.create)
   const { mutate: mutateActualizarCategoria, isLoadingUpdate } = useMutation(api.actualizarCategoria, mutatorConfig.update)
   const { mutate: mutateEliminarCategoria, isLoadingDelete } = useMutation(api.eliminarCategoria, mutatorConfig.delete)

@@ -40,6 +40,32 @@ const APIProvider = ({ children }) => {
     return data
   }
 
+  /* Redes sociales */
+
+  const getRedesSociales = async () => {
+    const { data } = await axiosPrivate.get('/red-social')
+
+    return data
+  }
+
+  const crearRedSocial = async ({ values }) => {
+    const { data } = await axiosPrivate.post('/red-social', values)
+
+    return data
+  }
+
+  const actualizarRedSocial = async ({ values, _id }) => {
+    const { data } = await axiosPrivate.put(`/red-social/${_id}`, values)
+
+    return data
+  }
+
+  const eliminarRedSocial = async ({ _id }) => {
+    const { data } = await axiosPrivate.delete(`/red-social/${_id}`)
+
+    return data
+  }
+
   /* Pymes */
 
   const getArtesanos = async ({ page = 1, limit = 10, query = {} }) => {
@@ -60,6 +86,11 @@ const APIProvider = ({ children }) => {
       crearCategoria,
       actualizarCategoria,
       eliminarCategoria,
+
+      getRedesSociales,
+      crearRedSocial,
+      actualizarRedSocial,
+      eliminarRedSocial,
 
       getArtesanos,
       getProductoById,
