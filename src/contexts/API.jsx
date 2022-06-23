@@ -8,6 +8,8 @@ export const ApiContext = createContext({})
 const APIProvider = ({ children }) => {
   const axiosPrivate = useAxiosPrivate()
 
+  /* Categorías */
+
   const getCategorias = async ({ page = 1, limit = 10, query = {} }) => {
     const { data } = await axiosPrivate.get(`/categoria?page=${page}&limit=${limit}${toQuery(query)}`)
 
@@ -19,6 +21,26 @@ const APIProvider = ({ children }) => {
 
     return data
   }
+
+  const getCategoriaById = async (_id) => {
+    const { data } = await axiosPrivate.get(`/categoria/${_id}`)
+
+    return data
+  }
+
+  const actualizarCategoria = async ({ values, _id }) => {
+    const { data } = await axiosPrivate.put(`/categoria/${_id}`, values)
+
+    return data
+  }
+
+  const eliminarCategoria = async ({ _id }) => {
+    const { data } = await axiosPrivate.delete(`/categoria/${_id}`)
+
+    return data
+  }
+
+  /* Pymes */
 
   const getArtesanos = async ({ page = 1, limit = 10, query = {} }) => {
     const { data } = await axiosPrivate.get(`/artesano?page=${page}&limit=${limit}${toQuery(query)}`)
@@ -32,16 +54,13 @@ const APIProvider = ({ children }) => {
     return data
   }
 
-  const getCategoriaById = async (_id) => {
-    const { data } = await axiosPrivate.get(`/categoria/${_id}`)
-
-    return data
-  }
-
   return (
     <ApiContext.Provider value={{
       getCategorias,
       crearCategoria,
+      actualizarCategoria,
+      eliminarCategoria,
+
       getArtesanos,
       getProductoById,
       getCategoriaById

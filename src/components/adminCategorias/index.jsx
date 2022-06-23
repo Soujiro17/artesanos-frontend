@@ -1,43 +1,45 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { toast } from 'react-toastify'
+import { useMutation, useQuery } from 'react-query'
 import useApi from '../../hooks/useApi'
 import Spinner from '../spinner'
 import { toFormData } from '../../utilities/toFormData'
+import useMutatorConfig from '../../hooks/useMutatorConfig'
+import X from '../icons/X'
 
 const AdminCategorias = () => {
   const [isUpdating, setIsUpdating] = useState(false)
   const [id, setId] = useState('')
+
+  const mutatorConfig = useMutatorConfig('Categoria', 'categorias')
+
   const { register, formState: { errors }, handleSubmit, setValue } = useForm()
 
   const api = useApi()
 
   const { data: categorias, isLoading: isLoadingCategorias } = useQuery('categorias', () => api.getCategorias({ query: { pagination: false } }))
 
-  const queryClient = useQueryClient()
-
-  const { mutate: mutateCrearCategria, isLoading } = useMutation(api.crearCategoria, {
-    onSuccess: () => {
-      toast.success('Categoría creada con éxito')
-      queryClient.prefetchQuery('categorias')
-    },
-    onError: (res) => {
-      toast.error(res.response.data)
-    }
-  })
+  const { mutate: mutateCrearCategria, isLoadingCreate } = useMutation(api.crearCategoria, mutatorConfig.create)
+  const { mutate: mutateActualizarCategoria, isLoadingUpdate } = useMutation(api.actualizarCategoria, mutatorConfig.update)
+  const { mutate: mutateEliminarCategoria, isLoadingDelete } = useMutation(api.eliminarCategoria, mutatorConfig.delete)
 
   const onSubmit = (data) => {
     const img = data.foto[0]
     const formData = toFormData({ ...data, foto: img })
 
-    mutateCrearCategria(formData)
+    if (id) return mutateActualizarCategoria({ values: formData, _id: id })
+
+    return mutateCrearCategria(formData)
   }
 
   const handleOnClickSet = (_id, nombre) => {
     setValue('nombre', nombre)
     setIsUpdating(true)
     setId(_id)
+  }
+
+  const removeCategory = (_id) => {
+    mutateEliminarCategoria({ _id })
   }
 
   const clearFields = () => {
@@ -49,7 +51,7 @@ const AdminCategorias = () => {
   return (
     <>
       <div>
-        {isLoading && <Spinner fullScreen />}
+        {(isLoadingCreate || isLoadingUpdate || isLoadingDelete) && <Spinner fullScreen />}
         <p>Crear categoria</p>
         <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {errors.nombre && <span>Nombre es requerido</span>}
@@ -65,7 +67,12 @@ const AdminCategorias = () => {
             {
               isLoadingCategorias
                 ? <Spinner />
-                : categorias?.docs?.map(categoria => <li key={categoria._id} onClick={() => handleOnClickSet(categoria._id, categoria.nombre)}>{categoria.nombre}</li>)
+                : categorias?.docs?.map(categoria =>
+                  <li key={categoria._id}>
+                    <p onClick={() => handleOnClickSet(categoria._id, categoria.nombre)}>{categoria.nombre}</p>
+                    <X onClick={() => removeCategory(categoria._id)} />
+                  </li>
+                )
             }
           </ul>
         </div>

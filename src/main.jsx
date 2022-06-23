@@ -5,6 +5,7 @@ import AuthProvider from './contexts/AuthContext'
 import 'react-toastify/dist/ReactToastify.css'
 import './index.scss'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
 import AppRouter from './routes'
 import APIProvider from './contexts/API'
 
@@ -28,6 +29,9 @@ render.render(
         <APIProvider>
           <AppRouter />
           <ToastContainer autoClose={3000} />
+          {
+            import.meta.env.DEV && <ReactQueryDevtools />
+          }
         </APIProvider>
       </AuthProvider>
     </QueryClientProvider>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { Link, useSearchParams } from 'react-router-dom'
 import ListarHeader from '../listarHeader'
+import Spinner from '../spinner'
 import styles from './styles.module.scss'
 
 /*
@@ -28,7 +29,7 @@ const Listar = ({ filtros: Filtros, title, path = '', fetchFunction }) => {
 
   const queryClient = useQueryClient()
 
-  const { data } = useQuery([title?.toLowerCase(), page], () => fetchFunction({ page }), {
+  const { data, isLoading } = useQuery([title?.toLowerCase(), page], () => fetchFunction({ page }), {
     initialDataState
   })
 
@@ -50,26 +51,28 @@ const Listar = ({ filtros: Filtros, title, path = '', fetchFunction }) => {
           </div>
         )}
         <div className={styles.items}>
-          {data?.docs?.length > 0
-            ? (
-                data?.docs.map((doc, i) => (
-                  <Link
-                    to={`${path}${doc.url?.toLowerCase() || `${doc._id}?name=${doc.nombre}`}`}
-                    className={styles.item_link}
-                    key={doc._id || i}
-                  >
-                    <img
-                      src={doc.picture_url || '/img/not_found_default.jpg'}
-                      className={styles.item_img}
-                      alt=''
-                    />
-                    <div className={styles.item_name}>{doc.nombre}</div>
-                  </Link>
-                ))
-              )
-            : (
-              <p className='error'>No hay elementos para mostrar</p>
-              )}
+          {isLoading
+            ? <Spinner />
+            : (data?.docs?.length > 0
+                ? (
+                    data?.docs.map((doc, i) => (
+                      <Link
+                        to={`${path}${doc.url?.toLowerCase() || `${doc._id}?name=${doc.nombre}`}`}
+                        className={styles.item_link}
+                        key={doc._id || i}
+                      >
+                        <img
+                          src={doc.picture_url || '/img/not_found_default.jpg'}
+                          className={styles.item_img}
+                          alt=''
+                        />
+                        <div className={styles.item_name}>{doc.nombre}</div>
+                      </Link>
+                    ))
+                  )
+                : (
+                  <p className='error'>No hay elementos para mostrar</p>
+                  ))}
         </div>
         <div className={styles.paginas}>
           {
