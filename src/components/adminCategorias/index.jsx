@@ -32,6 +32,7 @@ const AdminCategorias = () => {
 
     setId('')
     setValue('nombre', '')
+    setValue('foto', null)
     setIsUpdating(false)
   }
 
@@ -48,6 +49,7 @@ const AdminCategorias = () => {
 
   const clearFields = () => {
     setValue('nombre', '')
+    setValue('foto', null)
     setIsUpdating(false)
     setId('')
   }

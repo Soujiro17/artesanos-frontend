@@ -19,25 +19,21 @@ const AdminRedesSociales = () => {
 
   const { data, isLoading: isLoadingData } = useQuery('redes_sociales', () => api.getRedesSociales())
 
-  /*
-
-    UTILIZAR COMPRESS JS PARA BAJAR EL PESO DE LAS IMÁGENES POR FAVOR
-
-  */
-
-  console.log(data)
-
-  const { mutate: mutateCrear, isLoadingCreate } = useMutation(api.crearRedSocial, mutatorConfig.create)
-  const { mutate: mutateActualizar, isLoadingUpdate } = useMutation(api.actualizarRedSocial, mutatorConfig.update)
-  const { mutate: mutateEliminar, isLoadingDelete } = useMutation(api.eliminarRedSocial, mutatorConfig.delete)
+  const { mutate: mutateCrear, isLoading: isLoadingCreate } = useMutation(api.crearRedSocial, mutatorConfig.create)
+  const { mutate: mutateActualizar, isLoading: isLoadingUpdate } = useMutation(api.actualizarRedSocial, mutatorConfig.update)
+  const { mutate: mutateEliminar, isLoading: isLoadingDelete } = useMutation(api.eliminarRedSocial, mutatorConfig.delete)
 
   const onSubmit = (data) => {
     const img = data.foto[0]
     const formData = toFormData({ ...data, foto: img })
 
-    if (id) return mutateActualizar({ values: formData, _id: id })
+    if (id) mutateActualizar({ values: formData, _id: id })
+    else mutateCrear({ values: formData })
 
-    return mutateCrear({ values: formData })
+    setValue('nombre', '')
+    setValue('foto', null)
+    setIsUpdating(false)
+    setId('')
   }
 
   const handleOnClickSet = (_id, nombre) => {
@@ -52,6 +48,7 @@ const AdminRedesSociales = () => {
 
   const clearFields = () => {
     setValue('nombre', '')
+    setValue('foto', null)
     setIsUpdating(false)
     setId('')
   }
