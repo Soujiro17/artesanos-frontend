@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useMutation, useQuery } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import useApi from '../../hooks/useApi'
 import Spinner from '../spinner'
 import { toFormData } from '../../utilities/toFormData'
@@ -17,7 +17,9 @@ const AdminCategorias = () => {
 
   const api = useApi()
 
-  const { data: categorias, isLoading: isLoadingCategorias } = useQuery('categorias', () => api.getCategorias({ query: { pagination: false } }))
+  const queryClient = useQueryClient()
+
+  const data = queryClient.getQueryData('categorias')
 
   const { mutate: mutateCrearCategria, isLoading: isLoadingCreate } = useMutation(api.crearCategoria, mutatorConfig.create)
   const { mutate: mutateActualizarCategoria, isLoading: isLoadingUpdate } = useMutation(api.actualizarCategoria, mutatorConfig.update)
@@ -71,9 +73,9 @@ const AdminCategorias = () => {
         <div>
           <ul>
             {
-              isLoadingCategorias
+              !data
                 ? <Spinner />
-                : categorias?.docs?.map(categoria =>
+                : data?.docs?.map(categoria =>
                   <li key={categoria._id}>
                     <p onClick={() => handleOnClickSet(categoria._id, categoria.nombre)}>{categoria.nombre}</p>
                     <X onClick={() => removeCategory(categoria._id)} />

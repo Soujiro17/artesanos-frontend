@@ -9,6 +9,7 @@ import Producto from '../pages/producto'
 import Categoria from '../pages/categoria'
 import Administracion from '../pages/administracion'
 import Login from '../pages/login'
+import AdminArtesanos from '../components/adminArtesanos'
 
 const AppRouter = () => {
   return (
@@ -25,6 +26,7 @@ const AppRouter = () => {
           <Route path='pymes' element={<AdminPymes />} />
           <Route path='redes-sociales' element={<AdminRedesSociales />} />
           <Route path='rubros' element={<AdminRubros />} />
+          <Route path='artesanos' element={<AdminArtesanos />} />
         </Route>
         <Route path='*' element={<div>Not found</div>} />
       </Routes>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useMutation, useQuery } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import useApi from '../../hooks/useApi'
 import Spinner from '../spinner'
 import { toFormData } from '../../utilities/toFormData'
@@ -17,7 +17,9 @@ const AdminRedesSociales = () => {
 
   const api = useApi()
 
-  const { data, isLoading: isLoadingData } = useQuery('redes_sociales', () => api.getRedesSociales())
+  const queryClient = useQueryClient()
+
+  const data = queryClient.getQueryData('redes_sociales')
 
   const { mutate: mutateCrear, isLoading: isLoadingCreate } = useMutation(api.crearRedSocial, mutatorConfig.create)
   const { mutate: mutateActualizar, isLoading: isLoadingUpdate } = useMutation(api.actualizarRedSocial, mutatorConfig.update)
@@ -42,7 +44,7 @@ const AdminRedesSociales = () => {
     setId(_id)
   }
 
-  const removeCategory = (_id) => {
+  const remove = (_id) => {
     mutateEliminar({ _id })
   }
 
@@ -70,12 +72,12 @@ const AdminRedesSociales = () => {
         <div>
           <ul>
             {
-              isLoadingData
+              !data
                 ? <Spinner />
                 : data?.map(item =>
                   <li key={item._id}>
                     <p onClick={() => handleOnClickSet(item._id, item.nombre)}>{item.nombre}</p>
-                    <X onClick={() => removeCategory(item._id)} />
+                    <X onClick={() => remove(item._id)} />
                   </li>
                 )
             }
