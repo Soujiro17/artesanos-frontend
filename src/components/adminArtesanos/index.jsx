@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useMutation, useQuery } from 'react-query'
+import { toFormData } from '../../utilities/toFormData'
 import useApi from '../../hooks/useApi'
 import Spinner from '../spinner'
 import useMutatorConfig from '../../hooks/useMutatorConfig'
@@ -23,12 +24,16 @@ const AdminArtesanos = () => {
   const { mutate: mutateEliminar, isLoading: isLoadingDelete } = useMutation(api.eliminarArtesano, mutatorConfig.delete)
 
   const onSubmit = (data) => {
-    if (id) mutateActualizar({ values: data, _id: id })
-    else mutateCrear({ values: data })
+    const img = data.foto[0]
+    const formData = toFormData({ ...data, foto: img })
+
+    if (id) mutateActualizar({ values: formData, _id: id })
+    else mutateCrear({ values: formData })
 
     setValue('nombres', '')
     setValue('apellidos', '')
     setValue('rut', '')
+    setValue('foto', null)
     setIsUpdating(false)
     setId('')
   }
@@ -49,7 +54,7 @@ const AdminArtesanos = () => {
     setValue('nombres', '')
     setValue('apellidos', '')
     setValue('rut', '')
-    setValue('password', '')
+    setValue('foto', null)
     setIsUpdating(false)
     setId('')
   }
@@ -65,9 +70,8 @@ const AdminArtesanos = () => {
           {errors.apellidos && <span>Apellidos es requerido</span>}
           <input defaultValue='' {...register('apellidos', { required: true })} placeholder='Apellidos artesano' />
           {errors.rut && <span>RUT es requerido</span>}
-          <input defaultValue='' {...register('rut', { required: true })} placeholder='RUT artesano' />
-          {errors.password && <span>Contraseña es requerido</span>}
-          <input defaultValue='' {...register('password', { required: true })} placeholder='Contraseña artesano' />
+          <input defaultValue='' {...register('rut', { required: true })} placeholder='ej: 111111111' />
+          <input defaultValue={null} {...register('foto')} type='file' accept='image/*' />
           <button type='submit'>{isUpdating ? 'Actualizar artesano' : 'Agregar artesano'}</button>
           {isUpdating && <button onClick={clearFields}>Limpiar</button>}
         </form>
