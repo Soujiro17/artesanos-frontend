@@ -50,7 +50,7 @@ const AdminPymes = () => {
     // clearFields()
   }
 
-  const handleOnClickSet = ({ _id, nombre, rut, duenoId, rubro, direccion, horarios, telefono, correo, redesSociales }) => {
+  const handleOnClickSet = ({ _id, nombre, rut, duenoId, rubro, direccion, horarios, telefono, correo, redes_sociales: redesSocialess }) => {
     setValue('nombre', nombre)
     setValue('rut', rut)
     setValue('duenoId', duenoId)
@@ -59,7 +59,7 @@ const AdminPymes = () => {
     setValue('horarios', horarios)
     setValue('telefono', telefono)
     setValue('correo', correo)
-    setValue('redes_sociales', redesSociales)
+    setValue('redes_sociales', redesSocialess)
     setIsUpdating(true)
     setId(_id)
   }
@@ -68,6 +68,8 @@ const AdminPymes = () => {
     if (!window.confirm('Seguro que deseas eliminar este registro?')) return
     mutateEliminar({ _id })
   }
+
+  console.log(redes)
 
   const clearFields = () => {
     setValue('nombre', '')
@@ -79,7 +81,8 @@ const AdminPymes = () => {
     setValue('horarios', '')
     setValue('telefono', '')
     setValue('correo', '')
-    setValue('redes_sociales', '')
+    setValue('redes_sociales', [])
+    setRedes({})
     setIsUpdating(false)
     setId('')
   }
@@ -124,7 +127,7 @@ const AdminPymes = () => {
               redesSociales?.map((redSocial, i) => {
                 return (
                   <div key={redSocial._id}>
-                    <input id={redSocial.nombre} type='checkbox' onChange={(e) => handleRedes(e, i, redSocial._id)} name={redSocial.nombre} value={redes[redSocial.nombre] || false} />
+                    <input id={redSocial.nombre} type='checkbox' checked={redes[redSocial.nombre] || false} onChange={(e) => handleRedes(e, i, redSocial._id)} name={redSocial.nombre} value={redes[redSocial._id] || false} />
                     <label htmlFor={redSocial.nombre}>{redSocial.nombre}</label>
                     {
                       redes[redSocial.nombre] &&
