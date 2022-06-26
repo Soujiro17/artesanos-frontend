@@ -32,15 +32,11 @@ const AdminCategorias = () => {
     if (id) mutateActualizarCategoria({ values: formData, _id: id })
     else mutateCrearCategria({ values: formData })
 
-    setId('')
-    setValue('nombre', '')
-    setValue('foto', null)
-    setIsUpdating(false)
+    clearFields()
   }
 
   const handleOnClickSet = (_id, nombre) => {
     setValue('nombre', nombre)
-    setValue('foto', null)
     setIsUpdating(true)
     setId(_id)
   }
@@ -51,7 +47,7 @@ const AdminCategorias = () => {
 
   const clearFields = () => {
     setValue('nombre', '')
-    setValue('foto', null)
+    setValue('foto', [])
     setIsUpdating(false)
     setId('')
   }

@@ -30,12 +30,7 @@ const AdminArtesanos = () => {
     if (id) mutateActualizar({ values: formData, _id: id })
     else mutateCrear({ values: formData })
 
-    setValue('nombres', '')
-    setValue('apellidos', '')
-    setValue('rut', '')
-    setValue('foto', null)
-    setIsUpdating(false)
-    setId('')
+    clearFields()
   }
 
   const handleOnClickSet = ({ _id, nombres, apellidos, rut }) => {
@@ -47,6 +42,7 @@ const AdminArtesanos = () => {
   }
 
   const remove = (_id) => {
+    if (!window.confirm('Seguro que deseas eliminar este registro?')) return
     mutateEliminar({ _id })
   }
 
@@ -54,7 +50,7 @@ const AdminArtesanos = () => {
     setValue('nombres', '')
     setValue('apellidos', '')
     setValue('rut', '')
-    setValue('foto', null)
+    setValue('foto', [])
     setIsUpdating(false)
     setId('')
   }

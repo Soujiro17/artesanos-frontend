@@ -26,16 +26,14 @@ const AdminRedesSociales = () => {
   const { mutate: mutateEliminar, isLoading: isLoadingDelete } = useMutation(api.eliminarRedSocial, mutatorConfig.delete)
 
   const onSubmit = (data) => {
-    const img = data.foto[0]
+    console.log(data)
+    const img = data?.foto[0]
     const formData = toFormData({ ...data, foto: img })
 
     if (id) mutateActualizar({ values: formData, _id: id })
     else mutateCrear({ values: formData })
 
-    setValue('nombre', '')
-    setValue('foto', null)
-    setIsUpdating(false)
-    setId('')
+    clearFields()
   }
 
   const handleOnClickSet = (_id, nombre) => {
@@ -45,12 +43,14 @@ const AdminRedesSociales = () => {
   }
 
   const remove = (_id) => {
+    if (!window.confirm('Seguro que deseas eliminar este registro?')) return
     mutateEliminar({ _id })
   }
 
   const clearFields = () => {
     setValue('nombre', '')
-    setValue('foto', null)
+    // eslint-disable-next-line no-undef
+    setValue('foto', [])
     setIsUpdating(false)
     setId('')
   }

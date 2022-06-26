@@ -121,6 +121,38 @@ const APIProvider = ({ children }) => {
 
   /* Pymes */
 
+  const getPymes = async ({ page = 1, limit = 10, query = {} }) => {
+    const { data } = await axiosPrivate.get(`/pyme/all?page=${page}&limit=${limit}${toQuery(query)}`)
+
+    return data
+  }
+
+  const getArtesanoPymes = async () => {
+    const { data } = await axiosPrivate.get('/pyme')
+
+    return data
+  }
+
+  const crearPyme = async ({ values }) => {
+    const { data } = await axiosPrivate.post('/pyme', values)
+
+    return data
+  }
+
+  const actualizarPyme = async ({ values, _id }) => {
+    const { data } = await axiosPrivate.put(`/pyme/${_id}`, values)
+
+    return data
+  }
+
+  const eliminarPyme = async ({ _id }) => {
+    const { data } = await axiosPrivate.delete(`/pyme/${_id}`)
+
+    return data
+  }
+
+  /* Productos */
+
   const getProductoById = async (_id) => {
     const { data } = await axiosPrivate.get(`/producto/${_id}`)
 
@@ -163,6 +195,15 @@ const APIProvider = ({ children }) => {
       crearArtesano,
       actualizarArtesano,
       eliminarArtesano,
+
+      // Pymes
+      getPymes,
+      getArtesanoPymes,
+      crearPyme,
+      actualizarPyme,
+      eliminarPyme,
+
+      // Productos
 
       getProductoById,
       getCategoriaById

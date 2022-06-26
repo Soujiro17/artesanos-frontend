@@ -28,9 +28,7 @@ const AdminRubros = () => {
     if (id) mutateActualizar({ values: data, _id: id })
     else mutateCrear({ values: data })
 
-    setValue('nombre', '')
-    setIsUpdating(false)
-    setId('')
+    clearFields()
   }
 
   const handleOnClickSet = (_id, nombre) => {
@@ -40,6 +38,7 @@ const AdminRubros = () => {
   }
 
   const remove = (_id) => {
+    if (!window.confirm('Seguro que deseas eliminar este registro?')) return
     mutateEliminar({ _id })
   }
 
