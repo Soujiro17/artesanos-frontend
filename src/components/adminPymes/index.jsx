@@ -47,7 +47,7 @@ const AdminPymes = () => {
     if (id) mutateActualizar({ values: formData, _id: id })
     else mutateCrear({ values: formData })
 
-    // clearFields()
+    clearFields()
   }
 
   const handleOnClickSet = ({ _id, nombre, rut, duenoId, rubro, direccion, horarios, telefono, correo, redes_sociales: redesSocialess }) => {
@@ -68,8 +68,6 @@ const AdminPymes = () => {
     if (!window.confirm('Seguro que deseas eliminar este registro?')) return
     mutateEliminar({ _id })
   }
-
-  console.log(redes)
 
   const clearFields = () => {
     setValue('nombre', '')
@@ -118,7 +116,7 @@ const AdminPymes = () => {
               </select>)
           }
           {errors.direccion && <span>Direccion es requerida</span>}
-          <input defaultValue='' {...register('direccion', { required: true })} placeholder='Direccion' />
+          <input defaultValue='' {...register('direccion', { required: true })} placeholder='Direccion. Ejemplo: Gral Cruz 222, Valparaíso' />
           <input defaultValue='' {...register('horarios')} placeholder='Horarios. Ejemplo: 12:00 a 18:00 pm lunes a viernes' />
           <input defaultValue='' {...register('telefono', { valueAsNumber: true })} placeholder='Teléfono. Ejemplo: 911223344' type='number' />
           <input defaultValue='' {...register('correo')} placeholder='Email pyme' type='email' />

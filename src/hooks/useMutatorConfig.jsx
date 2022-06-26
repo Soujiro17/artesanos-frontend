@@ -4,11 +4,13 @@ import { toast } from 'react-toastify'
 const useMutatorConfig = (title, fetchName) => {
   const queryClient = useQueryClient()
 
+  const handleFunction = typeof fetchName === 'function' ? () => fetchName() : () => queryClient.prefetchQuery(fetchName)
+
   const mutatorConfig = {
     create: {
       onSuccess: () => {
         toast.success(`${title} creada con éxito`)
-        queryClient.prefetchQuery(fetchName)
+        handleFunction()
       },
       onError: (res) => {
         toast.error(res.response.data)
@@ -17,7 +19,7 @@ const useMutatorConfig = (title, fetchName) => {
     update: {
       onSuccess: () => {
         toast.success(`${title} actualizada con éxito`)
-        queryClient.prefetchQuery(fetchName)
+        handleFunction()
       },
       onError: (res) => {
         toast.error(res.response.data)
@@ -26,7 +28,7 @@ const useMutatorConfig = (title, fetchName) => {
     delete: {
       onSuccess: () => {
         toast.success(`${title} eliminada con éxito`)
-        queryClient.prefetchQuery(fetchName)
+        handleFunction()
       },
       onError: (res) => {
         toast.error(res.response.data)

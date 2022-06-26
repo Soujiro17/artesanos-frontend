@@ -15,6 +15,7 @@ import AdminCategorias from './adminCategorias'
 import AdminPymes from './adminPymes'
 import AdminRedesSociales from './adminRedesSociales'
 import AdminRubros from './adminRubros'
+import AdminProductos from './adminProductos'
 
 export {
   Header,
@@ -33,5 +34,6 @@ export {
   AdminCategorias,
   AdminPymes,
   AdminRedesSociales,
-  AdminRubros
+  AdminRubros,
+  AdminProductos
 }

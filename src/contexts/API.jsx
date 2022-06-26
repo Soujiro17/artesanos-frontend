@@ -153,11 +153,43 @@ const APIProvider = ({ children }) => {
 
   /* Productos */
 
+  const getProductos = async ({ page = 1, limit = 10, query = {} }) => {
+    const { data } = await axiosPrivate.get(`/producto/all?page=${page}&limit=${limit}${toQuery(query)}`)
+
+    return data
+  }
+
+  const getProductosByPymeId = async ({ _id }) => {
+    const { data } = await axiosPrivate.get(`/producto/pyme/${_id}`)
+
+    return data
+  }
+
+  const crearProducto = async ({ values }) => {
+    const { data } = await axiosPrivate.post('/producto', values)
+
+    return data
+  }
+
+  const actualizarProducto = async ({ values, _id }) => {
+    const { data } = await axiosPrivate.put(`/producto/${_id}`, values)
+
+    return data
+  }
+
+  const eliminarProducto = async ({ _id }) => {
+    const { data } = await axiosPrivate.delete(`/producto/${_id}`)
+
+    return data
+  }
+
   const getProductoById = async (_id) => {
     const { data } = await axiosPrivate.get(`/producto/${_id}`)
 
     return data
   }
+
+  /* FETCH ON LOAD */
 
   useQuery('rubros', () => getRubros(), {
     retry: 3
@@ -174,6 +206,7 @@ const APIProvider = ({ children }) => {
 
       // Categorías
       getCategorias,
+      getCategoriaById,
       crearCategoria,
       actualizarCategoria,
       eliminarCategoria,
@@ -204,9 +237,12 @@ const APIProvider = ({ children }) => {
       eliminarPyme,
 
       // Productos
-
+      getProductos,
       getProductoById,
-      getCategoriaById
+      getProductosByPymeId,
+      crearProducto,
+      actualizarProducto,
+      eliminarProducto
     }}
     >
       {children}

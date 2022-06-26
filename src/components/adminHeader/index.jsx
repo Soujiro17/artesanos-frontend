@@ -17,6 +17,7 @@ const AdminHeader = () => {
           <li className={styles.nav_list_item}><Link to='redes-sociales'>Redes sociales</Link></li>
           <li className={styles.nav_list_item}><Link to='rubros'>Rubros</Link></li>
           <li className={styles.nav_list_item}><Link to='artesanos'>Artesanos</Link></li>
+          <li className={styles.nav_list_item}><Link to='productos'>Productos</Link></li>
         </ul>
       </nav>
     </header>
