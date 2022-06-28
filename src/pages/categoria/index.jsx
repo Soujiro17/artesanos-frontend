@@ -4,8 +4,6 @@ import { Listar } from '../../components'
 import useApi from '../../hooks/useApi'
 
 const Categoria = () => {
-  const { id } = useParams()
-
   const { getProductosByCategoriaId } = useApi()
 
   const params = useParams()
@@ -15,10 +13,10 @@ const Categoria = () => {
 
   return (
     <Listar
-      endpoint={`producto/categoria/${id}`}
       title={title}
       path='/producto/'
       fetchFunction={() => getProductosByCategoriaId({ _id: params.id })}
+      name
     />
   )
 }

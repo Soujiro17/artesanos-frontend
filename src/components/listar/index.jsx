@@ -21,7 +21,7 @@ const initialDataState = {
   nextPage: 0
 }
 
-const Listar = ({ filtros: Filtros, title, path = '', fetchFunction }) => {
+const Listar = ({ filtros: Filtros, title, path = '', fetchFunction, name = false }) => {
   const [page, setPage] = useState(1)
 
   const [searchParams] = useSearchParams()
@@ -57,7 +57,7 @@ const Listar = ({ filtros: Filtros, title, path = '', fetchFunction }) => {
                 ? (
                     data?.docs.map((doc, i) => (
                       <Link
-                        to={path ? (path + (doc.url?.toLowerCase() || doc?._id)) : `${doc._id}?name=${doc.nombre}`}
+                        to={name ? `${path}${doc._id}?name=${doc.nombre}` : (path + (doc.url?.toLowerCase() || doc?._id))}
                         className={styles.item_link}
                         key={doc._id || i}
                       >

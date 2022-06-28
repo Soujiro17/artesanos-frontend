@@ -1,0 +1,48 @@
+@import '../../constants/colors.scss';
+
+.container{
+    min-height: 80vh;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    .presentacion{
+        height: 100%;
+        width: 80%;
+        .presentacion_left{
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 50%;
+            .presentacion_header_wrapper{
+                width: 100%;
+            }
+            .presentacion_title{
+                font-size: calc(4rem + .7vw);
+                margin: 0%;
+                span{
+                    text-shadow: 2px 0 0 $black, -2px 0 0 $black, 0 2px 0 $black, 0 -2px 0 $black, 1px 1px $black, -1px -1px 0 $black, 1px -1px 0 $black, -1px 1px 0 $black;
+                    color: $gray1;
+                }
+                color: $primary;
+            }
+            .presentacion_subtitle_wrapper{
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .presentacion_subtitle{
+                    font-size: calc(1rem + .1vw);
+                    text-align: justify;
+                    color: $accent;
+                }
+            }
+        }
+    }
+}
+
+.orange_line{
+    position: absolute;
+    bottom: 0%;
+}

@@ -1,0 +1,11 @@
+@import '../../constants/colors.scss';
+
+.line{
+    margin: 0%;
+    margin-bottom: 1rem;
+    height: 2px;
+    background-color: $accent;
+    border: none;
+    color: $accent;
+    width: 100%;
+}

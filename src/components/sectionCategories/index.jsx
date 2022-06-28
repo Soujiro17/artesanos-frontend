@@ -28,7 +28,7 @@ const SectionCategories = () => {
                   ? (
                       data?.docs?.map((categoria) => (
                         <Link
-                          to={`/categorias?id=${categoria.nombre.toLowerCase()}`}
+                          to={`/categoria/${categoria._id}?name=${categoria.nombre.toLowerCase()}`}
                           className={styles.categoria_wrapper}
                           key={categoria._id}
                         >

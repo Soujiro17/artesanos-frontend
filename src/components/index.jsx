@@ -16,6 +16,8 @@ import AdminPymes from './adminPymes'
 import AdminRedesSociales from './adminRedesSociales'
 import AdminRubros from './adminRubros'
 import AdminProductos from './adminProductos'
+import OrangeLine from './orangeLine'
+import Presentacion from './presentacion'
 
 export {
   Header,
@@ -35,5 +37,7 @@ export {
   AdminPymes,
   AdminRedesSociales,
   AdminRubros,
-  AdminProductos
+  AdminProductos,
+  OrangeLine,
+  Presentacion
 }
