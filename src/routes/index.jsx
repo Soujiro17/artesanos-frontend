@@ -11,6 +11,7 @@ const Categoria = React.lazy(() => import('../pages/categoria'))
 const Administracion = React.lazy(() => import('../pages/administracion'))
 const Login = React.lazy(() => import('../pages/login'))
 const AdminArtesanos = React.lazy(() => import('../components/adminArtesanos'))
+const Artesano = React.lazy(() => import('../pages/artesano'))
 
 const AppRouter = () => {
   return (
@@ -19,9 +20,10 @@ const AppRouter = () => {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/categorias' element={<Categorias />} />
-          <Route path='/categorias/:id' element={<Categoria />} />
+          <Route path='/categoria/:id' element={<Categoria />} />
           <Route path='/producto/:id' element={<Producto />} />
           <Route path='/artesanos' element={<Artesanos />} />
+          <Route path='/artesano/:id' element={<Artesano />} />
           <Route path='/login' element={<Login />} />
           <Route path='/administracion' element={<RequireAuth><Administracion /></RequireAuth>}>
             <Route path='categorias' element={<AdminCategorias />} />

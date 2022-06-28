@@ -105,6 +105,7 @@ const AdminProductos = () => {
             <label htmlFor='visible'>Visible</label>
           </div>
           <input defaultValue='' {...register('foto')} type='file' accept='image/*' />
+          {errors.categoriaId && <span>Categoría es requerida</span>}
           <select defaultValue='' {...register('categoriaId', { required: true })}>
             <option value=''>Seleccionar categoría</option>
             {
@@ -113,6 +114,7 @@ const AdminProductos = () => {
               ))
             }
           </select>
+          {errors.pymeId && <span>Pyme es requerida</span>}
           {
             isLoadingPymes
               ? <Spinner />

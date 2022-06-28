@@ -4,20 +4,21 @@ import { Listar } from '../../components'
 import useApi from '../../hooks/useApi'
 
 const Categoria = () => {
+  const { id } = useParams()
 
-    const { id } = useParams()
+  const { getProductosByCategoriaId } = useApi()
 
-    // const { getCategoriaById } = useApi()
+  const params = useParams()
 
-    const [searchParams] = useSearchParams()
-    const title = searchParams.get("name")
+  const [searchParams] = useSearchParams()
+  const title = searchParams.get('name')
 
   return (
-    <Listar 
-      endpoint={`producto/categoria/${id}`} 
-      title = {title} 
-      path = "/producto/"
-      fetchFunction={() => {}}
+    <Listar
+      endpoint={`producto/categoria/${id}`}
+      title={title}
+      path='/producto/'
+      fetchFunction={() => getProductosByCategoriaId({ _id: params.id })}
     />
   )
 }

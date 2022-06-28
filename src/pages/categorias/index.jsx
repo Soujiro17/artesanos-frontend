@@ -11,7 +11,7 @@ const Categorias = () => {
       filtros={FiltrosCategorias}
       title='Categorías'
       fetchFunction={getCategorias}
-      endpoint='categoria'
+      path='/categoria/'
     />
   )
 }

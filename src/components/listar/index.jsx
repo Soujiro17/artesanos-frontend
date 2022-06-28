@@ -57,7 +57,7 @@ const Listar = ({ filtros: Filtros, title, path = '', fetchFunction }) => {
                 ? (
                     data?.docs.map((doc, i) => (
                       <Link
-                        to={`${path}${doc.url?.toLowerCase() || `${doc._id}?name=${doc.nombre}`}`}
+                        to={path ? (path + (doc.url?.toLowerCase() || doc?._id)) : `${doc._id}?name=${doc.nombre}`}
                         className={styles.item_link}
                         key={doc._id || i}
                       >
