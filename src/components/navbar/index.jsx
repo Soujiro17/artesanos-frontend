@@ -1,27 +1,45 @@
-import React from 'react'
+import React, { useState } from 'react'
 import NavbarItem from '../navbarItem'
 import styles from './styles.module.scss'
 import useNavbarItems from '../../hooks/useNavbarItems'
 import { Link } from 'react-router-dom'
 import OrangeLine from '../orangeLine'
+import clsx from 'clsx'
 
 const Navbar = () => {
+  const [openMenu, setOpenMenu] = useState(false)
+
+  const handleOpenMenu = () => setOpenMenu(!openMenu)
+
   const navItems = useNavbarItems()
+
+  const navItemsList = clsx({
+    [styles.nav_list]: true,
+    [styles.active_navbar]: openMenu
+  })
 
   return (
     <nav className={styles.navbar}>
       <div className={styles.wrapper}>
-        <div className={styles.nav_wrapper}>
-          <div className={styles.logo}>
-            <Link to='/'>
-              <img src='/logo.png' alt='logo' className={styles.logo_img} />
-            </Link>
+        <div className={styles.nav_list_wrapper}>
+          <div className={styles.nav_wrapper}>
+            <div className={styles.logo}>
+              <Link to='/'>
+                <img src='/logo.png' alt='logo' className={styles.logo_img} />
+              </Link>
+            </div>
+            <ul className={navItemsList}>
+              {navItems.map((item, i) => {
+                if (!item) return null
+                return <NavbarItem {...item} key={i} />
+              })}
+            </ul>
           </div>
-          <ul className={styles.nav_list}>
-            {navItems.map((item, i) => <NavbarItem {...item} key={i} />)}
-          </ul>
+          <div className={styles.list_icon} onClick={handleOpenMenu}>
+            <img src='/icons/list.svg' className={styles.list_svg} />
+          </div>
         </div>
-        <OrangeLine />
+        <OrangeLine className={styles.orange_line} />
       </div>
     </nav>
   )

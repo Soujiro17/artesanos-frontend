@@ -4,18 +4,21 @@ import { SectionHeader } from '..'
 import styles from './styles.module.scss'
 
 const Section = ({ name, children, className, id }) => {
-
   const sectionClassname = clsx({
     [styles.section]: true,
     [className]: className
   })
 
   return (
-    <section className={sectionClassname} id = {id}>
-        <SectionHeader name={name}/>
+    <section className={sectionClassname} id={id} style={{ marginTop: name ? '0' : '3rem' }}>
+      <div className={styles.section_wrapper}>
+        {
+         name && <SectionHeader name={name} />
+        }
         <div className={styles.section_body}>
-            {children}
+          {children}
         </div>
+      </div>
     </section>
   )
 }

@@ -16,7 +16,6 @@ const Presentacion = () => {
           </div>
           <OrangeLine className={styles.orange_line} />
         </div>
-        <div className={styles.presentacion_right} />
       </div>
     </div>
   )

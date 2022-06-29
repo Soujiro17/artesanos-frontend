@@ -1,0 +1,15 @@
+.footer_logo{
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .orange_line{
+        justify-self: flex-start;
+    }
+    .logo{
+        object-fit: contain;
+        height: 100px;
+        width: 150px;
+    }
+}

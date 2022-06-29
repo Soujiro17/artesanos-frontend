@@ -1,0 +1,25 @@
+@import '../../constants/colors.scss';
+
+.circle{
+    display: inline-block;
+    margin: 5px;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 50%;
+    background-color: $primary;
+    border: none;
+}
+
+.stack_circles{
+    position: absolute;
+    z-index: -1;
+    opacity: .15;
+}
+
+.left{
+    left: 3rem;
+}
+
+.right{
+    right: 3rem;
+}

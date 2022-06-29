@@ -49,3 +49,13 @@ code {
 .text-align-right{
   text-align: right;
 }
+
+.btn-effect{
+  transition: .2s all;
+  &:hover{
+      transform: scale(1.05);
+  }
+  &:active{
+      transform: scale(1);
+  }
+}

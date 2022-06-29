@@ -1,7 +1,6 @@
 import React from 'react'
 import styles from './styles.module.scss'
-import { Header, Carousel, SectionCategories, SectionMap, HeaderLogo, Presentacion } from '../../components'
-import { imgs } from '../../data/imgs'
+import { Header, SectionCategories, SectionMap, Presentacion, FooterLogo } from '../../components'
 
 const Home = () => {
   return (
@@ -10,10 +9,11 @@ const Home = () => {
       <main className={styles.main}>
         {/* <Carousel imgs={imgs} /> */}
         <Presentacion />
+        <div className={styles.circle} />
         <SectionCategories />
         <SectionMap />
+        <FooterLogo lineWidth='80%' />
       </main>
-      <footer><HeaderLogo borderTop left /></footer>
     </>
   )
 }

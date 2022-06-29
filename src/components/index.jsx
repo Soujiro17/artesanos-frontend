@@ -18,6 +18,8 @@ import AdminRubros from './adminRubros'
 import AdminProductos from './adminProductos'
 import OrangeLine from './orangeLine'
 import Presentacion from './presentacion'
+import FooterLogo from './footerLogo'
+import StackCircles from './stackCircles'
 
 export {
   Header,
@@ -39,5 +41,7 @@ export {
   AdminRubros,
   AdminProductos,
   OrangeLine,
-  Presentacion
+  Presentacion,
+  FooterLogo,
+  StackCircles
 }

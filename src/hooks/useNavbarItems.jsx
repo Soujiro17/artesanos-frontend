@@ -37,7 +37,7 @@ const useNavbarItems = () => {
             url: '/',
             onClick: () => auth?.cerrarSesion()
           }
-        : {}
+        : null
     ]
   )
 }
