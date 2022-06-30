@@ -54,8 +54,8 @@ const SectionCategories = () => {
           <div className={styles.footer_cont}>
             <p className={styles.search}>Buscar</p>
             <div className={styles.search_group}>
-              <input placeholder='Categoría' className={styles.search_input} />
-              <button className={`${styles.btn_buscar} btn-effect`}>Buscar</button>
+              <input placeholder='Categoría' className={`${styles.search_input} input`} />
+              <button className={`${styles.btn_buscar} btn btn-effect`}>Buscar</button>
             </div>
           </div>
         </footer>

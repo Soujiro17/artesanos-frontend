@@ -1,16 +1,16 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { AdminHeader, Header } from '../../components'
+import { AdminHeader, Layout } from '../../components'
+import styles from './styles.module.scss'
 
 const Administracion = () => {
   return (
-    <>
-      <Header />
-      <main>
+    <Layout>
+      <main className={styles.administracion}>
         <AdminHeader />
         <Outlet />
       </main>
-    </>
+    </Layout>
   )
 }
 

@@ -1,20 +1,17 @@
 import React from 'react'
 import styles from './styles.module.scss'
-import { Header, SectionCategories, SectionMap, Presentacion, FooterLogo } from '../../components'
+import { SectionCategories, SectionMap, Presentacion, Layout } from '../../components'
 
 const Home = () => {
   return (
-    <>
-      <Header /> {/* 17vh */}
+    <Layout>
       <main className={styles.main}>
-        {/* <Carousel imgs={imgs} /> */}
         <Presentacion />
         <div className={styles.circle} />
         <SectionCategories />
         <SectionMap />
-        <FooterLogo lineWidth='80%' />
       </main>
-    </>
+    </Layout>
   )
 }
 

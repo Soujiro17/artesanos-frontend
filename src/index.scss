@@ -19,27 +19,15 @@ code {
   box-sizing: border-box;
 }
 
-.input{
-  height: 2.1rem;
-  border-radius: .4rem;
-  border: 1px solid $black;
-  padding-left: .5rem;
-}
-
 .btn{
-  height: 2.1rem;
-  border-radius: .4rem;
+  height: 2.5rem;
+  border-radius: 5rem;
+  min-width: 100px;
+  border: none;
+  outline: none;
   cursor: pointer;
-  border: 1px solid $black;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  letter-spacing: .5px;
-  text-transform: capitalize;
-
-  transition: .2s all;
-  &:active{
-    transform: scale(0.9);
-  }
+  letter-spacing: 5px;
+  text-transform: uppercase;
 }
 
 .error{
@@ -58,4 +46,46 @@ code {
   &:active{
       transform: scale(1);
   }
+}
+
+.bb-gc{
+  text-shadow: 1px 0 0 $black, -2px 0 0 $black, 0 2px 0 $black, 0 -2px 0 $black, 1px 1px $black, -1px -1px 0 $black, 1px -1px 0 $black, -1px 1px 0 $black;
+  color: $gray1;
+}
+
+.bb-gc-1px{
+  text-shadow: 1px 0 0 $black, -1px 0 0 $black, 0 1px 0 $black, 0 -1px 0 $black, 1px 1px $black, -1px -1px 0 $black, 1px -1px 0 $black, -1px 1px 0 $black;
+  color: $gray1;
+}
+
+.input{
+  border-radius: 5rem;
+  border: 1px solid $black;
+  height: 2.5rem;
+  padding-left: 1rem;
+  padding-right: .5rem;
+  outline: none;
+  width: 100%;
+}
+
+.primary{
+  background-color: $primary;
+  color: $white;
+}
+
+.accent{
+  background-color: $accent;
+  color: $white;
+}
+
+.color-p{
+  color: $primary;
+}
+
+.color-acc{
+  color: $accent;
+}
+
+.input-error{
+  border: 1.5px solid $accent;
 }

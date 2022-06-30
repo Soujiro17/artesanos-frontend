@@ -20,6 +20,7 @@ import OrangeLine from './orangeLine'
 import Presentacion from './presentacion'
 import FooterLogo from './footerLogo'
 import StackCircles from './stackCircles'
+import Layout from './layout'
 
 export {
   Header,
@@ -43,5 +44,6 @@ export {
   OrangeLine,
   Presentacion,
   FooterLogo,
-  StackCircles
+  StackCircles,
+  Layout
 }

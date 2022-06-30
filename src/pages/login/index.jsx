@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 
 import { useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { Spinner } from '../../components'
+import { OrangeLine, Spinner } from '../../components'
 import useAuth from '../../hooks/useAuth'
 import styles from './styles.module.scss'
 
@@ -40,29 +40,51 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-      <form className={styles.login_form} onSubmit={handleSubmit(onSubmit)}>
-        {loginMutation?.isLoading && <Spinner fullScreen />}
-        {errors.rut && <span>Rut es requerido</span>}
-        <input
-          defaultValue=''
-          type='email'
-          placeholder='RUT. Ej: aaa_bb@gmail.com'
-          className='input'
-          {...register('email', { required: true })}
-        />
-        {errors.password && <span>Contraseña es requerida</span>}
-        <input
-          defaultValue=''
-          type='password'
-          placeholder='Contraseña'
-          className='input'
-          {...register('password', { required: true })}
-        />
-        <button type='submit' className='btn'>
-          Iniciar sesión
-        </button>
-        <p>Olvidaste tu contraseña?</p>
-      </form>
+      {loginMutation?.isLoading && <Spinner fullScreen />}
+      <div className={styles.wrapper}>
+        <div className={styles.login_header}>
+          <p className={`color-p ${styles.text}`}>Bienvenido</p>
+          <p className={`bb-gc-1px ${styles.text}`}>Bienvenido</p>
+          <OrangeLine width='80%' />
+        </div>
+        <form className={styles.login_form} onSubmit={handleSubmit(onSubmit)}>
+          <div className={styles.logo}>
+            <Link to='/'>
+              <img src='/logo.png' className={styles.logo_img} />
+            </Link>
+          </div>
+          <div className={styles.form_group}>
+            <div className={styles.group}>
+              <label className={styles.label} htmlFor='email'>Email</label>
+              <input
+                defaultValue=''
+                id='email'
+                type='email'
+                placeholder='Email. Ej: aaa_bb@gmail.com'
+                className={`${styles.input} input ${errors.email ? 'input-error' : ''}`}
+                {...register('email', { required: true })}
+              />
+              {/* {errors.email && <span>Email es requerido</span>} */}
+            </div>
+            <div className={styles.group}>
+              <label className={styles.label} htmlFor='password'>Contraseña</label>
+              <input
+                defaultValue=''
+                id='password'
+                type='password'
+                placeholder='Contraseña'
+                className={`${styles.input} input ${errors.password ? 'input-error' : ''}`}
+                {...register('password', { required: true })}
+              />
+              {/* {errors.password && <span>Contraseña es requerida</span>} */}
+            </div>
+            <button type='submit' className='btn accent'>
+              ENTRAR
+            </button>
+          </div>
+          {/* <p>Olvidaste tu contraseña?</p> */}
+        </form>
+      </div>
     </div>
   )
 }

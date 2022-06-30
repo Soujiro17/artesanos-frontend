@@ -3,7 +3,9 @@ import styles from './styles.module.scss'
 import ReactDOM from 'react-dom'
 
 const Spinner = ({ fullScreen = false }) => {
-  const spinner = <div className={styles.spinner} />
+  const spinner = (
+    <div className={styles.lds_ring}><div /><div /><div /><div /></div>
+  )
 
   if (!fullScreen) return spinner
 

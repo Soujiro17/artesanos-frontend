@@ -24,10 +24,6 @@
             .presentacion_title{
                 font-size: calc(2rem + 3vw);
                 margin: 0%;
-                span{
-                    text-shadow: 2px 0 0 $black, -2px 0 0 $black, 0 2px 0 $black, 0 -2px 0 $black, 1px 1px $black, -1px -1px 0 $black, 1px -1px 0 $black, -1px 1px 0 $black;
-                    color: $gray1;
-                }
                 color: $primary;
             }
             .presentacion_subtitle_wrapper{
