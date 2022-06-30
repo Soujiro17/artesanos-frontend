@@ -21,7 +21,7 @@ const useNavbarItems = () => {
       },
       {
         name: 'Geolocalizar',
-        url: '#geolocalizar'
+        url: '/geolocalizar'
       },
       {
         name: 'Acerca de',

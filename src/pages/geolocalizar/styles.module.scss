@@ -1,0 +1,15 @@
+.geolocalizar{
+    .geolocalizar_title{
+        font-size: calc(2rem + .4vw);
+        font-weight: bold;
+    }
+
+    .geolocalizar_subtitle{
+        font-size: calc(1rem + .4vw);
+    }
+
+    .circulos{
+        display: flex;
+        justify-content: space-between;
+    }
+}
