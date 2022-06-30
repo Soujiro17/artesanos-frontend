@@ -40,6 +40,8 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
+      <img className={styles.circulo_azul} src='/circulo_azul.png' />
+      <img className={styles.circulo_rayas} src='/circulo_rayas.png' />
       {loginMutation?.isLoading && <Spinner fullScreen />}
       <div className={styles.wrapper}>
         <div className={styles.login_header}>

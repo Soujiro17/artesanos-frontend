@@ -3,8 +3,27 @@
 .container{
     height: 100vh;
     position: relative;
+    overflow: hidden;
+
+    .circulo_azul, .circulo_rayas{
+        position: absolute;
+        height: 350px;
+        width: 350px;
+        inset: 0;
+        margin: auto;
+        z-index: 1;
+    }
+
+    .circulo_azul{
+        transform: translateY(-7rem) translateX(20vw);
+    }
+    
+    .circulo_rayas{
+        transform: translateY(10rem) translateX(-20vw);
+    }
 
     .wrapper{
+        z-index: 10;
         position: absolute;
         inset: 0;
         margin: auto;
@@ -15,7 +34,7 @@
         .login_header{
             width: 30vw;
             text-align: center;
-            min-width: 300px;
+            min-width: 350px;
 
             display: flex;
             align-items: center;
@@ -32,7 +51,7 @@
     
         .login_form{
             height: 35vh;
-            min-width: 300px;
+            min-width: 350px;
             width: 30vw;
             min-height: 400px;
             display: flex;
