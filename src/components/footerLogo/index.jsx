@@ -3,15 +3,15 @@ import OrangeLine from '../orangeLine'
 import Section from '../section'
 import styles from './styles.module.scss'
 
-const index = ({ lineWidth }) => {
+const FooterLogo = ({ lineWidth = '80%' }) => {
   return (
     <Section>
       <div className={styles.footer_logo}>
-        <OrangeLine style={{ width: lineWidth }} className={styles.orange_line} />
+        <OrangeLine width={lineWidth} className={styles.orange_line} />
         <img src='/logo.png' className={styles.logo} />
       </div>
     </Section>
   )
 }
 
-export default index
+export default FooterLogo
