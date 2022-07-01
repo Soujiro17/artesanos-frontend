@@ -1,7 +1,8 @@
 @import '../../constants/colors.scss';
 
 .container{
-    height: 100vh;
+    min-height: 100vh;
+    height: fit-content;
     position: relative;
     overflow: hidden;
 
@@ -15,7 +16,7 @@
     }
 
     .circulo_azul{
-        transform: translateY(-7rem) translateX(20vw);
+        transform: translateY(-3rem) translateX(20vw);
     }
     
     .circulo_rayas{
@@ -40,7 +41,7 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            margin-bottom: 5rem;
+            margin-bottom: 10%;
             .text{
                 font-weight: 500;
                 font-size: calc(3rem + .4vw);
@@ -91,4 +92,14 @@
         }
     }
 
+}
+
+@media only screen and (max-height: 600px) {
+    .container{
+        .wrapper{
+            .login_header{
+                display: none;
+            }
+        }
+    }
 }
