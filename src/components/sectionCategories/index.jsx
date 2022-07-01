@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-closing-tag-location */
-import React from 'react'
+import React, { useState } from 'react'
 import Section from '../section'
 import styles from './styles.module.scss'
 import { Link } from 'react-router-dom'
@@ -11,6 +11,10 @@ import StackCircles from '../stackCircles'
 
 const SectionCategories = () => {
   const { getCategorias } = useApi()
+
+  const [nombre, setNombre] = useState('')
+
+  const handleNombre = (e) => setNombre(e.target.value)
 
   const { data, isLoading, isError } = useQuery('categorias', () => getCategorias({ query: { pagination: false } }))
 
@@ -30,7 +34,7 @@ const SectionCategories = () => {
                   : <>
                     {data?.docs?.length > 0
                       ? (
-                          data?.docs?.map((categoria) => (
+                          data?.docs?.filter(categoria => categoria.nombre.toLowerCase().includes(nombre.toLowerCase())).map((categoria) => (
                             <Link
                               to={`/categoria/${categoria._id}?name=${categoria.nombre.toLowerCase()}`}
                               className={styles.categoria_wrapper}
@@ -54,7 +58,7 @@ const SectionCategories = () => {
           <div className={styles.footer_cont}>
             <p className={styles.search}>Buscar</p>
             <div className={styles.search_group}>
-              <input placeholder='Categoría' className={`${styles.search_input} input`} />
+              <input placeholder='Categoría' className={`${styles.search_input} input`} onChange={handleNombre} />
               <button className={`${styles.btn_buscar} btn btn-effect`}>Buscar</button>
             </div>
           </div>
