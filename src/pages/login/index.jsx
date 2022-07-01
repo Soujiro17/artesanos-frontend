@@ -62,7 +62,7 @@ const Login = () => {
                 defaultValue=''
                 id='email'
                 type='email'
-                placeholder='Email. Ej: aaa_bb@gmail.com'
+                placeholder='Email'
                 className={`${styles.input} input ${errors.email ? 'input-error' : ''}`}
                 {...register('email', { required: true })}
               />

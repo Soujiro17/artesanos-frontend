@@ -24,7 +24,7 @@ const MapComponent = ({ points, geolocation = false }) => {
         () => toast.error('Error obteniendo la ubicación')
       )
     }
-  }, [navigator, actualLat, actualLon, actualAlt])
+  }, [navigator, actualLat, actualLon, actualAlt, navigator.geolocation])
 
   if (geolocation && !actualAlt && !actualLon && !actualAlt) return <Spinner />
 
