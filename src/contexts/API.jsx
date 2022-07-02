@@ -2,6 +2,7 @@
 import React, { createContext } from 'react'
 import { useQuery } from 'react-query'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
+import { axiosPublic } from '../services/axios'
 import { toQuery } from '../utilities/toQuery'
 
 export const ApiContext = createContext({})
@@ -12,19 +13,19 @@ const APIProvider = ({ children }) => {
   /* Categorías */
 
   const getCategorias = async ({ page = 1, limit = 10, query = {} }) => {
-    const { data } = await axiosPrivate.get(`/categoria?page=${page}&limit=${limit}${toQuery(query)}`)
+    const { data } = await axiosPublic.get(`/categoria?page=${page}&limit=${limit}${toQuery(query)}`)
+
+    return data
+  }
+
+  const getCategoriaById = async (_id) => {
+    const { data } = await axiosPublic.get(`/categoria/${_id}`)
 
     return data
   }
 
   const crearCategoria = async ({ values }) => {
     const { data } = await axiosPrivate.post('/categoria', values)
-
-    return data
-  }
-
-  const getCategoriaById = async (_id) => {
-    const { data } = await axiosPrivate.get(`/categoria/${_id}`)
 
     return data
   }
@@ -44,7 +45,7 @@ const APIProvider = ({ children }) => {
   /* Redes sociales */
 
   const getRedesSociales = async () => {
-    const { data } = await axiosPrivate.get('/red-social')
+    const { data } = await axiosPublic.get('/red-social')
 
     return data
   }
@@ -70,7 +71,7 @@ const APIProvider = ({ children }) => {
   /* Rubros */
 
   const getRubros = async () => {
-    const { data } = await axiosPrivate.get('/rubro')
+    const { data } = await axiosPublic.get('/rubro')
 
     return data
   }
@@ -96,7 +97,7 @@ const APIProvider = ({ children }) => {
   /* Artesanos */
 
   const getArtesanos = async ({ page = 1, limit = 10, query = {} }) => {
-    const { data } = await axiosPrivate.get(`/artesano?page=${page}&limit=${limit}${toQuery(query)}`)
+    const { data } = await axiosPublic.get(`/artesano?page=${page}&limit=${limit}${toQuery(query)}`)
 
     return data
   }
@@ -122,13 +123,19 @@ const APIProvider = ({ children }) => {
   /* Pymes */
 
   const getPymes = async ({ page = 1, limit = 10, query = {} }) => {
-    const { data } = await axiosPrivate.get(`/pyme/all?page=${page}&limit=${limit}${toQuery(query)}`)
+    const { data } = await axiosPublic.get(`/pyme/all?page=${page}&limit=${limit}${toQuery(query)}`)
 
     return data
   }
 
   const getArtesanoPymes = async () => {
     const { data } = await axiosPrivate.get('/pyme')
+
+    return data
+  }
+
+  const getCoordenadasPymes = async () => {
+    const { data } = await axiosPublic.get('/pyme/all/coordenadas')
 
     return data
   }
@@ -154,19 +161,19 @@ const APIProvider = ({ children }) => {
   /* Productos */
 
   const getProductos = async ({ page = 1, limit = 10, query = {} }) => {
-    const { data } = await axiosPrivate.get(`/producto/all?page=${page}&limit=${limit}${toQuery(query)}`)
+    const { data } = await axiosPublic.get(`/producto/all?page=${page}&limit=${limit}${toQuery(query)}`)
 
     return data
   }
 
   const getProductosByCategoriaId = async ({ page = 1, limit = 6, query = {}, _id }) => {
-    const { data } = await axiosPrivate.get(`/producto/categoria/${_id}?page=${page}&limit=${limit}${toQuery(query)}`)
+    const { data } = await axiosPublic.get(`/producto/categoria/${_id}?page=${page}&limit=${limit}${toQuery(query)}`)
 
     return data
   }
 
   const getProductosByPymeId = async ({ _id }) => {
-    const { data } = await axiosPrivate.get(`/producto/pyme/${_id}`)
+    const { data } = await axiosPublic.get(`/producto/pyme/${_id}`)
 
     return data
   }
@@ -200,6 +207,7 @@ const APIProvider = ({ children }) => {
   useQuery('rubros', () => getRubros(), {
     retry: 3
   })
+
   useQuery('categorias', () => getCategorias({ query: { pagination: false } }), {
     retry: 3
   })
@@ -238,6 +246,7 @@ const APIProvider = ({ children }) => {
       // Pymes
       getPymes,
       getArtesanoPymes,
+      getCoordenadasPymes,
       crearPyme,
       actualizarPyme,
       eliminarPyme,
