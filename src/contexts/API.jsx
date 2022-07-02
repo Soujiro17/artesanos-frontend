@@ -102,6 +102,12 @@ const APIProvider = ({ children }) => {
     return data
   }
 
+  const getArtesanoById = async ({ _id }) => {
+    const { data } = await axiosPublic.get(`/artesano/${_id}`)
+
+    return data
+  }
+
   const crearArtesano = async ({ values }) => {
     const { data } = await axiosPrivate.post('/artesano', values)
 
@@ -128,8 +134,8 @@ const APIProvider = ({ children }) => {
     return data
   }
 
-  const getArtesanoPymes = async () => {
-    const { data } = await axiosPrivate.get('/pyme')
+  const getArtesanoPymes = async ({ _id }) => {
+    const { data } = await axiosPrivate.get(`/pyme/artesano/${_id}`)
 
     return data
   }
@@ -239,6 +245,7 @@ const APIProvider = ({ children }) => {
 
       // Artesanos
       getArtesanos,
+      getArtesanoById,
       crearArtesano,
       actualizarArtesano,
       eliminarArtesano,

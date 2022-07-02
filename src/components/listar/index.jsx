@@ -41,6 +41,8 @@ const Listar = ({ filtros: Filtros, title, path = '', fetchFunction, name = fals
     }
   }, [data, page, queryClient])
 
+  console.log(data)
+
   return (
     <>
       {title && <ListarHeader title={subTitle || title} />}
@@ -66,7 +68,7 @@ const Listar = ({ filtros: Filtros, title, path = '', fetchFunction, name = fals
                           className={styles.item_img}
                           alt=''
                         />
-                        <div className={styles.item_name}>{doc.nombre}</div>
+                        <div className={styles.item_name}>{doc.nombre || `${doc.nombres} ${doc.apellidos}`}</div>
                       </Link>
                     ))
                   )

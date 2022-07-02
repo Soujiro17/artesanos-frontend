@@ -1,0 +1,81 @@
+@import '../../constants/colors.scss';
+
+.foto{
+    width: calc(2.6rem + 13.5vw);
+    position: relative;
+    z-index: 1;
+}
+
+.artesano{
+    img{
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .artesano_nombres{
+        display: flex;
+        gap: 10px;
+        .artesano_nombre{
+            font-weight: bolder;
+            font-size: calc(2.5rem + .4vw);
+        }
+    }
+
+    .artesano_datos{
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        left: 0%;
+        right: 0%;
+        margin: auto;
+        width: fit-content;
+        .artesanos_fotos{
+            display: flex;
+            gap: 1vw;
+            .artesano_foto{
+                flex-grow: 2;
+
+                .artesanofoto{
+                    width: calc(5.3rem + 27.8vw);
+                    object-fit: cover;
+                }
+            }
+        }
+        .artesano_productos{
+            display: flex;
+            gap: 1vw;
+
+        }
+    }
+}
+
+.producto_foto_group{
+    position: relative;
+    transition: .2s all;
+
+    .producto_nombre{
+        z-index: 100000;
+        color: $white;
+        bottom: 4px;
+        height: 2.5rem;
+        width: 100%;
+        text-align: center;
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+        margin: 0%;
+        background-color: $gray2;
+        position: absolute;
+        backdrop-filter: blur(5px);
+    }
+    &:hover{
+        .foto{
+            opacity: .5;
+            cursor: pointer;
+            transform: scale(1.01);
+        }
+    }
+
+    &:active{
+        transform: scale(0.98);
+    }
+}
