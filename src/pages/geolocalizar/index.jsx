@@ -14,7 +14,7 @@ const Geolocalizar = () => {
             <p className={`${styles.geolocalizar_subtitle} color-acc`}>Ubica a los emprendedores más cercanos a ti</p>
             <StackCircles rows='4' columns='3' style={style} />
           </div>
-          <Map geolocation />
+          <Map geolocation position />
           <StackCircles rows='4' columns='3' style={style} />
         </div>
       </Section>

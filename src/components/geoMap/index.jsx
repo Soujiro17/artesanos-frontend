@@ -41,8 +41,6 @@ const MapComponent = ({ points = false, geolocation = false }) => {
 
   const center = [actualLat, actualLon, actualAlt]
 
-  console.log(pymes)
-
   return (
     <div className={styles.map_wrapper}>
       <MapContainer
