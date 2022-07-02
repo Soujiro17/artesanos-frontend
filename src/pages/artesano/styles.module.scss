@@ -29,22 +29,49 @@
         right: 0%;
         margin: auto;
         width: fit-content;
-        .artesanos_fotos{
+        .artesano_datos_cont{
             display: flex;
-            gap: 1vw;
-            .artesano_foto{
-                flex-grow: 2;
-
-                .artesanofoto{
-                    width: calc(5.3rem + 27.8vw);
-                    object-fit: cover;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            .artesanos_fotos{
+                display: flex;
+                gap: 1vw;
+                .artesano_foto{
+                    flex-grow: 2;
+    
+                    .artesanofoto{
+                        width: calc(5.3rem + 27.8vw);
+                        object-fit: cover;
+                    }
                 }
             }
+            .artesano_productos{
+                .artesano_productos_cont{
+                    display: flex;
+                    gap: 1vw;
+                }
+    
+                .anchor_btn{
+                    display: block;
+                    margin-top: 4%;
+                    margin-bottom: 4%;
+                }
+    
+            }
         }
-        .artesano_productos{
-            display: flex;
-            gap: 1vw;
 
+        .sobre_emprendimiento{
+            .emprendimiento_title{
+                color: $primary;
+                text-transform: uppercase;
+                font-weight: bold;
+                letter-spacing: 5px;
+            }
+            .emprendimiento_text{
+                color: $gray4;
+                text-align: justify;
+            }
         }
     }
 }
@@ -66,6 +93,12 @@
         background-color: $gray2;
         position: absolute;
         backdrop-filter: blur(5px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+        white-space: nowrap;
+        padding-left: .5rem;
+        padding-right: .5rem;
     }
     &:hover{
         .foto{
@@ -77,5 +110,20 @@
 
     &:active{
         transform: scale(0.98);
+    }
+}
+
+.text{
+    font-size: calc(1.2rem + .4vw);
+    margin: 0%;
+    font-weight: bolder;
+    text-transform: uppercase;
+}
+
+@media only screen and (max-width: 700px) {
+    .producto_foto_group{
+        .producto_nombre{
+            height: 2rem;
+        }
     }
 }

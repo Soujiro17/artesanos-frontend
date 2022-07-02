@@ -28,6 +28,8 @@ code {
   cursor: pointer;
   letter-spacing: 5px;
   text-transform: uppercase;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .error{
@@ -88,4 +90,9 @@ code {
 
 .input-error{
   border: 1.5px solid $accent;
+}
+
+.bg-cyan{
+  background-color: $cyan;
+  color: $white;
 }
