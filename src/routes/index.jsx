@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
-import { AdminCategorias, AdminProductos, AdminPymes, AdminRedesSociales, AdminRubros, Spinner } from '../components'
+import { AdminCategorias, AdminProductos, AdminPymes, AdminRedesSociales, AdminRubros, Layout, Spinner } from '../components'
 import useAuth from '../hooks/useAuth'
 import Home from '../pages/home'
 
@@ -35,7 +35,7 @@ const AppRouter = () => {
             <Route path='artesanos' element={<AdminArtesanos />} />
             <Route path='productos' element={<AdminProductos />} />
           </Route>
-          <Route path='*' element={<div>Not found</div>} />
+          <Route path='*' element={<Layout><p style={{ textAlign: 'center' }}>Página no encontrada</p></Layout>} />
         </Routes>
       </Suspense>
     </BrowserRouter>

@@ -25,6 +25,14 @@ const MapComponent = ({ points = false, geolocation = false, data }) => {
     pymes = useQuery('pymes_coordenadas', () => api.getCoordenadasPymes()).data
   }
 
+  const createIcon = (value) => {
+    return L.icon({
+      iconUrl: value?.picture_url,
+      iconSize: [35, 35],
+      className: styles.icon_classname
+    })
+  }
+
   useEffect(() => {
     if (geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -67,34 +75,24 @@ const MapComponent = ({ points = false, geolocation = false, data }) => {
           )
 }
         {
-          data
-            ? data.map(points => {
-              const icon = L.icon({
-                iconUrl: points.picture_url,
-                iconSize: [35, 35],
-                className: styles.icon_classname
-              })
+        (data || pymes)?.map(pyme => {
+          const icon = createIcon(pyme)
 
-              return (
-                <Marker icon={icon} position={points.direccion.coordenadas.coordinates} key={pyme._id}>
-                  <Popup>{points.nombre}</Popup>
-                </Marker>
-              )
-            })
-            : pymes?.map(pyme => {
-              const icon = L.icon({
-                iconUrl: pyme.picture_url,
-                iconSize: [35, 35],
-                className: styles.icon_classname
+          return (
+            <Marker icon={icon} position={pyme.direccion.coordenadas.coordinates} key={pyme._id}>
+              <Popup>{pyme.nombre}</Popup>
+            </Marker>
+          )
+        })
+            // : pymes?.map(pyme => {
+            //   const icon = createIcon(pyme)
 
-              })
-
-              return (
-                <Marker icon={icon} position={pyme.direccion.coordenadas.coordinates} key={pyme._id}>
-                  <Popup>{pyme.nombre}</Popup>
-                </Marker>
-              )
-            })
+            //   return (
+            //     <Marker icon={icon} position={pyme.direccion.coordenadas.coordinates} key={pyme._id}>
+            //       <Popup>{pyme.nombre}</Popup>
+            //     </Marker>
+            //   )
+            // })
         }
       </MapContainer>
     </div>

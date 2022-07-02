@@ -25,7 +25,7 @@ const ArtesanoMapa = ({ pymes }) => {
       <button className='bg-cyan btn-effect btn' onClick={handleShowMap}>Ver mapa</button>
       {showMap && (
         <div className={styles.mapa}>
-          <Map />
+          <Map data={pymes} />
         </div>
       )}
     </div>
@@ -56,8 +56,8 @@ const Artesano = () => {
                   <div className={styles.artesano_pymes}>
                     <p className={`${styles.text} color-p`}>Pymes</p>
                     {
-                    pymes?.slice(0, 2).map(pyme => <FotoConAnchorYText value={pyme} key={pyme._id} />)
-                  }
+                      pymes?.slice(0, 2).map(pyme => <FotoConAnchorYText value={pyme} key={pyme._id} />)
+                    }
                   </div>
                   <div className={styles.artesano_foto}>
                     <p className={`${styles.text} color-p`}>Artesano</p>
@@ -83,7 +83,7 @@ const Artesano = () => {
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </p>
               </div>
-              <ArtesanoMapa />
+              <ArtesanoMapa pymes={pymes} />
             </div>
           </div>
         </Section>
