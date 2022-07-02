@@ -23,17 +23,15 @@ const rootContainer = document.getElementById('root')
 const render = ReactDOM.createRoot(rootContainer)
 
 render.render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <APIProvider>
-          <AppRouter />
-          <ToastContainer autoClose={3000} />
-          {
+  <QueryClientProvider client={queryClient}>
+    <AuthProvider>
+      <APIProvider>
+        <AppRouter />
+        <ToastContainer autoClose={3000} />
+        {
             import.meta.env.DEV && <ReactQueryDevtools />
           }
-        </APIProvider>
-      </AuthProvider>
-    </QueryClientProvider>
-  </React.StrictMode>
+      </APIProvider>
+    </AuthProvider>
+  </QueryClientProvider>
 )
