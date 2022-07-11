@@ -14,6 +14,8 @@ const Producto = () => {
 
   const { data: producto, isLoading } = useQuery(['producto', id], () => getProductoById({ _id: id }))
 
+  console.log(producto)
+
   return (
     <Layout>
       {isLoading && <Spinner fullScreen />}

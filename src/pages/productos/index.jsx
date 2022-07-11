@@ -8,12 +8,10 @@ const Productos = () => {
 
   const { getProductosByPymeId } = useApi()
 
-  console.log(id)
-
   if (!id) return <Navigate to='/' />
 
   return (
-    <Listar fetchFunction={getProductosByPymeId} title='Productos' path='producto' _id={id} />
+    <Listar fetchFunction={getProductosByPymeId} title='Productos' path='/producto/' _id={id} />
   )
 }
 
