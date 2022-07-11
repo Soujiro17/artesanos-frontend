@@ -73,7 +73,7 @@ const Artesano = () => {
                       <FotoConAnchorYText value={{ picture_url: artesano?.picture_url, nombre: 'Text' }} />
                       <FotoConAnchorYText value={{ picture_url: artesano?.picture_url, nombre: 'Text' }} />
                     </div>
-                    <Link to='#' className={styles.anchor_btn}>
+                    <Link to={`/productos/${pymes[0]._id}`} className={styles.anchor_btn}>
                       <button className='bg-cyan btn-effect btn'>Más productos</button>
                     </Link>
                   </div>

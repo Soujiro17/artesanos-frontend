@@ -23,7 +23,7 @@ const initialDataState = {
   nextPage: 0
 }
 
-const Listar = ({ filtros: Filtros, title, path = '', fetchFunction, name = false, artesano = false }) => {
+const Listar = ({ filtros: Filtros, title, path = '', fetchFunction, name = false, artesano = false, _id }) => {
   const [page, setPage] = useState(1)
 
   const [searchParams] = useSearchParams()
@@ -31,14 +31,14 @@ const Listar = ({ filtros: Filtros, title, path = '', fetchFunction, name = fals
 
   const queryClient = useQueryClient()
 
-  const { data, isLoading } = useQuery([title?.toLowerCase(), page], () => fetchFunction({ page }), {
+  const { data, isLoading } = useQuery([title?.toLowerCase(), page], () => fetchFunction({ page, _id }), {
     initialDataState
   })
 
   useEffect(() => {
     if (data?.hasNextPage) {
-      queryClient.prefetchQuery([title?.toLowerCase(), page], () =>
-        fetchFunction({ page })
+      queryClient.prefetchQuery([title?.toLowerCase(), page, _id], () =>
+        fetchFunction({ page, _id })
       )
     }
   }, [data, page, queryClient])

@@ -2,11 +2,12 @@ import React, { Suspense } from 'react'
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import { AdminCategorias, AdminProductos, AdminPymes, AdminRedesSociales, AdminRubros, Layout, Spinner } from '../components'
 import useAuth from '../hooks/useAuth'
-import Home from '../pages/home'
 
+const Home = React.lazy(() => import('../pages/home'))
 const Categorias = React.lazy(() => import('../pages/categorias'))
 const Artesanos = React.lazy(() => import('../pages/artesanos'))
 const Producto = React.lazy(() => import('../pages/producto'))
+const Productos = React.lazy(() => import('../pages/productos'))
 const Categoria = React.lazy(() => import('../pages/categoria'))
 const Administracion = React.lazy(() => import('../pages/administracion'))
 const Login = React.lazy(() => import('../pages/login'))
@@ -24,6 +25,7 @@ const AppRouter = () => {
           <Route path='/geolocalizar' element={<Geolocalizar />} />
           <Route path='/categoria/:id' element={<Categoria />} />
           <Route path='/producto/:id' element={<Producto />} />
+          <Route path='/productos/:id' element={<Productos />} />
           <Route path='/artesanos' element={<Artesanos />} />
           <Route path='/artesano/:id' element={<Artesano />} />
           <Route path='/login' element={<Login />} />

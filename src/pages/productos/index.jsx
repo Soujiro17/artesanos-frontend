@@ -1,15 +1,19 @@
 import React from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { Listar } from '../../components'
+import useApi from '../../hooks/useApi'
 
 const Productos = () => {
+  const { id } = useParams()
 
-    const [searchParams] = useSearchParams()
+  const { getProductosByPymeId } = useApi()
 
-    const title = searchParams.get("id")
+  console.log(id)
+
+  if (!id) return <Navigate to='/' />
 
   return (
-    <Listar endpoint="producto/all" title={title || 'Productos'} path = "producto" />
+    <Listar fetchFunction={getProductosByPymeId} title='Productos' path='producto' _id={id} />
   )
 }
 

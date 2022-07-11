@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, Navigate, useParams } from 'react-router-dom'
 import { Layout, OrangeLine, Section, Spinner } from '../../components'
 import styles from './styles.module.scss'
 import useApi from '../../hooks/useApi'
@@ -10,7 +10,9 @@ const Producto = () => {
 
   const { getProductoById } = useApi()
 
-  const { data: producto, isLoading } = useQuery(['producto', id], () => getProductoById(id))
+  if (!id) return <Navigate to='/' />
+
+  const { data: producto, isLoading } = useQuery(['producto', id], () => getProductoById({ _id: id }))
 
   return (
     <Layout>
@@ -31,7 +33,7 @@ const Producto = () => {
                 <img alt={producto?.pymeId?.nombre} src={producto?.pymeId?.picture_url} className={styles.img_pyme} />
                 <p className={styles.pyme_nombre}>{producto?.pymeId?.nombre}</p>
               </Link>
-              <Link to=''>
+              <Link to={`/productos/${producto?.pymeId._id}`}>
                 <button className='btn btn-effect bg-cyan'>Más productos</button>
               </Link>
             </div>
