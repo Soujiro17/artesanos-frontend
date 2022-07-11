@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { Link, useSearchParams } from 'react-router-dom'
+import Layout from '../layout'
 import ListarHeader from '../listarHeader'
 import Spinner from '../spinner'
+import StackCircles from '../stackCircles'
 import styles from './styles.module.scss'
 
 /*
@@ -21,7 +23,7 @@ const initialDataState = {
   nextPage: 0
 }
 
-const Listar = ({ filtros: Filtros, title, path = '', fetchFunction, name = false }) => {
+const Listar = ({ filtros: Filtros, title, path = '', fetchFunction, name = false, artesano = false }) => {
   const [page, setPage] = useState(1)
 
   const [searchParams] = useSearchParams()
@@ -41,11 +43,10 @@ const Listar = ({ filtros: Filtros, title, path = '', fetchFunction, name = fals
     }
   }, [data, page, queryClient])
 
-  console.log(data)
-
   return (
-    <>
+    <Layout>
       {title && <ListarHeader title={subTitle || title} />}
+      <StackCircles left />
       <div className={styles.listar}>
         {Filtros && (
           <div className={styles.filtros}>
@@ -59,7 +60,7 @@ const Listar = ({ filtros: Filtros, title, path = '', fetchFunction, name = fals
                 ? (
                     data?.docs.map((doc, i) => (
                       <Link
-                        to={name ? `${path}${doc._id}?name=${doc.nombre}` : (path + (doc.url?.toLowerCase() || doc?._id))}
+                        to={name ? `${path}${doc._id}?name=${doc.nombre}` : (path + (doc.url?.toLowerCase() || artesano ? doc?.duenoId : doc?._id))}
                         className={styles.item_link}
                         key={doc._id || i}
                       >
@@ -78,22 +79,23 @@ const Listar = ({ filtros: Filtros, title, path = '', fetchFunction, name = fals
         </div>
         <div className={styles.paginas}>
           {
-          [...Array(data?.totalPages)].map((item, i) => {
-            return (
-              <div
-                className={`${styles.pagina} ${page === i + 1 ? styles.current : null}`}
-                onClick={() => setPage(i + 1)}
-                key={i}
-              >
-                {i + 1}
-              </div>
+            [...Array(data?.totalPages)].map((item, i) => {
+              return (
+                <div
+                  className={`${styles.pagina} ${page === i + 1 ? styles.current : null}`}
+                  onClick={() => setPage(i + 1)}
+                  key={i}
+                >
+                  {i + 1}
+                </div>
+              )
+            }
             )
-          }
-          )
         }
+          <StackCircles right />
         </div>
       </div>
-    </>
+    </Layout>
   )
 }
 

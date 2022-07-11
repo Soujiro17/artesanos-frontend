@@ -2,13 +2,20 @@
 
 .listar_header{
     height: 15vh;
-    border-bottom: 2px solid $black;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: calc(2rem + .5vw);
-    text-transform: capitalize;
     position: relative;
+    .listar_title{
+        text-transform: capitalize;
+        font-size: calc(2rem + .5vw);
+        color: $primary;
+        font-weight: bold;
+        border-bottom: 2px solid $accent;
+        padding-bottom: 1rem;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
     .arrow{
         height: 50%;
         position: absolute;

@@ -46,7 +46,7 @@ const Login = () => {
       <div className={styles.wrapper}>
         <div className={styles.login_header}>
           <p className={`color-p ${styles.text}`}>Bienvenido</p>
-          <p className={`bb-gc-1px ${styles.text}`}>Bienvenido</p>
+          {/* <p className={`bb-gc-1px ${styles.text}`}>Bienvenido</p> */}
           <OrangeLine width='80%' />
         </div>
         <form className={styles.login_form} onSubmit={handleSubmit(onSubmit)}>

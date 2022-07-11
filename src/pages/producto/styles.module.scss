@@ -1,0 +1,57 @@
+@import '../../constants/colors.scss';
+
+.producto{
+    height: 100%;
+    .producto_title{
+        font-size: calc(1.5rem + .4vw);
+        font-weight: bolder;
+    }
+
+    .producto_detalles{
+        display: flex;
+        .producto_imagen, .producto_info{
+            width: 50%;
+        }
+
+        .producto_imagen{
+            .img_producto{
+                object-fit: cover;
+                height: calc(10rem + 15vw);
+                width: calc(10rem + 15vw);
+            }
+        }
+
+        .producto_info{
+            height: 100%;
+            border-top: 2px solid $accent;
+            padding-top: 1rem;
+            text-align: center;
+            color: $primary;
+            h2{
+                letter-spacing: 3px;
+                text-align: center;
+            }
+            p{
+                text-align: justify;
+            }
+
+            .pyme_nombre{
+                text-align: center;
+                font-weight: bolder;
+                margin-top: .5rem;
+                font-size: calc(1.5rem + .1vw);
+            }
+
+            .img_pyme{
+                object-fit: cover;
+                height: 150px;
+                width: 150px;
+            }
+
+            a{
+                text-decoration: none;
+                color: $primary;
+            }
+        }
+    }
+}
