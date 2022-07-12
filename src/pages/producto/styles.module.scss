@@ -58,6 +58,9 @@
 
 @media only screen and (max-width: 810px) {
     .producto{
+        .producto_title{
+            align-items: center;
+        }
         .producto_detalles{
             flex-direction: column;
             align-items: center;
