@@ -1,0 +1,82 @@
+@import '../../constants/colors.scss';
+
+.acerca_de{
+    .acerca_de_title{
+        font-size: calc(2rem + .4vw);
+    }
+    .acerca_de_content{
+        display: flex;
+        .logo_wrapper{
+            width: 50%;
+            position: relative;
+
+            .circle{
+                position: absolute;
+                object-fit: cover;
+                height: calc(10rem + 5vw);
+                width: calc(10rem + 5vw);
+                z-index: 1;
+            }
+            .blue_circle{
+                right: 40%;
+                transform: translateY(10rem);
+            }
+            .gray_circle{
+                transform: translateY(-5rem) translateX(-5rem);
+            }
+            .logo{
+                position: relative;
+                z-index: 100;
+                object-fit: cover;
+                width: calc(10rem + 10vw);
+                height: calc(10rem + 10vw);
+            }
+        }
+        .acerca_de_info{
+            position: relative;
+            z-index: 100;
+            width: 50%;
+            color: $primary;
+            h2{
+                letter-spacing: 5px;
+                margin-top: 0%;
+            }
+            p{
+                text-align: justify;
+            }
+
+        }
+    }
+    .circles{
+        position: static;
+        margin-top: 3rem;
+        right: 0%;
+        opacity: 1;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .acerca_de{
+        .acerca_de_title{
+            font-size: calc(2rem + .4vw);
+            text-align: center;
+        }
+        .acerca_de_content{
+            flex-direction: column;
+            .logo_wrapper, .acerca_de_info {
+                width: 100%;
+            }
+
+            .logo_wrapper{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 2rem;
+                .blue_circle{
+                    right: 0%;
+                    transform: translateY(1rem) translateX(-4rem);
+                }
+            }
+        }
+    }
+}

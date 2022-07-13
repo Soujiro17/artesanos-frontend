@@ -25,7 +25,7 @@ const useNavbarItems = () => {
       },
       {
         name: 'Acerca de',
-        url: '/'
+        url: '/acerca-de'
       },
       {
         name: isLoggedIn ? 'Administrar' : 'Iniciar sesión',
