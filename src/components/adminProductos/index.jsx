@@ -15,7 +15,7 @@ const AdminProductos = () => {
 
   const api = useApi()
 
-  const { data, isLoadingData, refetch } = useQuery(['productos', pymeId], () => api.getProductosByPymeId({ _id: pymeId, paginate: false }), {
+  const { data, isLoadingData, refetch } = useQuery(['productos', pymeId], () => api.getProductosByPymeId({ _id: pymeId, pagination: false }), {
     enabled: false
   })
 
