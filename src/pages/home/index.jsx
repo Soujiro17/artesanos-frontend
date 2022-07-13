@@ -7,7 +7,6 @@ const Home = () => {
     <Layout>
       <main className={styles.main}>
         <Presentacion />
-        <div className={styles.circle} />
         <SectionCategories />
         <SectionMap />
       </main>

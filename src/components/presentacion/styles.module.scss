@@ -38,7 +38,11 @@
                 }
             }
         }
-
+        .circles_home{
+            margin-left: 2rem;
+            object-fit: contain;
+            overflow: hidden;
+        }
     }
 }
 
@@ -69,7 +73,9 @@
                     }
                 }
             }
-    
+            .circles_home{
+                display: none;
+            }
         }
     }
     
