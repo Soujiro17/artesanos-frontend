@@ -1,17 +1,19 @@
 /* eslint-disable react/jsx-indent */
 import React, { useState } from 'react'
+import { useMemo } from 'react'
+import { useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { Link, useParams } from 'react-router-dom'
 import { Layout, OrangeLine, Section, Spinner, StackCircles, Map } from '../../components'
 import useApi from '../../hooks/useApi'
 import styles from './styles.module.scss'
 
-const FotoConAnchorYText = ({ value = {}, url }) => {
+const FotoConAnchorYText = ({ nombre = 'Producto no disponible', img, url }) => {
   return (
     <Link to={url || '#'}>
       <div className={styles.producto_foto_group}>
-        <img className={`${styles.foto}`} src={value.picture_url} />
-        <p className={styles.producto_nombre}>{value.nombre}</p>
+        <img className={`${styles.foto}`} src={img || '/img/not_found_default.jpg'} />
+        <p className={styles.producto_nombre}>{nombre}</p>
       </div>
     </Link>
   )
@@ -39,14 +41,37 @@ const Artesano = () => {
   const api = useApi()
 
   const { data: artesano, isLoading } = useQuery(['artesano', params.id], () => api.getArtesanoById({ _id: params.id }))
-  const { data: pymes, isLoading: isLoadingPymes } = useQuery(['pymes', params.id], () => api.getArtesanoPymes({ _id: params.id }))
+  const { data: pymes = [], isLoading: isLoadingPymes } = useQuery(['pymes', params.id], () => api.getArtesanoPymes({ _id: params.id }))
+  const { data: productos, isLoadingProductos } = useQuery(['productos', pymes[0]?._id], () => api.getProductosByPymeId({ _id: pymes[0]?._id }), {
+    enabled: pymes? true : false,
+  })
+
+  const finalProducts = useMemo(() => {
+
+    if(!productos) return null
+
+    let final = []
+
+    for(let i = 0; i < 5; i++){
+      
+      if(i > productos?.docs?.length){
+        final.push(<FotoConAnchorYText key={i} />)
+      }else{
+        if(productos?.docs){
+          final.push(<FotoConAnchorYText key={i} img = {productos?.docs[i]?.picture_url} nombre = {productos?.docs[i]?.nombre} url = {`/producto/${productos?.docs[i]?._id}`}/>)
+        }
+      }
+    }
+
+    return final
+  }, [productos])
 
   return (
     <Layout>
       <>
         <StackCircles left />
         <Section>
-          {(isLoading || isLoadingPymes)
+          {(isLoading || isLoadingPymes || isLoadingProductos)
             ? <Spinner />
             : <div className={styles.artesano}>
               <div className={styles.artesano_nombres}>
@@ -56,8 +81,9 @@ const Artesano = () => {
                 <div className={styles.artesano_datos_cont}>
                   <div className={styles.artesanos_fotos}>
                     <div className={styles.artesano_pymes}>
-                      <FotoConAnchorYText value={{ picture_url: artesano?.picture_url, nombre: 'Text' }} />
-                      <FotoConAnchorYText value={{ picture_url: artesano?.picture_url, nombre: 'Text' }} />
+                      {
+                       finalProducts?.slice(0,2)
+                      }
                       {/* <p className={`${styles.text} color-p`}>Pymes</p> */}
                       {/* {pymes?.slice(0, 2).map(pyme => <FotoConAnchorYText value={pyme} key={pyme._id} />)} */}
                     </div>
@@ -69,9 +95,9 @@ const Artesano = () => {
                   <div className={styles.artesano_productos}>
                     {/* <p className={`${styles.text} color-p`}>Productos</p> */}
                     <div className={styles.artesano_productos_cont}>
-                      <FotoConAnchorYText value={{ picture_url: artesano?.picture_url, nombre: 'Text' }} />
-                      <FotoConAnchorYText value={{ picture_url: artesano?.picture_url, nombre: 'Text' }} />
-                      <FotoConAnchorYText value={{ picture_url: artesano?.picture_url, nombre: 'Text' }} />
+                      {
+                        finalProducts?.slice(2,5)
+                      }
                     </div>
                     <Link to={`/productos/${pymes[0]._id}`} className={styles.anchor_btn}>
                       <button className='bg-cyan btn-effect btn'>Más productos</button>
