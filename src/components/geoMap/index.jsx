@@ -53,7 +53,7 @@ const MapComponent = ({ points = false, geolocation = false, data }) => {
 
   if (geolocation && errorPass && !actualAlt && !actualLon && !actualAlt) return <Spinner />
 
-  const center = (geolocation && errorPass) ? [actualLat, actualLon, actualAlt] : [-33.49868534902928, -70.65307906953697]
+  const center = data? data[0].direccion?.coordenadas?.coordinates : (geolocation && errorPass) ? [actualLat, actualLon, actualAlt] : [-33.49868534902928, -70.65307906953697]
 
   return (
     <div className={styles.map_wrapper}>
