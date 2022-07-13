@@ -8,20 +8,10 @@ const Categorias = () => {
 
   return (
     <Listar
-      filtros={FiltrosCategorias}
       title='Categorías'
       fetchFunction={getCategorias}
       path='/categoria/'
     />
   )
 }
-
-const FiltrosCategorias = () => {
-  return (
-    <div className={styles.filtros}>
-      Filtros
-    </div>
-  )
-}
-
 export default Categorias
