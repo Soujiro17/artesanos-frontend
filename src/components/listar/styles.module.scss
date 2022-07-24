@@ -97,3 +97,22 @@
         }
     }
 }
+
+@media only screen and (max-width: 900px) {
+    .listar{
+        .items{
+            display: grid;
+            align-items: center;
+            justify-content: center;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+            gap: 10px;
+    
+            .item_link{
+                .item_name{
+                    visibility: initial;
+                }
+            }
+        }
+    }
+}

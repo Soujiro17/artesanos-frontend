@@ -178,8 +178,8 @@ const APIProvider = ({ children }) => {
     return data
   }
 
-  const getProductosByPymeId = async ({ _id, page = 1, limit = 6 }) => {
-    const { data } = await axiosPublic.get(`/producto/pyme/${_id}?page=${page}&limit=${limit}`)
+  const getProductosByPymeId = async ({ _id, page = 1, limit = 6, pagination = true }) => {
+    const { data } = await axiosPublic.get(`/producto/pyme/${_id}?page=${page}&limit=${limit}&pagination=${pagination}`)
 
     return data
   }

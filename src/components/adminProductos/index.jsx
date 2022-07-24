@@ -15,7 +15,7 @@ const AdminProductos = () => {
 
   const api = useApi()
 
-  const { data, isLoadingData, refetch } = useQuery(['productos', pymeId], () => api.getProductosByPymeId({ _id: pymeId }), {
+  const { data, isLoadingData, refetch } = useQuery(['productos', pymeId], () => api.getProductosByPymeId({ _id: pymeId, pagination: false }), {
     enabled: false
   })
 
@@ -148,7 +148,7 @@ const AdminProductos = () => {
             {
               isLoadingData
                 ? <Spinner />
-                : data?.map(item =>
+                : data?.docs?.map(item =>
                   <li key={item._id}>
                     <p onClick={() => handleOnClickSet({ ...item })}>Nombre: {item.nombre}</p>
                     <p onClick={() => handleOnClickSet({ ...item })}>Precio: {item.precio}</p>
