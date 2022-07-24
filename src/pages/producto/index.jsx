@@ -26,6 +26,7 @@ const Producto = () => {
             </div>
             <div className={styles.producto_info}>
               <h2>Descripción del producto</h2>
+              <p className={styles.precio_sku_stock}>Precio ${producto?.precio?.toLocaleString()} | <span>SKU {producto?.sku}</span> | <span>Disponibles {producto?.stock}</span></p>
               <p>{producto?.descripcion}</p>
               <OrangeLine />
               <h2>Emprendedor al que pertenece</h2>

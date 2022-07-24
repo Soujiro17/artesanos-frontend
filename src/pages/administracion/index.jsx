@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { AdminHeader, Layout } from '../../components'
+import { AdminHeader, Layout, Section } from '../../components'
 import styles from './styles.module.scss'
 
 const Administracion = () => {
@@ -8,7 +8,9 @@ const Administracion = () => {
     <Layout>
       <main className={styles.administracion}>
         <AdminHeader />
-        <Outlet />
+        <Section>
+          <Outlet />
+        </Section>
       </main>
     </Layout>
   )
