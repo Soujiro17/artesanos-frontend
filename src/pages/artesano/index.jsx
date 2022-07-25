@@ -43,22 +43,20 @@ const Artesano = () => {
   const { data: artesano, isLoading } = useQuery(['artesano', params.id], () => api.getArtesanoById({ _id: params.id }))
   const { data: pymes = [], isLoading: isLoadingPymes } = useQuery(['pymes', params.id], () => api.getArtesanoPymes({ _id: params.id }))
   const { data: productos, isLoadingProductos } = useQuery(['productos', pymes[0]?._id], () => api.getProductosByPymeId({ _id: pymes[0]?._id }), {
-    enabled: pymes? true : false,
+    enabled: !!pymes
   })
 
   const finalProducts = useMemo(() => {
+    if (!productos) return null
 
-    if(!productos) return null
+    const final = []
 
-    let final = []
-
-    for(let i = 0; i < 5; i++){
-      
-      if(i > productos?.docs?.length){
+    for (let i = 0; i < 5; i++) {
+      if (i > productos?.docs?.length) {
         final.push(<FotoConAnchorYText key={i} />)
-      }else{
-        if(productos?.docs){
-          final.push(<FotoConAnchorYText key={i} img = {productos?.docs[i]?.picture_url} nombre = {productos?.docs[i]?.nombre} url = {`/producto/${productos?.docs[i]?._id}`}/>)
+      } else {
+        if (productos?.docs) {
+          final.push(<FotoConAnchorYText key={i} img={productos?.docs[i]?.picture_url} nombre={productos?.docs[i]?.nombre} url={`/producto/${productos?.docs[i]?._id}`} />)
         }
       }
     }
@@ -82,7 +80,7 @@ const Artesano = () => {
                   <div className={styles.artesanos_fotos}>
                     <div className={styles.artesano_pymes}>
                       {
-                       finalProducts?.slice(0,2)
+                       finalProducts?.slice(0, 2)
                       }
                       {/* <p className={`${styles.text} color-p`}>Pymes</p> */}
                       {/* {pymes?.slice(0, 2).map(pyme => <FotoConAnchorYText value={pyme} key={pyme._id} />)} */}
@@ -96,7 +94,7 @@ const Artesano = () => {
                     {/* <p className={`${styles.text} color-p`}>Productos</p> */}
                     <div className={styles.artesano_productos_cont}>
                       {
-                        finalProducts?.slice(2,5)
+                        finalProducts?.slice(2, 5)
                       }
                     </div>
                     <Link to={`/productos/${pymes[0]._id}`} className={styles.anchor_btn}>
