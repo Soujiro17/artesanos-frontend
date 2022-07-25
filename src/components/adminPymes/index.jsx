@@ -6,7 +6,7 @@ import { toFormData } from '../../utilities/toFormData'
 import useApi from '../../hooks/useApi'
 import Spinner from '../spinner'
 import useMutatorConfig from '../../hooks/useMutatorConfig'
-import X from '../icons/X'
+import AlterRow from '../alterRow'
 
 const AdminPymes = () => {
   const [isUpdating, setIsUpdating] = useState(false)
@@ -92,11 +92,11 @@ const AdminPymes = () => {
         <p>Crear Pyme</p>
         <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {errors.nombre && <span>Nombre es requerido</span>}
-          <input defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre pyme' />
+          <input className='input' defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre pyme' />
           {errors.rut && <span>RUT es requerido</span>}
-          <input defaultValue='' {...register('rut', { required: true })} placeholder='RUT pyme' />
+          <input className='input' defaultValue='' {...register('rut', { required: true })} placeholder='RUT pyme' />
           <input defaultValue='' {...register('foto')} type='file' accept='image/*' />
-          <select defaultValue='' {...register('rubro', { required: true })}>
+          <select className='input' defaultValue='' {...register('rubro', { required: true })}>
             <option value=''>Seleccionar rubro</option>
             {
               rubros?.map(rubro => (
@@ -108,7 +108,7 @@ const AdminPymes = () => {
             isLoadingArtesanos
               ? <Spinner />
               : (
-              <select defaultValue='' {...register('duenoId', { required: true })}>
+              <select className='input' defaultValue='' {...register('duenoId', { required: true })}>
                 <option value=''>Seleccionar artesano</option>
                 {
                   artesanos?.docs?.map(artesano => <option key={artesano._id} value={artesano._id}>{artesano.nombres} {artesano.apellidos} - {artesano.rut}</option>)
@@ -116,10 +116,12 @@ const AdminPymes = () => {
               </select>)
           }
           {errors.direccion && <span>Direccion es requerida</span>}
-          <input defaultValue='' {...register('direccion', { required: true })} placeholder='Direccion. Ejemplo: Gral Cruz 222, Valparaíso' />
-          <input defaultValue='' {...register('horarios')} placeholder='Horarios. Ejemplo: 12:00 a 18:00 pm lunes a viernes' />
-          <input defaultValue='' {...register('telefono', { valueAsNumber: true })} placeholder='Teléfono. Ejemplo: 911223344' type='number' />
-          <input defaultValue='' {...register('correo')} placeholder='Email pyme' type='email' />
+          <input className='input' defaultValue='' {...register('direccion', { required: true })} placeholder='Direccion. Ejemplo: Gral Cruz 222, Valparaíso' />
+          <input className='input' defaultValue='' {...register('horarios')} placeholder='Horarios. Ejemplo: 12:00 a 18:00 pm lunes a viernes' />
+          <input className='input' defaultValue='' {...register('telefono', { valueAsNumber: true })} placeholder='Teléfono. Ejemplo: 911223344' type='number' />
+          <input className='input' defaultValue='' {...register('correo')} placeholder='Email pyme' type='email' />
+          <textarea className='input' defaultValue='' {...register('descripcion', { required: true })} placeholder='Descripción pyme' maxLength={300} />
+
           <div>
             {
               redesSociales?.map((redSocial, i) => {
@@ -136,26 +138,33 @@ const AdminPymes = () => {
               })
             }
           </div>
-          <button type='submit'>{isUpdating ? 'Actualizar artesano' : 'Agregar artesano'}</button>
-          {isUpdating && <button onClick={clearFields}>Limpiar</button>}
+          <button className='btn btn-effect bg-cyan' type='submit'>{isUpdating ? 'Actualizar artesano' : 'Agregar artesano'}</button>
+          {isUpdating && <button className='btn btn-effect bg-cyan' onClick={clearFields}>Limpiar</button>}
         </form>
       </div>
-      <div>
-        <div>
-          <ul>
-            {
-              isLoadingData
-                ? <Spinner />
-                : data?.docs?.map(item =>
-                  <li key={item._id}>
-                    <p onClick={() => handleOnClickSet({ ...item })}>Nombre: {item.nombre}</p>
-                    <p onClick={() => handleOnClickSet({ ...item })}>RUT: {item.rut}</p>
-                    <X onClick={() => remove(item._id)} />
-                  </li>
-                )
-            }
-          </ul>
-        </div>
+      <div className='table-container'>
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Rut</th>
+              <th>Accion</th>
+            </tr>
+          </thead>
+          <tbody>
+          {
+            isLoadingData
+              ? <Spinner />
+              : data?.docs?.map(item =>
+                <tr key={item._id}>
+                  <td>{item.nombre}</td>
+                  <td>{item.rut}</td>
+                  <AlterRow onClickEdit={() => handleOnClickSet({ ...item })} onClickRemove={() => remove(item._id)} />
+                </tr>
+              )
+          }
+          </tbody>
+        </table>
       </div>
     </>
   )

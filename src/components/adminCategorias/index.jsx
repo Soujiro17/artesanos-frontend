@@ -5,7 +5,7 @@ import useApi from '../../hooks/useApi'
 import Spinner from '../spinner'
 import { toFormData } from '../../utilities/toFormData'
 import useMutatorConfig from '../../hooks/useMutatorConfig'
-import X from '../icons/X'
+import AlterRow from '../alterRow'
 
 const AdminCategorias = () => {
   const [isUpdating, setIsUpdating] = useState(false)
@@ -35,13 +35,13 @@ const AdminCategorias = () => {
     clearFields()
   }
 
-  const handleOnClickSet = (_id, nombre) => {
+  const handleOnClickSet = ({ _id, nombre }) => {
     setValue('nombre', nombre)
     setIsUpdating(true)
     setId(_id)
   }
 
-  const removeCategory = (_id) => {
+  const remove = (_id) => {
     mutateEliminarCategoria({ _id })
   }
 
@@ -59,27 +59,33 @@ const AdminCategorias = () => {
         <p>Crear categoria</p>
         <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {errors.nombre && <span>Nombre es requerido</span>}
-          <input defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre categoría' />
+          <input className='input' defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre categoría' />
           <input defaultValue={null} {...register('foto')} type='file' accept='image/*' />
-          <button type='submit'>{isUpdating ? 'Actualizar categoría' : 'Agregar categoría'}</button>
-          {isUpdating && <button onClick={clearFields}>Limpiar</button>}
+          <button className='btn btn-effect bg-cyan' type='submit'>{isUpdating ? 'Actualizar categoría' : 'Agregar categoría'}</button>
+          {isUpdating && <button className='btn btn-effect bg-cyan' onClick={clearFields}>Limpiar</button>}
         </form>
       </div>
-      <div>
-        <div>
-          <ul>
+      <div className='table-container'>
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Accion</th>
+            </tr>
+          </thead>
+          <tbody>
             {
-              !data
-                ? <Spinner />
-                : data?.docs?.map(categoria =>
-                  <li key={categoria._id}>
-                    <p onClick={() => handleOnClickSet(categoria._id, categoria.nombre)}>{categoria.nombre}</p>
-                    <X onClick={() => removeCategory(categoria._id)} />
-                  </li>
-                )
+            !data
+              ? <Spinner />
+              : data?.docs?.map(item =>
+                <tr key={item._id}>
+                  <td>{item.nombre}</td>
+                  <AlterRow onClickEdit={() => handleOnClickSet({ ...item })} onClickRemove={() => remove(item._id)} />
+                </tr>
+              )
             }
-          </ul>
-        </div>
+          </tbody>
+        </table>
       </div>
     </>
   )

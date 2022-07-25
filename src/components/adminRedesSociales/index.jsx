@@ -5,7 +5,7 @@ import useApi from '../../hooks/useApi'
 import Spinner from '../spinner'
 import { toFormData } from '../../utilities/toFormData'
 import useMutatorConfig from '../../hooks/useMutatorConfig'
-import X from '../icons/X'
+import AlterRow from '../alterRow'
 
 const AdminRedesSociales = () => {
   const [isUpdating, setIsUpdating] = useState(false)
@@ -36,7 +36,7 @@ const AdminRedesSociales = () => {
     clearFields()
   }
 
-  const handleOnClickSet = (_id, nombre) => {
+  const handleOnClickSet = ({ _id, nombre }) => {
     setValue('nombre', nombre)
     setIsUpdating(true)
     setId(_id)
@@ -62,27 +62,33 @@ const AdminRedesSociales = () => {
         <p>Crear red social</p>
         <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {errors.nombre && <span>Nombre es requerido</span>}
-          <input defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre red social' />
+          <input className='input' defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre red social' />
           <input defaultValue={null} {...register('foto')} type='file' accept='image/*' />
-          <button type='submit'>{isUpdating ? 'Actualizar red social' : 'Agregar red social'}</button>
-          {isUpdating && <button onClick={clearFields}>Limpiar</button>}
+          <button className='btn btn-effect bg-cyan' type='submit'>{isUpdating ? 'Actualizar red social' : 'Agregar red social'}</button>
+          {isUpdating && <button className='btn btn-effect bg-cyan' onClick={clearFields}>Limpiar</button>}
         </form>
       </div>
-      <div>
-        <div>
-          <ul>
+      <div className='table-container'>
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Accion</th>
+            </tr>
+          </thead>
+          <tbody>
             {
-              !data
-                ? <Spinner />
-                : data?.map(item =>
-                  <li key={item._id}>
-                    <p onClick={() => handleOnClickSet(item._id, item.nombre)}>{item.nombre}</p>
-                    <X onClick={() => remove(item._id)} />
-                  </li>
-                )
+            !data
+              ? <Spinner />
+              : data?.map(item =>
+                <tr key={item._id}>
+                  <td>{item.nombre}</td>
+                  <AlterRow onClickEdit={() => handleOnClickSet({ ...item })} onClickRemove={() => remove(item._id)} />
+                </tr>
+              )
             }
-          </ul>
-        </div>
+          </tbody>
+        </table>
       </div>
     </>
   )

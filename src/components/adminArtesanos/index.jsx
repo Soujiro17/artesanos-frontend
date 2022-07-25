@@ -5,7 +5,7 @@ import { toFormData } from '../../utilities/toFormData'
 import useApi from '../../hooks/useApi'
 import Spinner from '../spinner'
 import useMutatorConfig from '../../hooks/useMutatorConfig'
-import X from '../icons/X'
+import AlterRow from '../alterRow'
 
 const AdminArtesanos = () => {
   const [isUpdating, setIsUpdating] = useState(false)
@@ -62,33 +62,41 @@ const AdminArtesanos = () => {
         <p>Crear Artesano</p>
         <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {errors.nombres && <span>Nombres es requerido</span>}
-          <input defaultValue='' {...register('nombres', { required: true })} placeholder='Nombres artesano' />
+          <input className='input' defaultValue='' {...register('nombres', { required: true })} placeholder='Nombres artesano' />
           {errors.apellidos && <span>Apellidos es requerido</span>}
-          <input defaultValue='' {...register('apellidos', { required: true })} placeholder='Apellidos artesano' />
+          <input className='input' defaultValue='' {...register('apellidos', { required: true })} placeholder='Apellidos artesano' />
           {errors.rut && <span>RUT es requerido</span>}
-          <input defaultValue='' {...register('rut', { required: true })} placeholder='ej: 111111111' />
+          <input className='input' defaultValue='' {...register('rut', { required: true })} placeholder='ej: 111111111' />
           <input defaultValue={null} {...register('foto')} type='file' accept='image/*' />
-          <button type='submit'>{isUpdating ? 'Actualizar artesano' : 'Agregar artesano'}</button>
-          {isUpdating && <button onClick={clearFields}>Limpiar</button>}
+          <button className='btn btn-effect bg-cyan' type='submit'>{isUpdating ? 'Actualizar artesano' : 'Agregar artesano'}</button>
+          {isUpdating && <button className='btn btn-effect bg-cyan' onClick={clearFields}>Limpiar</button>}
         </form>
       </div>
-      <div>
-        <div>
-          <ul>
+      <div className='table-container'>
+        <table>
+          <thead>
+            <tr>
+              <th>Nombres</th>
+              <th>Apellidos</th>
+              <th>RUT</th>
+              <th>Accion</th>
+            </tr>
+          </thead>
+          <tbody>
             {
-              isLoadingData
-                ? <Spinner />
-                : data?.docs?.map(item =>
-                  <li key={item._id}>
-                    <p onClick={() => handleOnClickSet({ ...item })}>Nombres: {item.nombres}</p>
-                    <p onClick={() => handleOnClickSet({ ...item })}>Apellidos: {item.apellidos}</p>
-                    <p onClick={() => handleOnClickSet({ ...item })}>RUT: {item.rut}</p>
-                    <X onClick={() => remove(item._id)} />
-                  </li>
-                )
+            !data || isLoadingData
+              ? <Spinner />
+              : data?.docs?.map(item =>
+                <tr key={item._id}>
+                  <td>{item.nombres}</td>
+                  <td>{item.apellidos}</td>
+                  <td>{item.rut}</td>
+                  <AlterRow onClickEdit={() => handleOnClickSet({ ...item })} onClickRemove={() => remove(item._id)} />
+                </tr>
+              )
             }
-          </ul>
-        </div>
+          </tbody>
+        </table>
       </div>
     </>
   )

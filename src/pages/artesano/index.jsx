@@ -1,7 +1,5 @@
 /* eslint-disable react/jsx-indent */
-import React, { useState } from 'react'
-import { useMemo } from 'react'
-import { useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useQuery } from 'react-query'
 import { Link, useParams } from 'react-router-dom'
 import { Layout, OrangeLine, Section, Spinner, StackCircles, Map } from '../../components'

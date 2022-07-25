@@ -43,7 +43,7 @@ code {
 .btn-effect{
   transition: .2s all;
   &:hover{
-      transform: scale(1.05);
+      transform: scale(1.02);
   }
   &:active{
       transform: scale(1);
@@ -95,4 +95,48 @@ code {
 .bg-cyan{
   background-color: $cyan;
   color: $white;
+}
+
+.alter-row{
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none !important;
+  gap: 10px;
+}
+
+.table-container{
+  width: 100%;
+  padding-top: 2rem;
+  table{
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    border: 1px solid $primary;
+    td, th{
+      border: 1px solid $primary;
+    }
+    tr{
+      height: 2.5rem;
+    }
+    thead{
+      tr{
+        font-weight: bold;
+        text-transform: uppercase;
+        color: $white;
+        background-color: $accent;
+      }
+    }
+    tbody{
+      tr{
+        border: 1px solid $primary;
+        background-color: $white;
+        &:nth-child(2n){
+          background-color: $gray1;
+        }
+      }
+      
+    }
+  }
 }

@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from 'react-query'
 import useApi from '../../hooks/useApi'
 import Spinner from '../spinner'
 import useMutatorConfig from '../../hooks/useMutatorConfig'
-import X from '../icons/X'
+import AlterRow from '../alterRow'
 
 const AdminRubros = () => {
   const [isUpdating, setIsUpdating] = useState(false)
@@ -31,7 +31,7 @@ const AdminRubros = () => {
     clearFields()
   }
 
-  const handleOnClickSet = (_id, nombre) => {
+  const handleOnClickSet = ({ _id, nombre }) => {
     setValue('nombre', nombre)
     setIsUpdating(true)
     setId(_id)
@@ -55,26 +55,32 @@ const AdminRubros = () => {
         <p>Crear rubro</p>
         <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {errors.nombre && <span>Nombre es requerido</span>}
-          <input defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre rubro' />
-          <button type='submit'>{isUpdating ? 'Actualizar rubro' : 'Agregar rubro'}</button>
-          {isUpdating && <button onClick={clearFields}>Limpiar</button>}
+          <input className='input' defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre rubro' />
+          <button className='btn btn-effect bg-cyan' type='submit'>{isUpdating ? 'Actualizar rubro' : 'Agregar rubro'}</button>
+          {isUpdating && <button className='btn btn-effect bg-cyan' onClick={clearFields}>Limpiar</button>}
         </form>
       </div>
-      <div>
-        <div>
-          <ul>
+      <div className='table-container'>
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Accion</th>
+            </tr>
+          </thead>
+          <tbody>
             {
-              !data
-                ? <Spinner />
-                : data?.map(item =>
-                  <li key={item._id}>
-                    <p onClick={() => handleOnClickSet(item._id, item.nombre)}>{item.nombre}</p>
-                    <X onClick={() => remove(item._id)} />
-                  </li>
-                )
+            !data
+              ? <Spinner />
+              : data?.map(item =>
+                <tr key={item._id}>
+                  <td>{item.nombre}</td>
+                  <AlterRow onClickEdit={() => handleOnClickSet({ ...item })} onClickRemove={() => remove(item._id)} />
+                </tr>
+              )
             }
-          </ul>
-        </div>
+          </tbody>
+        </table>
       </div>
     </>
   )

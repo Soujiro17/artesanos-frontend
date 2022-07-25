@@ -5,8 +5,8 @@ import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { toFormData } from '../../utilities/toFormData'
 import useApi from '../../hooks/useApi'
 import Spinner from '../spinner'
-import X from '../icons/X'
 import useMutatorConfig from '../../hooks/useMutatorConfig'
+import AlterRow from '../alterRow'
 
 const AdminProductos = () => {
   const [isUpdating, setIsUpdating] = useState(false)
@@ -92,21 +92,21 @@ const AdminProductos = () => {
         <p>Crear producto</p>
         <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {errors.nombre && <span>Nombre es requerido</span>}
-          <input defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre producto' />
+          <input className='input' defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre producto' />
           {errors.precio && <span>Precio es requerido</span>}
-          <input defaultValue='' {...register('precio', { required: true })} type='number' placeholder='Precio producto' />
-          <input defaultValue='' {...register('stock')} type='number' placeholder='Stock producto' />
+          <input className='input' defaultValue='' {...register('precio', { required: true })} type='number' placeholder='Precio producto' />
+          <input className='input' defaultValue='' {...register('stock')} type='number' placeholder='Stock producto' />
           {errors.sku && <span>SKU es requerido</span>}
-          <input defaultValue='' {...register('sku', { required: true })} placeholder='SKU producto' />
+          <input className='input' defaultValue='' {...register('sku', { required: true })} placeholder='SKU producto' />
           {errors.descripcion && <span>Descripción es requerida</span>}
-          <textarea defaultValue='' {...register('descripcion')} placeholder='Descripción producto' maxLength={300} />
+          <textarea className='input' defaultValue='' {...register('descripcion')} placeholder='Descripción producto' maxLength={300} />
           <div>
             <input id='visible' defaultChecked {...register('visible')} type='checkbox' />
             <label htmlFor='visible'>Visible</label>
           </div>
           <input defaultValue='' {...register('foto')} type='file' accept='image/*' />
           {errors.categoriaId && <span>Categoría es requerida</span>}
-          <select defaultValue='' {...register('categoriaId', { required: true })}>
+          <select className='input' defaultValue='' {...register('categoriaId', { required: true })}>
             <option value=''>Seleccionar categoría</option>
             {
               categorias?.docs?.map(categoria => (
@@ -119,15 +119,15 @@ const AdminProductos = () => {
             isLoadingPymes
               ? <Spinner />
               : (
-              <select defaultValue='' {...register('pymeId', { required: true })}>
+              <select className='input' defaultValue='' {...register('pymeId', { required: true })}>
                 <option value=''>Seleccionar pyme</option>
                 {
                   pymes?.docs?.map(pyme => <option key={pyme._id} value={pyme._id}>{pyme.nombre} - {pyme.rut}</option>)
                 }
               </select>)
           }
-          <button type='submit'>{isUpdating ? 'Actualizar producto' : 'Agregar producto'}</button>
-          {isUpdating && <button onClick={clearFields}>Limpiar</button>}
+          <button className='btn btn-effect bg-cyan' type='submit'>{isUpdating ? 'Actualizar producto' : 'Agregar producto'}</button>
+          {isUpdating && <button className='btn btn-effect bg-cyan' onClick={clearFields}>Limpiar</button>}
         </form>
       </div>
       <div>
@@ -136,30 +136,42 @@ const AdminProductos = () => {
             isLoadingPymes
               ? <Spinner />
               : (
-              <select onChange={onChangeProductosByPymeId} value={pymeId}>
+              <select className='input' onChange={onChangeProductosByPymeId} value={pymeId}>
                 <option value=''>Seleccionar pyme</option>
                 {
                   pymes?.docs?.map(pyme => <option key={pyme._id} value={pyme._id}>{pyme.nombre} - {pyme.rut}</option>)
                 }
               </select>)
         }
-        <div>
-          <ul>
-            {
+        <div className='table-container'>
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Visible</th>
+                <th>SKU</th>
+                <th>Accion</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
               isLoadingData
                 ? <Spinner />
                 : data?.docs?.map(item =>
-                  <li key={item._id}>
-                    <p onClick={() => handleOnClickSet({ ...item })}>Nombre: {item.nombre}</p>
-                    <p onClick={() => handleOnClickSet({ ...item })}>Precio: {item.precio}</p>
-                    <p onClick={() => handleOnClickSet({ ...item })}>Stock: {item.stock === null ? 'Consultar al artesano' : item.stock}</p>
-                    <p onClick={() => handleOnClickSet({ ...item })}>Visible: {item.visible ? 'Visible' : 'Oculto'}</p>
-                    <p onClick={() => handleOnClickSet({ ...item })}>SKU: {item.sku}</p>
-                    <X onClick={() => remove(item._id)} />
-                  </li>
+                  <tr key={item._id}>
+                    <td>{item.nombre}</td>
+                    <td>{item.precio}</td>
+                    <td>{item.stock === null ? 'Consultar al artesano' : item.stock}</td>
+                    <td>{item.visible ? 'Sí' : 'No'}</td>
+                    <td>{item.sku}</td>
+                    <AlterRow onClickEdit={() => handleOnClickSet({ ...item })} onClickRemove={() => remove(item._id)} />
+                  </tr>
                 )
-            }
-          </ul>
+              }
+            </tbody>
+          </table>
         </div>
       </div>
     </>
