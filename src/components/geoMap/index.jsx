@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import Spinner from '../spinner'
 import styles from './styles.module.scss'
 import useApi from '../../hooks/useApi'
+import { Link } from 'react-router-dom'
 
 const MapComponent = ({ points = false, geolocation = false, data }) => {
   const [errorPass, setErrorPass] = useState(true)
@@ -53,7 +54,7 @@ const MapComponent = ({ points = false, geolocation = false, data }) => {
 
   if (geolocation && errorPass && !actualAlt && !actualLon && !actualAlt) return <Spinner />
 
-  const center = data? data[0].direccion?.coordenadas?.coordinates : (geolocation && errorPass) ? [actualLat, actualLon, actualAlt] : [-33.49868534902928, -70.65307906953697]
+  const center = data ? data[0].direccion?.coordenadas?.coordinates : (geolocation && errorPass) ? [actualLat, actualLon, actualAlt] : [-33.49868534902928, -70.65307906953697]
 
   return (
     <div className={styles.map_wrapper}>
@@ -80,19 +81,12 @@ const MapComponent = ({ points = false, geolocation = false, data }) => {
 
           return (
             <Marker icon={icon} position={pyme.direccion.coordenadas.coordinates} key={pyme._id}>
-              <Popup>{pyme.nombre}</Popup>
+              <Popup>
+                <Link to={`/artesano/${pyme.duenoId}`}>{pyme.nombre}</Link>
+              </Popup>
             </Marker>
           )
         })
-            // : pymes?.map(pyme => {
-            //   const icon = createIcon(pyme)
-
-            //   return (
-            //     <Marker icon={icon} position={pyme.direccion.coordenadas.coordinates} key={pyme._id}>
-            //       <Popup>{pyme.nombre}</Popup>
-            //     </Marker>
-            //   )
-            // })
         }
       </MapContainer>
     </div>
