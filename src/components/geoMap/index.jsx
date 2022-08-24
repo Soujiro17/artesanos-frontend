@@ -28,7 +28,7 @@ const MapComponent = ({ points = false, geolocation = false, data }) => {
 
   const createIcon = (value) => {
     return L.icon({
-      iconUrl: value?.picture_url,
+      iconUrl: value?.picture_url || '/san_miguel.jpg',
       iconSize: [35, 35],
       className: styles.icon_classname
     })

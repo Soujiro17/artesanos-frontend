@@ -7,6 +7,7 @@ import Spinner from '../spinner'
 import useMutatorConfig from '../../hooks/useMutatorConfig'
 import AlterRow from '../alterRow'
 import { validate, format } from 'rut.js'
+// import artesanos from '../../data/artesanos'
 
 const AdminArtesanos = () => {
   const [isUpdating, setIsUpdating] = useState(false)
@@ -44,6 +45,10 @@ const AdminArtesanos = () => {
     setId(_id)
   }
 
+  // const crearArtesanos = () => {
+  //   artesanos.map(artesano => mutateCrear({ values: toFormData(artesano) }))
+  // }
+
   const remove = (_id) => {
     if (!window.confirm('Seguro que deseas eliminar este registro?')) return
     mutateEliminar({ _id })
@@ -68,8 +73,16 @@ const AdminArtesanos = () => {
           <input className='input' defaultValue='' {...register('nombres', { required: true })} placeholder='Nombres artesano' />
           {errors.apellidos && <span>Apellidos es requerido</span>}
           <input className='input' defaultValue='' {...register('apellidos', { required: true })} placeholder='Apellidos artesano' />
-          {errors.rut && <span>RUT es requerido o es inválido</span>}
-          <input className='input' defaultValue='' {...register('rut', { required: true, validate: (value) => validate(value), setValueAs: (value) => format(value) })} placeholder='ej: 111111111' />
+          {/* {errors.rut && <span>RUT es requerido o es inválido</span>} */}
+          <input
+            className='input' defaultValue='' {...register('rut'
+              // {
+              //   required: true,
+              //   validate: (value) => validate(value),
+              //   setValueAs: (value) => format(value)
+              // }
+            )} placeholder='ej: 111111111'
+          />
           {crearPyme && <input className='input' defaultValue='' {...register('direccion', { required: !!crearPyme })} placeholder='ej: Gral Cruz 222' />}
           <input defaultValue={null} {...register('foto')} type='file' accept='image/*' />
           {crearPyme && errors.direccion && <span>Dirección es requerido</span>}
@@ -108,6 +121,7 @@ const AdminArtesanos = () => {
             }
           </tbody>
         </table>
+        {/* <button onClick={crearArtesanos}>Agregar artesanos</button> */}
       </div>
     </>
   )

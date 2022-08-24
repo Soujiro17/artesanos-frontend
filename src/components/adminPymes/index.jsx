@@ -94,8 +94,17 @@ const AdminPymes = () => {
         <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {errors.nombre && <span>Nombre es requerido</span>}
           <input className='input' defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre pyme' />
-          {errors.rut && <span>RUT es requerido o es inválido</span>}
-          <input className='input' defaultValue='' {...register('rut', { required: true, validate: (value) => validate(value), setValueAs: (value) => format(value) })} placeholder='RUT pyme' />
+          {/* {errors.rut && <span>RUT es requerido o es inválido</span>} */}
+          <input
+            className='input' defaultValue='' {...register('rut'
+              // {
+              // required: true,
+              // validate: (value) => validate(value),
+              // setValueAs: (value) => format(value)
+              // }
+            )}
+            placeholder='RUT pyme'
+          />
           <input defaultValue='' {...register('foto')} type='file' accept='image/*' />
           <select className='input' defaultValue='' {...register('rubro')}>
             <option value=''>Seleccionar rubro</option>
