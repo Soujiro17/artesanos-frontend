@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { useMutation, useQuery } from 'react-query'
 import { toFormData } from '../../utilities/toFormData'
 import useApi from '../../hooks/useApi'
 import Spinner from '../spinner'
 import useMutatorConfig from '../../hooks/useMutatorConfig'
 import AlterRow from '../alterRow'
+import { validate, format } from 'rut.js'
 
 const AdminArtesanos = () => {
   const [isUpdating, setIsUpdating] = useState(false)
@@ -13,9 +14,11 @@ const AdminArtesanos = () => {
 
   const mutatorConfig = useMutatorConfig('Artesano', 'artesanos')
 
-  const { register, formState: { errors }, handleSubmit, setValue } = useForm()
+  const { register, formState: { errors }, handleSubmit, setValue, control } = useForm()
 
   const api = useApi()
+
+  const crearPyme = useWatch({ control, name: 'crearPyme' })
 
   const { data, isLoading: isLoadingData } = useQuery('artesanos', () => api.getArtesanos({ query: { pagination: false } }))
 
@@ -65,14 +68,22 @@ const AdminArtesanos = () => {
           <input className='input' defaultValue='' {...register('nombres', { required: true })} placeholder='Nombres artesano' />
           {errors.apellidos && <span>Apellidos es requerido</span>}
           <input className='input' defaultValue='' {...register('apellidos', { required: true })} placeholder='Apellidos artesano' />
-          {errors.rut && <span>RUT es requerido</span>}
-          <input className='input' defaultValue='' {...register('rut', { required: true })} placeholder='ej: 111111111' />
+          {errors.rut && <span>RUT es requerido o es inválido</span>}
+          <input className='input' defaultValue='' {...register('rut', { required: true, validate: (value) => validate(value), setValueAs: (value) => format(value) })} placeholder='ej: 111111111' />
+          {crearPyme && <input className='input' defaultValue='' {...register('direccion', { required: !!crearPyme })} placeholder='ej: Gral Cruz 222' />}
           <input defaultValue={null} {...register('foto')} type='file' accept='image/*' />
+          {crearPyme && errors.direccion && <span>Dirección es requerido</span>}
+          <div>
+            <label htmlFor='crear-pyme'>Crear pyme con datos del artesano</label>
+            <input id='crear-pyme' type='checkbox' {...register('crearPyme')} />
+          </div>
           <button className='btn btn-effect bg-cyan' type='submit'>{isUpdating ? 'Actualizar artesano' : 'Agregar artesano'}</button>
+
           {isUpdating && <button className='btn btn-effect bg-cyan' onClick={clearFields}>Limpiar</button>}
         </form>
       </div>
       <div className='table-container'>
+        <p className='no-data'>Mostrando {data?.totalDocs || 0} registros</p>
         <table>
           <thead>
             <tr>
@@ -85,7 +96,7 @@ const AdminArtesanos = () => {
           <tbody>
             {
             !data || isLoadingData
-              ? <Spinner />
+              ? <tr><td colSpan={4}><Spinner /></td></tr>
               : data?.docs?.map(item =>
                 <tr key={item._id}>
                   <td>{item.nombres}</td>

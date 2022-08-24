@@ -144,6 +144,7 @@ const AdminProductos = () => {
               </select>)
         }
         <div className='table-container'>
+          <p className='no-data'>Mostrando {data?.totalDocs || 0} registros</p>
           <table>
             <thead>
               <tr>

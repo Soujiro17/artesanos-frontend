@@ -15,11 +15,11 @@ code {
     monospace;
 }
 
-*{
+* {
   box-sizing: border-box;
 }
 
-.btn{
+.btn {
   height: 2.5rem;
   border-radius: 5rem;
   min-width: 100px;
@@ -32,35 +32,37 @@ code {
   padding-right: 1rem;
 }
 
-.error{
+.error {
   text-align: center;
 }
 
-.text-align-right{
+.text-align-right {
   text-align: right;
 }
 
-.btn-effect{
+.btn-effect {
   transition: .2s all;
-  &:hover{
-      transform: scale(1.02);
+
+  &:hover {
+    transform: scale(1.01);
   }
-  &:active{
-      transform: scale(1);
+
+  &:active {
+    transform: scale(1);
   }
 }
 
-.bb-gc{
+.bb-gc {
   text-shadow: 1px 0 0 $black, -2px 0 0 $black, 0 2px 0 $black, 0 -2px 0 $black, 1px 1px $black, -1px -1px 0 $black, 1px -1px 0 $black, -1px 1px 0 $black;
   color: $gray1;
 }
 
-.bb-gc-1px{
+.bb-gc-1px {
   text-shadow: 1px 0 0 $black, -1px 0 0 $black, 0 1px 0 $black, 0 -1px 0 $black, 1px 1px $black, -1px -1px 0 $black, 1px -1px 0 $black, -1px 1px 0 $black;
   color: $gray1;
 }
 
-.input{
+.input {
   border-radius: 5rem;
   border: 1px solid $black;
   height: 2.5rem;
@@ -70,34 +72,34 @@ code {
   width: 100%;
 }
 
-.primary{
+.primary {
   background-color: $primary;
   color: $white;
 }
 
-.accent{
+.accent {
   background-color: $accent;
   color: $white;
 }
 
-.color-p{
+.color-p {
   color: $primary;
 }
 
-.color-acc{
+.color-acc {
   color: $accent;
 }
 
-.input-error{
+.input-error {
   border: 1.5px solid $accent;
 }
 
-.bg-cyan{
+.bg-cyan {
   background-color: $cyan;
   color: $white;
 }
 
-.alter-row{
+.alter-row {
   height: 2.5rem;
   display: flex;
   align-items: center;
@@ -106,37 +108,48 @@ code {
   gap: 10px;
 }
 
-.table-container{
+.table-container {
   width: 100%;
   padding-top: 2rem;
-  table{
+
+  table {
     width: 100%;
     text-align: center;
     border-collapse: collapse;
     border: 1px solid $primary;
-    td, th{
+
+    td,
+    th {
       border: 1px solid $primary;
     }
-    tr{
+
+    tr {
       height: 2.5rem;
     }
-    thead{
-      tr{
+
+    thead {
+      tr {
         font-weight: bold;
         text-transform: uppercase;
         color: $white;
         background-color: $accent;
       }
     }
-    tbody{
-      tr{
+
+    tbody {
+      tr {
         border: 1px solid $primary;
         background-color: $white;
-        &:nth-child(2n){
+
+        &:nth-child(2n) {
           background-color: $gray1;
         }
       }
-      
+
     }
   }
+}
+
+.no-data {
+  margin-bottom: 0%;
 }

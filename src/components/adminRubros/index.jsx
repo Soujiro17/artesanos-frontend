@@ -61,6 +61,7 @@ const AdminRubros = () => {
         </form>
       </div>
       <div className='table-container'>
+        <p className='no-data'>Mostrando {data?.length || 0} registros</p>
         <table>
           <thead>
             <tr>

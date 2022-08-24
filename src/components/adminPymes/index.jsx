@@ -7,6 +7,7 @@ import useApi from '../../hooks/useApi'
 import Spinner from '../spinner'
 import useMutatorConfig from '../../hooks/useMutatorConfig'
 import AlterRow from '../alterRow'
+import { validate, format } from 'rut.js'
 
 const AdminPymes = () => {
   const [isUpdating, setIsUpdating] = useState(false)
@@ -93,10 +94,10 @@ const AdminPymes = () => {
         <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {errors.nombre && <span>Nombre es requerido</span>}
           <input className='input' defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre pyme' />
-          {errors.rut && <span>RUT es requerido</span>}
-          <input className='input' defaultValue='' {...register('rut', { required: true })} placeholder='RUT pyme' />
+          {errors.rut && <span>RUT es requerido o es inválido</span>}
+          <input className='input' defaultValue='' {...register('rut', { required: true, validate: (value) => validate(value), setValueAs: (value) => format(value) })} placeholder='RUT pyme' />
           <input defaultValue='' {...register('foto')} type='file' accept='image/*' />
-          <select className='input' defaultValue='' {...register('rubro', { required: true })}>
+          <select className='input' defaultValue='' {...register('rubro')}>
             <option value=''>Seleccionar rubro</option>
             {
               rubros?.map(rubro => (
@@ -120,7 +121,7 @@ const AdminPymes = () => {
           <input className='input' defaultValue='' {...register('horarios')} placeholder='Horarios. Ejemplo: 12:00 a 18:00 pm lunes a viernes' />
           <input className='input' defaultValue='' {...register('telefono', { valueAsNumber: true })} placeholder='Teléfono. Ejemplo: 911223344' type='number' />
           <input className='input' defaultValue='' {...register('correo')} placeholder='Email pyme' type='email' />
-          <textarea className='input' defaultValue='' {...register('descripcion', { required: true })} placeholder='Descripción pyme' maxLength={300} />
+          <textarea className='input' defaultValue='' {...register('descripcion')} placeholder='Descripción pyme' maxLength={300} />
 
           <div>
             {
@@ -143,6 +144,7 @@ const AdminPymes = () => {
         </form>
       </div>
       <div className='table-container'>
+        <p className='no-data'>Mostrando {data?.totalDocs || 0} registros</p>
         <table>
           <thead>
             <tr>
