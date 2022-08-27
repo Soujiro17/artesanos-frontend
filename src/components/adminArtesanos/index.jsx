@@ -6,7 +6,7 @@ import useApi from '../../hooks/useApi'
 import Spinner from '../spinner'
 import useMutatorConfig from '../../hooks/useMutatorConfig'
 import AlterRow from '../alterRow'
-import { validate, format } from 'rut.js'
+// import { validate, format } from 'rut.js'
 // import artesanos from '../../data/artesanos'
 
 const AdminArtesanos = () => {

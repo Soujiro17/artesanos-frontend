@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react'
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import { AdminCategorias, AdminProductos, AdminPymes, AdminRedesSociales, AdminRubros, Layout, Spinner } from '../components'
+import AdminComienzo from '../components/adminComienzo'
 import useAuth from '../hooks/useAuth'
 
 const Home = React.lazy(() => import('../pages/home'))
@@ -32,7 +33,7 @@ const AppRouter = () => {
           <Route path='/acerca-de' element={<AcercaDe />} />
           <Route path='/login' element={<Login />} />
           <Route path='/administracion' element={<RequireAuth><Administracion /></RequireAuth>}>
-            <Route path='' element={<p>Test</p>} index/>
+            <Route path='' element={<AdminComienzo />} index />
             <Route path='categorias' element={<AdminCategorias />} />
             <Route path='pymes' element={<AdminPymes />} />
             <Route path='redes-sociales' element={<AdminRedesSociales />} />

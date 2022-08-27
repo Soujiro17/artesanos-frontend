@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useQuery } from 'react-query'
+import { Spinner } from '../components'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 import { axiosPublic } from '../services/axios'
 
@@ -37,7 +38,9 @@ const AuthProvider = ({ children }) => {
     setAuth(null)
   }
 
-  useQuery('loggedIn', () => getLoggedIn())
+  const { isLoading } = useQuery('loggedIn', () => getLoggedIn())
+
+  if (isLoading) return <Spinner fullScreen />
 
   return (
     <AuthContext.Provider value={{ auth, login, getLoggedIn, cerrarSesion }}>{children}</AuthContext.Provider>
