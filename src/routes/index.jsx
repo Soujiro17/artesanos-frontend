@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
-import { AdminCategorias, AdminProductos, AdminPymes, AdminRedesSociales, AdminRubros, Layout, Spinner } from '../components'
+import { AdminCategorias, AdminProductos, Layout, Spinner } from '../components'
 import AdminComienzo from '../components/adminComienzo'
 import useAuth from '../hooks/useAuth'
 
@@ -35,9 +35,6 @@ const AppRouter = () => {
           <Route path='/administracion' element={<RequireAuth><Administracion /></RequireAuth>}>
             <Route path='' element={<AdminComienzo />} index />
             <Route path='categorias' element={<AdminCategorias />} />
-            <Route path='pymes' element={<AdminPymes />} />
-            <Route path='redes-sociales' element={<AdminRedesSociales />} />
-            <Route path='rubros' element={<AdminRubros />} />
             <Route path='artesanos' element={<AdminArtesanos />} />
             <Route path='productos' element={<AdminProductos />} />
           </Route>

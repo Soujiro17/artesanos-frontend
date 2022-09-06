@@ -12,9 +12,6 @@ import Spinner from './spinner'
 import ListarHeader from './listarHeader'
 import AdminHeader from './adminHeader'
 import AdminCategorias from './adminCategorias'
-import AdminPymes from './adminPymes'
-import AdminRedesSociales from './adminRedesSociales'
-import AdminRubros from './adminRubros'
 import AdminProductos from './adminProductos'
 import OrangeLine from './orangeLine'
 import Presentacion from './presentacion'
@@ -37,9 +34,6 @@ export {
   ListarHeader,
   AdminHeader,
   AdminCategorias,
-  AdminPymes,
-  AdminRedesSociales,
-  AdminRubros,
   AdminProductos,
   OrangeLine,
   Presentacion,

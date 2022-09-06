@@ -10,14 +10,10 @@ const AdminHeader = () => {
       </div>
       <nav className={styles.nav}>
         <ul className={styles.nav_list}>
+          <li className={styles.nav_list_item}><Link to=''>Inicio</Link></li>
           <li className={styles.nav_list_item}>
             <Link to='categorias'>Categorias</Link>
           </li>
-          <li className={styles.nav_list_item}>
-            <Link to='pymes'>Pymes</Link>
-          </li>
-          <li className={styles.nav_list_item}><Link to='redes-sociales'>Redes sociales</Link></li>
-          <li className={styles.nav_list_item}><Link to='rubros'>Rubros</Link></li>
           <li className={styles.nav_list_item}><Link to='artesanos'>Artesanos</Link></li>
           <li className={styles.nav_list_item}><Link to='productos'>Productos</Link></li>
         </ul>

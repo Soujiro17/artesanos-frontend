@@ -42,58 +42,6 @@ const APIProvider = ({ children }) => {
     return data
   }
 
-  /* Redes sociales */
-
-  const getRedesSociales = async () => {
-    const { data } = await axiosPublic.get('/red-social')
-
-    return data
-  }
-
-  const crearRedSocial = async ({ values }) => {
-    const { data } = await axiosPrivate.post('/red-social', values)
-
-    return data
-  }
-
-  const actualizarRedSocial = async ({ values, _id }) => {
-    const { data } = await axiosPrivate.put(`/red-social/${_id}`, values)
-
-    return data
-  }
-
-  const eliminarRedSocial = async ({ _id }) => {
-    const { data } = await axiosPrivate.delete(`/red-social/${_id}`)
-
-    return data
-  }
-
-  /* Rubros */
-
-  const getRubros = async () => {
-    const { data } = await axiosPublic.get('/rubro')
-
-    return data
-  }
-
-  const crearRubro = async ({ values }) => {
-    const { data } = await axiosPrivate.post('/rubro', values)
-
-    return data
-  }
-
-  const actualizarRubro = async ({ values, _id }) => {
-    const { data } = await axiosPrivate.put(`/rubro/${_id}`, values)
-
-    return data
-  }
-
-  const eliminarRubro = async ({ _id }) => {
-    const { data } = await axiosPrivate.delete(`/rubro/${_id}`)
-
-    return data
-  }
-
   /* Artesanos */
 
   const getArtesanos = async ({ page = 1, limit = 10, query = {} }) => {
@@ -122,44 +70,6 @@ const APIProvider = ({ children }) => {
 
   const eliminarArtesano = async ({ _id }) => {
     const { data } = await axiosPrivate.delete(`/artesano/${_id}`)
-
-    return data
-  }
-
-  /* Pymes */
-
-  const getPymes = async ({ page = 1, limit = 10, query = {} }) => {
-    const { data } = await axiosPublic.get(`/pyme/all?page=${page}&limit=${limit}${toQuery(query)}`)
-
-    return data
-  }
-
-  const getArtesanoPymes = async ({ _id }) => {
-    const { data } = await axiosPrivate.get(`/pyme/artesano/${_id}`)
-
-    return data
-  }
-
-  const getCoordenadasPymes = async () => {
-    const { data } = await axiosPublic.get('/pyme/all/coordenadas')
-
-    return data
-  }
-
-  const crearPyme = async ({ values }) => {
-    const { data } = await axiosPrivate.post('/pyme', values)
-
-    return data
-  }
-
-  const actualizarPyme = async ({ values, _id }) => {
-    const { data } = await axiosPrivate.put(`/pyme/${_id}`, values)
-
-    return data
-  }
-
-  const eliminarPyme = async ({ _id }) => {
-    const { data } = await axiosPrivate.delete(`/pyme/${_id}`)
 
     return data
   }
@@ -210,14 +120,7 @@ const APIProvider = ({ children }) => {
 
   /* FETCH ON LOAD */
 
-  useQuery('rubros', () => getRubros(), {
-    retry: 3
-  })
-
   useQuery('categorias', () => getCategorias({ query: { pagination: false } }), {
-    retry: 3
-  })
-  useQuery('redes_sociales', () => getRedesSociales(), {
     retry: 3
   })
 
@@ -231,32 +134,12 @@ const APIProvider = ({ children }) => {
       actualizarCategoria,
       eliminarCategoria,
 
-      // Redes sociales
-      getRedesSociales,
-      crearRedSocial,
-      actualizarRedSocial,
-      eliminarRedSocial,
-
-      // Rubros
-      getRubros,
-      crearRubro,
-      actualizarRubro,
-      eliminarRubro,
-
       // Artesanos
       getArtesanos,
       getArtesanoById,
       crearArtesano,
       actualizarArtesano,
       eliminarArtesano,
-
-      // Pymes
-      getPymes,
-      getArtesanoPymes,
-      getCoordenadasPymes,
-      crearPyme,
-      actualizarPyme,
-      eliminarPyme,
 
       // Productos
       getProductos,
