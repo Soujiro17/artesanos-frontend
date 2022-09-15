@@ -3,7 +3,7 @@ import styles from './styles.module.scss'
 import { SectionCategories, SectionMap, Presentacion, Layout } from '../../components'
 
 const Home = () => {
-  console.log(process.env.REACT_API_URL)
+  console.log(process.env.VITE_NETLIFY_TEST)
 
   return (
     <Layout>
