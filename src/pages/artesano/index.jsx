@@ -17,7 +17,7 @@ const FotoConAnchorYText = ({ nombre = 'Producto no disponible', img, url }) => 
   )
 }
 
-const ArtesanoMapa = ({ pymes }) => {
+const ArtesanoMapa = ({ emprendimiento }) => {
   const [showMap, setShowMap] = useState(false)
   const handleShowMap = () => setShowMap(!showMap)
 
@@ -26,7 +26,7 @@ const ArtesanoMapa = ({ pymes }) => {
       <button className='bg-cyan btn-effect btn' onClick={handleShowMap}>Ver mapa</button>
       {showMap && (
         <div className={styles.mapa}>
-          <Map data={pymes} />
+          <Map data={emprendimiento} />
         </div>
       )}
     </div>
@@ -39,10 +39,9 @@ const Artesano = () => {
   const api = useApi()
 
   const { data: artesano, isLoading } = useQuery(['artesano', params.id], () => api.getArtesanoById({ _id: params.id }))
-  const { data: pymes = [], isLoading: isLoadingPymes } = useQuery(['pymes', params.id], () => api.getArtesanoPymes({ _id: params.id }))
-  const { data: productos, isLoadingProductos } = useQuery(['productos', pymes[0]?._id], () => api.getProductosByPymeId({ _id: pymes[0]?._id }), {
-    enabled: !!pymes
-  })
+
+  const emprendimiento = artesano?.emprendimiento
+  const productos = artesano?.emprendimiento?.productos
 
   const finalProducts = useMemo(() => {
     if (!productos) return null
@@ -50,28 +49,35 @@ const Artesano = () => {
     const final = []
 
     for (let i = 0; i < 5; i++) {
-      if (i > productos?.docs?.length) {
+      if (i > productos.length - 1) {
         final.push(<FotoConAnchorYText key={i} />)
       } else {
-        if (productos?.docs) {
-          final.push(<FotoConAnchorYText key={i} img={productos?.docs[i]?.picture_url} nombre={productos?.docs[i]?.nombre} url={`/producto/${productos?.docs[i]?._id}`} />)
+        if (productos) {
+          final.push(
+            <FotoConAnchorYText
+              key={i}
+              img={productos[i]?.foto?.url}
+              nombre={productos[i]?.nombre}
+              url={`/producto/${productos[i]?._id}`}
+            />
+          )
         }
       }
     }
 
     return final
-  }, [productos])
+  }, [artesano])
 
   return (
     <Layout>
       <>
         <StackCircles left />
         <Section>
-          {(isLoading || isLoadingPymes || isLoadingProductos)
+          {(isLoading)
             ? <Spinner />
             : <div className={styles.artesano}>
               <div className={styles.artesano_nombres}>
-                <p className={`${styles.artesano_nombre} color-p`}>{artesano?.nombres} <span className={`${styles.artesano_apellido} bb-gc`}>{artesano?.apellidos}</span> - {pymes[0]?.nombre}</p>
+                <p className={`${styles.artesano_nombre} color-p`}>{artesano?.nombres} <span className={`${styles.artesano_apellido} bb-gc`}>{artesano?.apellidos}</span> - {emprendimiento?.nombre}</p>
               </div>
               <div className={styles.artesano_datos}>
                 <div className={styles.artesano_datos_cont}>
@@ -80,22 +86,18 @@ const Artesano = () => {
                       {
                        finalProducts?.slice(0, 2)
                       }
-                      {/* <p className={`${styles.text} color-p`}>Pymes</p> */}
-                      {/* {pymes?.slice(0, 2).map(pyme => <FotoConAnchorYText value={pyme} key={pyme._id} />)} */}
                     </div>
                     <div className={styles.artesano_foto}>
-                      {/* <p className={`${styles.text} color-p`}>Artesano</p> */}
                       <img src={artesano?.picture_url || '/img/not_found_default.jpg'} className={`${styles.artesanofoto}`} />
                     </div>
                   </div>
                   <div className={styles.artesano_productos}>
-                    {/* <p className={`${styles.text} color-p`}>Productos</p> */}
                     <div className={styles.artesano_productos_cont}>
                       {
                         finalProducts?.slice(2, 5)
                       }
                     </div>
-                    <Link to={`/productos/${pymes[0]._id}`} className={styles.anchor_btn}>
+                    <Link to={`/productos/${artesano.emprendimiento?._id}`} className={styles.anchor_btn}>
                       <button className='bg-cyan btn-effect btn'>Más productos</button>
                     </Link>
                   </div>
@@ -104,10 +106,10 @@ const Artesano = () => {
                 <div className={styles.sobre_emprendimiento}>
                   <p className={styles.emprendimiento_title}>Sobre el emprendimiento</p>
                   <p className={styles.emprendimiento_text}>
-                    {pymes[0]?.descripcion}
+                    {emprendimiento?.descripcion}
                   </p>
                 </div>
-                <ArtesanoMapa pymes={pymes} />
+                <ArtesanoMapa emprendimiento={emprendimiento} />
               </div>
               </div>}
         </Section>

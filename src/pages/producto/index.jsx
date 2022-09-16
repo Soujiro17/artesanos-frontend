@@ -10,31 +10,32 @@ const Producto = () => {
 
   const { getProductoById } = useApi()
 
-  if (!id) return <Navigate to='/' />
+  // eslint-disable-next-line eqeqeq
+  if (!id || id == 'undefined') return <Navigate to={-1} />
 
   const { data: producto, isLoading } = useQuery(['producto', id], () => getProductoById({ _id: id }))
 
   return (
     <Layout>
-      {isLoading && <Spinner fullScreen />}
+      {(isLoading) && <Spinner fullScreen />}
       <Section>
         <div className={styles.producto}>
           <p className={`color-p ${styles.producto_title}`}>{producto?.nombre}</p>
           <div className={styles.producto_detalles}>
             <div className={styles.producto_imagen}>
-              <img alt={producto?.nombre} src={producto?.picture_url || '/img/not_found_default.jpg'} className={styles.img_producto} />
+              <img alt={producto?.nombre} src={producto?.foto?.url || '/img/not_found_default.jpg'} className={styles.img_producto} />
             </div>
             <div className={styles.producto_info}>
               <h2>Descripción del producto</h2>
-              <p className={styles.precio_sku_stock}>Precio ${producto?.precio?.toLocaleString()} | <span>SKU {producto?.sku}</span> | <span>Disponibles {producto?.stock}</span></p>
+              <p className={styles.precio_sku_stock}>Precio ${producto?.precio?.toLocaleString()} | <span>Disponibilidad: {producto?.stock === null ? 'Consultar con artesano' : `${producto?.stock}`}</span></p>
               <p>{producto?.descripcion}</p>
               <OrangeLine />
               <h2>Emprendedor al que pertenece</h2>
-              <Link to={`/artesano/${producto?.pymeId.duenoId}`}>
-                <img alt={producto?.pymeId?.nombre} src={producto?.pymeId?.picture_url} className={styles.img_pyme} />
-                <p className={styles.pyme_nombre}>{producto?.pymeId?.nombre}</p>
+              <Link to={`/artesano/${producto?.emprendimiento?.artesano?._id}`}>
+                <img alt={producto?.pymeId?.nombre} src={producto?.emprendimiento?.artesano?.foto?.url || '/img/not_found_default.jpg'} className={styles.img_pyme} />
+                <p className={styles.pyme_nombre}>{producto?.emprendimiento?.nombre}</p>
               </Link>
-              <Link to={`/productos/${producto?.pymeId._id}`}>
+              <Link to={`/productos/${producto?.emprendimiento?._id}`}>
                 <button className='btn btn-effect bg-cyan'>Más productos</button>
               </Link>
             </div>

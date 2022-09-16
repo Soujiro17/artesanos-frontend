@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet'
 import L from 'leaflet'
-import { useQuery } from 'react-query'
+import { useQueryClient } from 'react-query'
 import { toast } from 'react-toastify'
 import Spinner from '../spinner'
 import styles from './styles.module.scss'
-import useApi from '../../hooks/useApi'
 import { Link } from 'react-router-dom'
 
-const MapComponent = ({ points = false, geolocation = false, data }) => {
+const MapComponent = ({ geolocation = false, data }) => {
   const [errorPass, setErrorPass] = useState(true)
   const [actualLat, setActualLat] = useState(0)
   const [actualLon, setActualLon] = useState(0)
@@ -16,19 +15,13 @@ const MapComponent = ({ points = false, geolocation = false, data }) => {
 
   const zoom = 13.5
 
-  // Determinar punto central en caso de no encontrar la ubicación del usuario. Ejemplo: Santiago
+  const queryClient = useQueryClient()
 
-  let pymes = []
-
-  const api = useApi()
-
-  if (points) {
-    pymes = useQuery('pymes_coordenadas', () => api.getCoordenadasPymes()).data
-  }
+  const emprendimientos = queryClient.getQueryData(['direcciones'])
 
   const createIcon = (value) => {
     return L.icon({
-      iconUrl: value?.picture_url || '/san_miguel.jpg',
+      iconUrl: value || '/san_miguel.jpg',
       iconSize: [35, 35],
       className: styles.icon_classname
     })
@@ -54,7 +47,7 @@ const MapComponent = ({ points = false, geolocation = false, data }) => {
 
   if (geolocation && errorPass && !actualAlt && !actualLon && !actualAlt) return <Spinner />
 
-  const center = data ? data[0].direccion?.coordenadas?.coordinates : (geolocation && errorPass) ? [actualLat, actualLon, actualAlt] : [-33.49868534902928, -70.65307906953697]
+  const center = data ? data.direccion?.coordenadas : (geolocation && errorPass) ? [actualLat, actualLon, actualAlt] : [-33.49868534902928, -70.65307906953697]
 
   return (
     <div className={styles.map_wrapper}>
@@ -75,19 +68,17 @@ const MapComponent = ({ points = false, geolocation = false, data }) => {
             </>
           )
 }
-        {
-        (data || pymes)?.map(pyme => {
-          const icon = createIcon(pyme)
+        {emprendimientos?.map(emprendimiento => {
+          const icon = createIcon(emprendimiento.foto?.url)
 
           return (
-            <Marker icon={icon} position={pyme.direccion.coordenadas.coordinates} key={pyme._id}>
+            <Marker icon={icon} position={emprendimiento.direccion?.coordenadas} key={emprendimiento._id}>
               <Popup>
-                <Link to={`/artesano/${pyme.duenoId}`}>{pyme.nombre}</Link>
+                <Link to={`/artesano/${emprendimiento.artesano}`}>{emprendimiento.nombre}</Link>
               </Popup>
             </Marker>
           )
-        })
-        }
+        })}
       </MapContainer>
     </div>
   )

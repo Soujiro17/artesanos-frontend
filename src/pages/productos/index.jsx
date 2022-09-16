@@ -6,12 +6,12 @@ import useApi from '../../hooks/useApi'
 const Productos = () => {
   const { id } = useParams()
 
-  const { getProductosByPymeId } = useApi()
+  const { getProductosByEmprendimientoId } = useApi()
 
   if (!id) return <Navigate to='/' />
 
   return (
-    <Listar fetchFunction={getProductosByPymeId} title='Productos' path='/producto/' _id={id} />
+    <Listar fetchFunction={getProductosByEmprendimientoId} title='Productos' path='/producto/' _id={id} />
   )
 }
 

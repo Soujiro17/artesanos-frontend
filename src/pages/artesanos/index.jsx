@@ -3,10 +3,10 @@ import { Listar } from '../../components'
 import useApi from '../../hooks/useApi'
 
 const Artesanos = () => {
-  const { getPymes } = useApi()
+  const { getArtesanos } = useApi()
 
   return (
-    <Listar title='Artesanos' fetchFunction={getPymes} path='/artesano/' artesano />
+    <Listar title='Artesanos' fetchFunction={getArtesanos} path='/artesano/' artesano />
   )
 }
 

@@ -23,7 +23,7 @@ const initialDataState = {
   nextPage: 0
 }
 
-const Listar = ({ filtros: Filtros, title, path = '', fetchFunction, name = false, artesano = false, _id }) => {
+const Listar = ({ filtros: Filtros, title, path = '', fetchFunction, name = false, _id }) => {
   const [page, setPage] = useState(1)
 
   const [searchParams] = useSearchParams()
@@ -60,12 +60,12 @@ const Listar = ({ filtros: Filtros, title, path = '', fetchFunction, name = fals
                 ? (
                     data?.docs.map((doc, i) => (
                       <Link
-                        to={name ? `${path}${doc._id}?name=${doc.nombre}` : (path + (doc.url?.toLowerCase() || artesano ? doc?.duenoId : doc?._id))}
+                        to={name ? `${path}${doc._id}?name=${doc.nombre}` : (path + (doc.url?.toLowerCase() || doc?._id))}
                         className={styles.item_link}
                         key={doc._id || i}
                       >
                         <img
-                          src={doc.picture_url || '/img/not_found_default.jpg'}
+                          src={doc.foto?.url || '/img/not_found_default.jpg'}
                           className={styles.item_img}
                           alt=''
                         />

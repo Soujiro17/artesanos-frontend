@@ -77,19 +77,19 @@ const APIProvider = ({ children }) => {
   /* Productos */
 
   const getProductos = async ({ page = 1, limit = 10, query = {} }) => {
-    const { data } = await axiosPublic.get(`/producto/all?page=${page}&limit=${limit}${toQuery(query)}`)
+    const { data } = await axiosPublic.get(`/producto?page=${page}&limit=${limit}${toQuery(query)}`)
 
     return data
   }
 
   const getProductosByCategoriaId = async ({ page = 1, limit = 6, query = {}, _id }) => {
-    const { data } = await axiosPublic.get(`/producto/categoria/${_id}?page=${page}&limit=${limit}${toQuery(query)}`)
+    const { data } = await axiosPublic.get(`/producto?categoria=${_id}&page=${page}&limit=${limit}${toQuery(query)}`)
 
     return data
   }
 
-  const getProductosByPymeId = async ({ _id, page = 1, limit = 6, pagination = true }) => {
-    const { data } = await axiosPublic.get(`/producto/pyme/${_id}?page=${page}&limit=${limit}&pagination=${pagination}`)
+  const getProductosByEmprendimientoId = async ({ _id, page = 1, limit = 6, pagination = true }) => {
+    const { data } = await axiosPublic.get(`/producto?emprendimiento=${_id}&page=${page}&limit=${limit}&pagination=${pagination}`)
 
     return data
   }
@@ -118,9 +118,21 @@ const APIProvider = ({ children }) => {
     return data
   }
 
+  /* DIRECCIÓN */
+
+  const getDirecciones = async () => {
+    const { data } = await axiosPublic.get('/direccion')
+
+    return data
+  }
+
   /* FETCH ON LOAD */
 
-  useQuery('categorias', () => getCategorias({ query: { pagination: false } }), {
+  useQuery(['categorias'], () => getCategorias({ query: { pagination: false } }), {
+    retry: 3
+  })
+
+  useQuery(['direcciones'], getDirecciones, {
     retry: 3
   })
 
@@ -145,10 +157,13 @@ const APIProvider = ({ children }) => {
       getProductos,
       getProductoById,
       getProductosByCategoriaId,
-      getProductosByPymeId,
+      getProductosByEmprendimientoId,
       crearProducto,
       actualizarProducto,
-      eliminarProducto
+      eliminarProducto,
+
+      // Direccion
+      getDirecciones
     }}
     >
       {children}
