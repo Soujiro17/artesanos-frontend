@@ -27,6 +27,28 @@ const MapComponent = ({ geolocation = false, data }) => {
     })
   }
 
+  const MIN = 0.0001
+  const MAX = 0.0009
+
+  const randomNum = () => {
+    const posOrNeg = Math.floor(Math.random() * (1 - 0 + 1) + 0)
+
+    const num = Math.floor(Math.random() * (MAX - MIN)) + MIN
+
+    if (posOrNeg) {
+      return -num
+    }
+
+    return num
+  }
+
+  const ubicacionCercana = () => {
+    const latitud = randomNum()
+    const longitud = randomNum()
+
+    return [parseFloat(import.meta.env.VITE_DIRECCION_SANMIGUEL_LATITUD) + latitud, parseFloat(import.meta.env.VITE_DIRECCION_SANMIGUEL_LONGITUD) + longitud]
+  }
+
   useEffect(() => {
     if (geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -47,7 +69,7 @@ const MapComponent = ({ geolocation = false, data }) => {
 
   if (geolocation && errorPass && !actualAlt && !actualLon && !actualAlt) return <Spinner />
 
-  const center = data ? data.direccion?.coordenadas : (geolocation && errorPass) ? [actualLat, actualLon, actualAlt] : [-33.49868534902928, -70.65307906953697]
+  const center = data ? data.direccion?.coordenadas : (geolocation && errorPass) ? [actualLat, actualLon, actualAlt] : [import.meta.env.VITE_DIRECCION_SANMIGUEL_LATITUD, import.meta.env.VITE_DIRECCION_SANMIGUEL_LONGITUD]
 
   return (
     <div className={styles.map_wrapper}>
@@ -67,12 +89,21 @@ const MapComponent = ({ geolocation = false, data }) => {
               </Marker>
             </>
           )
-}
+        }
+
         {emprendimientos?.map(emprendimiento => {
           const icon = createIcon(emprendimiento.foto?.url)
 
+          let nuevaDireccion
+
+          if (emprendimiento.direccion?.tieneDireccion) {
+            nuevaDireccion = ubicacionCercana()
+          }
+
+          console.log(nuevaDireccion)
+
           return (
-            <Marker icon={icon} position={emprendimiento.direccion?.coordenadas} key={emprendimiento._id}>
+            <Marker icon={icon} position={nuevaDireccion || emprendimiento.direccion?.coordenadas} key={emprendimiento._id}>
               <Popup>
                 <Link to={`/artesano/${emprendimiento.artesano}`}>{emprendimiento.nombre}</Link>
               </Popup>
