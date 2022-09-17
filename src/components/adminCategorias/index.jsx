@@ -58,8 +58,7 @@ const AdminCategorias = () => {
         {(isLoadingCreate || isLoadingUpdate || isLoadingDelete) && <Spinner fullScreen />}
         <h2>Crear categoria</h2>
         <form onSubmit={handleSubmit(onSubmit)} className='admin-form'>
-          {errors.nombre && <span>Nombre es requerido</span>}
-          <input className='input' defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre categoría' />
+          <input className={`${errors.nombre ? 'error-campo' : ''} input`} defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre categoría' />
           <input defaultValue={null} {...register('foto')} type='file' accept='image/*' />
           <button className='btn btn-effect bg-cyan' type='submit'>{isUpdating ? 'Actualizar categoría' : 'Agregar categoría'}</button>
           {isUpdating && <button className='btn btn-effect bg-cyan' onClick={clearFields}>Limpiar</button>}

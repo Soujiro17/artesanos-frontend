@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useForm, useWatch } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { useMutation, useQuery } from 'react-query'
 import { toFormData } from '../../utilities/toFormData'
 import useApi from '../../hooks/useApi'
@@ -26,14 +26,13 @@ const AdminArtesanos = () => {
 
   const onSubmit = (data) => {
     const img = data.foto[0]
-    const imgDos = data.fotoEmprendimiento[0]
 
-    const formData = toFormData({ ...data, foto: img, fotoEmprendimiento: imgDos })
+    const formData = toFormData({ ...data, foto: img })
 
     if (id) mutateActualizar({ values: formData, _id: id })
     else mutateCrear({ values: formData })
 
-    // clearFields()
+    clearFields()
   }
 
   const handleOnClickSet = ({ _id, nombres, apellidos, rut, emprendimiento }) => {
@@ -42,7 +41,7 @@ const AdminArtesanos = () => {
     setValue('rut', rut)
     setValue('nombre', emprendimiento?.nombre)
     setValue('descripcion', emprendimiento?.descripcion)
-    setValue('direccion', emprendimiento?.direccion)
+    setValue('direccion', emprendimiento?.direccion?.nombre)
     setValue('telefono', emprendimiento?.telefono)
     setIsUpdating(true)
     setId(_id)
@@ -52,10 +51,16 @@ const AdminArtesanos = () => {
   // //   artesanos.map(artesano => mutateCrear({ values: toFormData(artesano) }))
   // // }
 
-  // const remove = (_id) => {
-  //   if (!window.confirm('Seguro que deseas eliminar este registro?')) return
-  //   mutateEliminar({ _id })
-  // }
+  const remove = (_id) => {
+    if (!window.confirm('Seguro que deseas eliminar este registro?')) return
+
+    if (_id === id) {
+      setIsUpdating(false)
+      setId('')
+    }
+
+    mutateEliminar({ _id })
+  }
 
   const clearFields = () => {
     reset()
@@ -68,10 +73,8 @@ const AdminArtesanos = () => {
         <p>Crear Artesano</p>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.admin_form_sides}>
           <div className={styles.side}>
-            {/* {errors.nombres && <span>Nombres es requerido</span>} */}
-            <input className='input' defaultValue='' {...register('nombres', { required: true })} placeholder='Nombres artesano' />
-            {/* {errors.apellidos && <span>Apellidos es requerido</span>} */}
-            <input className='input' defaultValue='' {...register('apellidos', { required: true })} placeholder='Apellidos artesano' />
+            <input className={`${errors.nombres ? 'error-campo' : ''} input`} defaultValue='' {...register('nombres', { required: true })} placeholder='Nombres artesano' />
+            <input className={`${errors.apellidos ? 'error-campo' : ''} input`} defaultValue='' {...register('apellidos', { required: true })} placeholder='Apellidos artesano' />
             <input className='input' defaultValue='' {...register('rut')} placeholder='ej: 111111111' />
             <input defaultValue={null} {...register('foto')} type='file' accept='image/*' />
           </div>
@@ -82,7 +85,6 @@ const AdminArtesanos = () => {
             <input className='input' defaultValue='' {...register('direccion')} placeholder='Direccion' />
             <input className='input' defaultValue='' {...register('telefono')} placeholder='Teléfono' />
             <input className='input' defaultValue='' {...register('correo')} placeholder='Correo' />
-            <input defaultValue={null} {...register('fotoEmprendimiento')} type='file' accept='image/*' />
           </div>
 
           <div className={styles.botones}>
