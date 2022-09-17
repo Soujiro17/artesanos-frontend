@@ -1,0 +1,23 @@
+.admin_form_sides {
+    width: 100%;
+    display: flex;
+    gap: 1%;
+    flex-wrap: wrap;
+
+    .side {
+        width: 49%;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+    }
+
+    .botones {
+        margin-top: 1rem;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+
+}

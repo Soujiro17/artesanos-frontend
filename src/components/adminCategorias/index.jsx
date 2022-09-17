@@ -54,10 +54,10 @@ const AdminCategorias = () => {
 
   return (
     <>
-      <div>
+      <div className='form-container'>
         {(isLoadingCreate || isLoadingUpdate || isLoadingDelete) && <Spinner fullScreen />}
-        <p>Crear categoria</p>
-        <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <h2>Crear categoria</h2>
+        <form onSubmit={handleSubmit(onSubmit)} className='admin-form'>
           {errors.nombre && <span>Nombre es requerido</span>}
           <input className='input' defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre categoría' />
           <input defaultValue={null} {...register('foto')} type='file' accept='image/*' />

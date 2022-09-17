@@ -6,9 +6,9 @@ import { Layout, OrangeLine, Section, Spinner, StackCircles, Map } from '../../c
 import useApi from '../../hooks/useApi'
 import styles from './styles.module.scss'
 
-const FotoConAnchorYText = ({ nombre = 'Producto no disponible', img, url }) => {
+const FotoConAnchorYText = ({ nombre = 'Producto no disponible', img, url, izq = false }) => {
   return (
-    <Link to={url || '#'}>
+    <Link to={url || '#'} className={`${styles.anchor_img} ${izq ? styles.izq : ''}`}>
       <div className={styles.producto_foto_group}>
         <img className={`${styles.foto}`} src={img || '/img/not_found_default.jpg'} />
         <p className={styles.producto_nombre}>{nombre}</p>
@@ -50,7 +50,7 @@ const Artesano = () => {
 
     for (let i = 0; i < 5; i++) {
       if (i > productos.length - 1) {
-        final.push(<FotoConAnchorYText key={i} />)
+        final.push(<FotoConAnchorYText key={i} izq={i === 0 || i === 1} />)
       } else {
         if (productos) {
           final.push(
@@ -59,6 +59,7 @@ const Artesano = () => {
               img={productos[i]?.foto?.url}
               nombre={productos[i]?.nombre}
               url={`/producto/${productos[i]?._id}`}
+              izq={i === 0 || i === 1}
             />
           )
         }
@@ -77,30 +78,24 @@ const Artesano = () => {
             ? <Spinner />
             : <div className={styles.artesano}>
               <div className={styles.artesano_nombres}>
-                <p className={`${styles.artesano_nombre} color-p`}>{artesano?.nombres} <span className={`${styles.artesano_apellido} bb-gc`}>{artesano?.apellidos}</span> - {emprendimiento?.nombre}</p>
+                <p className={`${styles.artesano_nombre} color-p`}>{artesano?.nombres} <span className={`${styles.artesano_apellido} bb-gc`}>{artesano?.apellidos}</span>{emprendimiento?.nombre ? `- ${emprendimiento?.nombre}` : ''}</p>
               </div>
               <div className={styles.artesano_datos}>
                 <div className={styles.artesano_datos_cont}>
-                  <div className={styles.artesanos_fotos}>
-                    <div className={styles.artesano_pymes}>
-                      {
-                       finalProducts?.slice(0, 2)
-                      }
-                    </div>
-                    <div className={styles.artesano_foto}>
-                      <img src={artesano?.picture_url || '/img/not_found_default.jpg'} className={`${styles.artesanofoto}`} />
-                    </div>
+                  <div className={styles.artesano_fotos_izquierda}>
+                    {
+                      finalProducts?.slice(0, 2)
+                    }
                   </div>
-                  <div className={styles.artesano_productos}>
-                    <div className={styles.artesano_productos_cont}>
-                      {
-                        finalProducts?.slice(2, 5)
-                      }
-                    </div>
-                    <Link to={`/productos/${artesano.emprendimiento?._id}`} className={styles.anchor_btn}>
-                      <button className='bg-cyan btn-effect btn'>Más productos</button>
-                    </Link>
+                  <img src={artesano?.foto?.url || '/img/not_found_default.jpg'} className={styles.artesano_foto} />
+                  <div className={styles.artesano_productos_cont}>
+                    {
+                      finalProducts?.slice(2, 5)
+                    }
                   </div>
+                </div>
+                <div className={styles.btn_div}>
+                  <button className='bg-cyan btn-effect btn'>Más productos</button>
                 </div>
                 <OrangeLine />
                 <div className={styles.sobre_emprendimiento}>

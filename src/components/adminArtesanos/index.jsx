@@ -6,8 +6,7 @@ import useApi from '../../hooks/useApi'
 import Spinner from '../spinner'
 import useMutatorConfig from '../../hooks/useMutatorConfig'
 import AlterRow from '../alterRow'
-// import { validate, format } from 'rut.js'
-// import artesanos from '../../data/artesanos'
+import styles from './styles.module.scss'
 
 const AdminArtesanos = () => {
   const [isUpdating, setIsUpdating] = useState(false)
@@ -15,13 +14,11 @@ const AdminArtesanos = () => {
 
   const mutatorConfig = useMutatorConfig('Artesano', 'artesanos')
 
-  const { register, formState: { errors }, handleSubmit, setValue, control } = useForm()
+  const { register, formState: { errors }, handleSubmit, setValue, reset } = useForm()
 
   const api = useApi()
 
-  const crearPyme = useWatch({ control, name: 'crearPyme' })
-
-  const { data, isLoading: isLoadingData } = useQuery('artesanos', () => api.getArtesanos({ query: { pagination: false } }))
+  const { data, isLoading: isLoadingData } = useQuery('artesanos', () => api.getArtesanos({ query: { pagination: false, populate: true } }))
 
   const { mutate: mutateCrear, isLoading: isLoadingCreate } = useMutation(api.crearArtesano, mutatorConfig.create)
   const { mutate: mutateActualizar, isLoading: isLoadingUpdate } = useMutation(api.actualizarArtesano, mutatorConfig.update)
@@ -29,38 +26,39 @@ const AdminArtesanos = () => {
 
   const onSubmit = (data) => {
     const img = data.foto[0]
-    const formData = toFormData({ ...data, foto: img })
+    const imgDos = data.fotoEmprendimiento[0]
+
+    const formData = toFormData({ ...data, foto: img, fotoEmprendimiento: imgDos })
 
     if (id) mutateActualizar({ values: formData, _id: id })
     else mutateCrear({ values: formData })
 
-    clearFields()
+    // clearFields()
   }
 
-  const handleOnClickSet = ({ _id, nombres, apellidos, rut }) => {
+  const handleOnClickSet = ({ _id, nombres, apellidos, rut, emprendimiento }) => {
     setValue('nombres', nombres)
     setValue('apellidos', apellidos)
     setValue('rut', rut)
+    setValue('nombre', emprendimiento?.nombre)
+    setValue('descripcion', emprendimiento?.descripcion)
+    setValue('direccion', emprendimiento?.direccion)
+    setValue('telefono', emprendimiento?.telefono)
     setIsUpdating(true)
     setId(_id)
   }
 
-  // const crearArtesanos = () => {
-  //   artesanos.map(artesano => mutateCrear({ values: toFormData(artesano) }))
+  // // const crearArtesanos = () => {
+  // //   artesanos.map(artesano => mutateCrear({ values: toFormData(artesano) }))
+  // // }
+
+  // const remove = (_id) => {
+  //   if (!window.confirm('Seguro que deseas eliminar este registro?')) return
+  //   mutateEliminar({ _id })
   // }
 
-  const remove = (_id) => {
-    if (!window.confirm('Seguro que deseas eliminar este registro?')) return
-    mutateEliminar({ _id })
-  }
-
   const clearFields = () => {
-    setValue('nombres', '')
-    setValue('apellidos', '')
-    setValue('rut', '')
-    setValue('foto', [])
-    setIsUpdating(false)
-    setId('')
+    reset()
   }
 
   return (
@@ -68,31 +66,29 @@ const AdminArtesanos = () => {
       <div>
         {(isLoadingCreate || isLoadingUpdate || isLoadingDelete) && <Spinner fullScreen />}
         <p>Crear Artesano</p>
-        <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          {errors.nombres && <span>Nombres es requerido</span>}
-          <input className='input' defaultValue='' {...register('nombres', { required: true })} placeholder='Nombres artesano' />
-          {errors.apellidos && <span>Apellidos es requerido</span>}
-          <input className='input' defaultValue='' {...register('apellidos', { required: true })} placeholder='Apellidos artesano' />
-          {/* {errors.rut && <span>RUT es requerido o es inválido</span>} */}
-          <input
-            className='input' defaultValue='' {...register('rut'
-              // {
-              //   required: true,
-              //   validate: (value) => validate(value),
-              //   setValueAs: (value) => format(value)
-              // }
-            )} placeholder='ej: 111111111'
-          />
-          {crearPyme && <input className='input' defaultValue='' {...register('direccion', { required: !!crearPyme })} placeholder='ej: Gral Cruz 222' />}
-          <input defaultValue={null} {...register('foto')} type='file' accept='image/*' />
-          {crearPyme && errors.direccion && <span>Dirección es requerido</span>}
-          <div>
-            <label htmlFor='crear-pyme'>Crear pyme con datos del artesano</label>
-            <input id='crear-pyme' type='checkbox' {...register('crearPyme')} />
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.admin_form_sides}>
+          <div className={styles.side}>
+            {/* {errors.nombres && <span>Nombres es requerido</span>} */}
+            <input className='input' defaultValue='' {...register('nombres', { required: true })} placeholder='Nombres artesano' />
+            {/* {errors.apellidos && <span>Apellidos es requerido</span>} */}
+            <input className='input' defaultValue='' {...register('apellidos', { required: true })} placeholder='Apellidos artesano' />
+            <input className='input' defaultValue='' {...register('rut')} placeholder='ej: 111111111' />
+            <input defaultValue={null} {...register('foto')} type='file' accept='image/*' />
           </div>
-          <button className='btn btn-effect bg-cyan' type='submit'>{isUpdating ? 'Actualizar artesano' : 'Agregar artesano'}</button>
 
-          {isUpdating && <button className='btn btn-effect bg-cyan' onClick={clearFields}>Limpiar</button>}
+          <div className={styles.side}>
+            <input className='input' defaultValue='' {...register('nombre')} placeholder='Nombre emprendimiento' />
+            <input className='input' defaultValue='' {...register('descripcion')} placeholder='Descripcion emprendimiento' />
+            <input className='input' defaultValue='' {...register('direccion')} placeholder='Direccion' />
+            <input className='input' defaultValue='' {...register('telefono')} placeholder='Teléfono' />
+            <input className='input' defaultValue='' {...register('correo')} placeholder='Correo' />
+            <input defaultValue={null} {...register('fotoEmprendimiento')} type='file' accept='image/*' />
+          </div>
+
+          <div className={styles.botones}>
+            <button className={`${styles.btn_submit} btn btn-effect bg-cyan`} type='submit'>{isUpdating ? 'Actualizar artesano' : 'Agregar artesano'}</button>
+            <button className={`${styles.btn_submit} btn btn-effect bg-cyan`} onClick={clearFields}>Limpiar</button>
+          </div>
         </form>
       </div>
       <div className='table-container'>

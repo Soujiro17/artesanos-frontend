@@ -17,6 +17,7 @@ code {
 
 * {
   box-sizing: border-box;
+
 }
 
 .btn {
@@ -106,6 +107,20 @@ code {
   justify-content: center;
   border: none !important;
   gap: 10px;
+}
+
+.form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 50%;
 }
 
 .table-container {

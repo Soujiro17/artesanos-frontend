@@ -11,6 +11,6 @@ export const axiosPrivate = axios.create({
   baseURL: import.meta.env.VITE_URL_HOST,
   headers: {
     'Content-type': 'application/json'
-  }
-  // withCredentials: true
+  },
+  withCredentials: true
 })

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet'
 import L from 'leaflet'
 import { useQueryClient } from 'react-query'
@@ -49,6 +49,28 @@ const MapComponent = ({ geolocation = false, data }) => {
     return [parseFloat(import.meta.env.VITE_DIRECCION_SANMIGUEL_LATITUD) + latitud, parseFloat(import.meta.env.VITE_DIRECCION_SANMIGUEL_LONGITUD) + longitud]
   }
 
+  const emprendimientosComponents = useMemo(() => {
+    if (!emprendimientos) return null
+
+    return emprendimientos?.map(emprendimiento => {
+      const icon = createIcon(emprendimiento.foto?.url)
+
+      let nuevaDireccion
+
+      if (emprendimiento.direccion?.tieneDireccion) {
+        nuevaDireccion = ubicacionCercana()
+      }
+
+      return (
+        <Marker icon={icon} position={nuevaDireccion || emprendimiento.direccion?.coordenadas} key={emprendimiento._id}>
+          <Popup>
+            <Link to={`/artesano/${emprendimiento.artesano}`}>{emprendimiento.nombre}</Link>
+          </Popup>
+        </Marker>
+      )
+    })
+  }, [emprendimientos])
+
   useEffect(() => {
     if (geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -91,25 +113,7 @@ const MapComponent = ({ geolocation = false, data }) => {
           )
         }
 
-        {emprendimientos?.map(emprendimiento => {
-          const icon = createIcon(emprendimiento.foto?.url)
-
-          let nuevaDireccion
-
-          if (emprendimiento.direccion?.tieneDireccion) {
-            nuevaDireccion = ubicacionCercana()
-          }
-
-          console.log(nuevaDireccion)
-
-          return (
-            <Marker icon={icon} position={nuevaDireccion || emprendimiento.direccion?.coordenadas} key={emprendimiento._id}>
-              <Popup>
-                <Link to={`/artesano/${emprendimiento.artesano}`}>{emprendimiento.nombre}</Link>
-              </Popup>
-            </Marker>
-          )
-        })}
+        {emprendimientosComponents}
       </MapContainer>
     </div>
   )

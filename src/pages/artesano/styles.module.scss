@@ -1,11 +1,5 @@
 @import '../../constants/colors.scss';
 
-.foto {
-    width: calc(2.6rem + 13.5vw);
-    position: relative;
-    z-index: 1;
-}
-
 .artesano {
     img {
         object-fit: cover;
@@ -18,7 +12,7 @@
 
         .artesano_nombre {
             font-weight: bolder;
-            font-size: calc(2.5rem + .4vw);
+            font-size: calc(1.5rem + .6vw);
         }
     }
 
@@ -29,42 +23,48 @@
         left: 0%;
         right: 0%;
         margin: auto;
-        width: fit-content;
+        width: 80%;
 
         .artesano_datos_cont {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-columns: repeat(3, calc(50px + 10vw));
+            grid-template-areas:
+                "productos-left artesano-foto artesano-foto"
+                "productos-left artesano-foto artesano-foto"
+                "productos-bottom productos-bottom productos-bottom";
+            column-gap: 10px;
+            row-gap: 10px;
+
             justify-content: center;
 
-            .artesanos_fotos {
+            .artesano_fotos_izquierda {
+                grid-area: productos-left;
                 display: flex;
-                gap: 1vw;
-
-                .artesano_foto {
-                    flex-grow: 2;
-
-                    .artesanofoto {
-                        width: calc(5.3rem + 27.8vw);
-                        object-fit: cover;
-                        height: 99%;
-                    }
-                }
+                flex-direction: column;
+                gap: 10px;
             }
 
-            .artesano_productos {
-                .artesano_productos_cont {
-                    display: flex;
-                    gap: 1vw;
-                }
-
-                .anchor_btn {
-                    display: block;
-                    margin-top: 4%;
-                    margin-bottom: 4%;
-                }
-
+            .artesano_foto {
+                grid-area: artesano-foto;
+                width: 100%;
+                object-fit: cover;
+                height: 100%;
             }
+
+            .artesano_productos_cont {
+                grid-area: productos-bottom;
+                display: flex;
+                gap: 10px;
+            }
+
+        }
+
+        .btn_div {
+            display: block;
+            margin-top: 4%;
+            margin-bottom: 4%;
+            text-align: center;
         }
 
         .sobre_emprendimiento {
@@ -73,11 +73,13 @@
                 text-transform: uppercase;
                 font-weight: bold;
                 letter-spacing: 5px;
+                font-size: calc(12px + .1vw);
             }
 
             .emprendimiento_text {
                 color: $gray4;
                 text-align: justify;
+                font-size: calc(10px + .1vw);
             }
         }
 
@@ -92,41 +94,58 @@
     }
 }
 
-.producto_foto_group {
-    position: relative;
-    transition: .2s all;
+.anchor_img {
+    display: block;
+    width: 100%;
+    height: 100%;
 
-    .producto_nombre {
-        z-index: 100000;
-        color: $white;
-        bottom: 4px;
-        height: 2.5rem;
+    .producto_foto_group {
+        position: relative;
+        transition: .2s all;
+        height: 100%;
         width: 100%;
-        text-align: center;
-        padding-top: .5rem;
-        padding-bottom: .5rem;
-        margin: 0%;
-        background-color: $gray2;
-        position: absolute;
-        backdrop-filter: blur(5px);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        word-wrap: break-word;
-        white-space: nowrap;
-        padding-left: .5rem;
-        padding-right: .5rem;
-    }
 
-    &:hover {
         .foto {
-            opacity: .5;
-            cursor: pointer;
-            transform: scale(1.01);
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1;
         }
-    }
 
-    &:active {
-        transform: scale(0.98);
+        .producto_nombre {
+            z-index: 100000;
+            color: $white;
+            bottom: 4px;
+            height: 15%;
+            font-size: calc(4px + .6vw);
+            width: 100%;
+            text-align: center;
+            padding-top: .5rem;
+            padding-bottom: .5rem;
+            margin: 0%;
+            max-width: 100%;
+            background-color: $gray2;
+            position: absolute;
+            backdrop-filter: blur(5px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-wrap: break-word;
+            white-space: nowrap;
+            padding-left: .5rem;
+            padding-right: .5rem;
+        }
+
+        &:hover {
+            .foto {
+                opacity: .5;
+                cursor: pointer;
+                transform: scale(1.01);
+            }
+        }
+
+        &:active {
+            transform: scale(0.98);
+        }
     }
 }
 
