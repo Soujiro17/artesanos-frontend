@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import { useForm } from 'react-hook-form'
-import { useMutation } from 'react-query'
+import { useMutation } from '@tanstack/react-query'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { OrangeLine, Spinner } from '../../components'

@@ -1,4 +1,23 @@
 import { axiosPublic } from '../services/axios'
+import { toQuery } from '../utils/toQuery'
+
+export const getProductos = async ({ page = 1, limit = 10, query = {} }) => {
+  const { data } = await axiosPublic.get(`/producto?page=${page}&limit=${limit}${toQuery(query)}`)
+
+  return data
+}
+
+export const getProductosByCategoriaId = async ({ page = 1, limit = 6, query = {}, _id }) => {
+  const { data } = await axiosPublic.get(`/producto?categoria=${_id}&page=${page}&limit=${limit}${toQuery(query)}`)
+
+  return data
+}
+
+export const getProductoById = async ({ _id }) => {
+  const { data } = await axiosPublic.get(`/producto/${_id}`)
+
+  return data
+}
 
 export const crearProducto = async ({ values, axios }) => {
   const { data } = await axios.post('/producto', values)

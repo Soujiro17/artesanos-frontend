@@ -1,5 +1,8 @@
+import { useQuery } from '@tanstack/react-query'
 import React, { Suspense } from 'react'
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
+import { getCategorias } from '../api/categorias'
+import { getDirecciones } from '../api/direcciones'
 import { AdminCategorias, AdminProductos, Layout, Spinner } from '../components'
 import AdminComienzo from '../components/adminComienzo'
 import useAuth from '../hooks/useAuth'
@@ -18,6 +21,14 @@ const Geolocalizar = React.lazy(() => import('../pages/geolocalizar'))
 const AcercaDe = React.lazy(() => import('../pages/acercaDe'))
 
 const AppRouter = () => {
+  useQuery(['categorias'], () => getCategorias({ query: { pagination: false } }), {
+    retry: 3
+  })
+
+  useQuery(['direcciones'], getDirecciones, {
+    retry: 3
+  })
+
   return (
     <BrowserRouter>
       <Suspense fallback={<Spinner fullScreen />}>

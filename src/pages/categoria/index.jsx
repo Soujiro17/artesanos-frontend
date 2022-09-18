@@ -1,11 +1,9 @@
 import React from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
+import { getProductosByCategoriaId } from '../../api/productos'
 import { Listar } from '../../components'
-import useApi from '../../hooks/useApi'
 
 const Categoria = () => {
-  const { getProductosByCategoriaId } = useApi()
-
   const params = useParams()
 
   const [searchParams] = useSearchParams()

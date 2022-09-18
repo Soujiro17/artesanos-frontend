@@ -1,10 +1,12 @@
-import { useQueryClient } from 'react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
-const useMutatorConfig = (title, fetchName) => {
+const useMutatorConfig = (title, fetchName, fetchFunction) => {
   const queryClient = useQueryClient()
 
-  const handleFunction = typeof fetchName === 'function' ? () => fetchName() : () => queryClient.prefetchQuery(fetchName)
+  const handleFunction = async () => {
+    await queryClient.prefetchQuery([fetchName], fetchFunction)
+  }
 
   const mutatorConfig = {
     create: {

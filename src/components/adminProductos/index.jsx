@@ -1,27 +1,22 @@
 /* eslint-disable react/jsx-indent */
 import React, { useState, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { toFormData } from '../../utilities/toFormData'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import Spinner from '../spinner'
 import { SelectArtesanos } from '..'
 import useMutatorConfig from '../../hooks/useMutatorConfig'
 import AlterRow from '../alterRow'
-import { actualizarProducto, crearProducto, eliminarProducto, getProductosByEmprendimientoId } from '../../api/productos'
-import useAxiosPrivate from '../../hooks/useAxiosPrivate'
+import { getProductosByEmprendimientoId } from '../../api/productos'
+import withForm from '../withForm'
 
-const AdminProductos = () => {
+const AdminProductos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, form }) => {
   const [selectedArtesano, setSelectedArtesano] = useState('')
-  const [idToUpdate, setIdToUpdate] = useState('')
 
   const { data, isLoadingData, refetch } = useQuery(['productos', selectedArtesano], () => getProductosByEmprendimientoId({ _id: selectedArtesano, pagination: false }), {
     enabled: false
   })
 
-  const axiosPrivate = useAxiosPrivate()
-
   const queryClient = useQueryClient()
-  const categorias = queryClient.getQueryData('categorias')
+  const categorias = queryClient.getQueryData(['categorias'])
 
   const mutatorConfig = useMutatorConfig('Categoria', () => {
     if (selectedArtesano === getValues('artesano')) {
@@ -29,24 +24,9 @@ const AdminProductos = () => {
     }
   })
 
-  const form = useForm()
-  const { register, formState: { errors }, handleSubmit, setValue, getValues, reset } = form
+  const { register, formState: { errors }, handleSubmit, getValues } = form
 
   const onChangeProductosByArtesanoId = (e) => setSelectedArtesano(e.target.value)
-
-  const { mutate: mutateCrear, isLoading: isLoadingCreate } = useMutation(crearProducto, mutatorConfig.create)
-  const { mutate: mutateActualizar, isLoading: isLoadingUpdate } = useMutation(actualizarProducto, mutatorConfig.update)
-  const { mutate: mutateEliminar, isLoading: isLoadingDelete } = useMutation(eliminarProducto, mutatorConfig.delete)
-
-  const onSubmit = (data) => {
-    const img = data?.foto[0]
-    const formData = toFormData({ ...data, foto: img })
-
-    if (idToUpdate) mutateActualizar({ values: formData, _id: idToUpdate, axios: axiosPrivate })
-    else mutateCrear({ values: formData, axios: axiosPrivate })
-
-    clearFields()
-  }
 
   useEffect(() => {
     if (selectedArtesano) {
@@ -54,31 +34,9 @@ const AdminProductos = () => {
     }
   }, [selectedArtesano])
 
-  const handleOnClickSet = ({ _id, nombre, precio, stock, descripcion, visible, categoria, artesano }) => {
-    setValue('nombre', nombre)
-    setValue('precio', precio)
-    setValue('stock', stock)
-    setValue('descripcion', descripcion)
-    setValue('visible', visible)
-    setValue('categoria', categoria)
-    setValue('artesano', artesano)
-    setIdToUpdate(_id)
-  }
-
-  const remove = (_id) => {
-    if (!window.confirm('Seguro que deseas eliminar este registro?')) return
-    mutateEliminar({ _id, axios: axiosPrivate })
-  }
-
-  const clearFields = () => {
-    reset()
-    setIdToUpdate('')
-  }
-
   return (
     <>
       <div className='form-container'>
-        {(isLoadingCreate || isLoadingUpdate || isLoadingDelete) && <Spinner fullScreen />}
         <p>Crear producto</p>
         <form onSubmit={handleSubmit(onSubmit)} className='admin-form'>
           <input className={`${errors.nombre ? 'error-campo' : ''} input`} defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre producto' />
@@ -100,7 +58,7 @@ const AdminProductos = () => {
           </select>
           <SelectArtesanos form={form} />
           <button className='btn btn-effect bg-cyan' type='submit'>{idToUpdate ? 'Actualizar producto' : 'Agregar producto'}</button>
-          <button className='btn btn-effect bg-cyan' onClick={clearFields}>Limpiar</button>
+          <button className='btn btn-effect bg-cyan' onClick={onClear}>Limpiar</button>
         </form>
       </div>
       <div>
@@ -129,7 +87,7 @@ const AdminProductos = () => {
                     <td>{item.precio}</td>
                     <td>{item.stock === null ? 'Consultar al artesano' : item.stock}</td>
                     <td>{item.visible ? 'Sí' : 'No'}</td>
-                    <AlterRow onClickEdit={() => handleOnClickSet({ ...item })} onClickRemove={() => remove(item._id)} />
+                    <AlterRow onClickEdit={() => onClickSet({ ...item })} onClickRemove={() => onRemove(item._id)} />
                   </tr>
                 )
               }
@@ -141,4 +99,4 @@ const AdminProductos = () => {
   )
 }
 
-export default AdminProductos
+export default withForm(AdminProductos)('productos')

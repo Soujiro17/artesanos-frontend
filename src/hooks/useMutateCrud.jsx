@@ -1,21 +1,17 @@
-import { useMutation } from 'react-query'
+import { useMutation } from '@tanstack/react-query'
+import Spinner from '../components/spinner'
 import useAxiosPrivate from './useAxiosPrivate'
-import useMutatorConfig from './useMutatorConfig'
 
 const useMutateCrud = (createFunction, updateFunction, deleteFunction, config) => {
   const axiosPrivate = useAxiosPrivate()
 
-  let newConfig
+  const { mutate: mutateCreate, isLoading: isLoadingCreate } = useMutation(data => createFunction({ ...data, axios: axiosPrivate }), config.create)
+  const { mutate: mutateUpdate, isLoading: isLoadingUpdate } = useMutation(data => updateFunction({ ...data, axios: axiosPrivate }), config.update)
+  const { mutate: mutateDelete, isLoading: isLoadingDelete } = useMutation(data => deleteFunction({ ...data, axios: axiosPrivate }), config.delete)
 
-  if (typeof config === 'string') {
-    newConfig = useMutatorConfig(config, config + 's')
-  }
+  if (isLoadingCreate || isLoadingUpdate || isLoadingDelete) return <Spinner fullScreen />
 
-  const { mutate: mutateCreate, isLoading: isLoadingCreate } = useMutation(data => createFunction({ ...data, axios: axiosPrivate }), newConfig?.create || config.create)
-  const { mutate: mutateUpdate, isLoading: isLoadingUpdate } = useMutation(data => updateFunction({ ...data, axios: axiosPrivate }), newConfig?.update || config.update)
-  const { mutate: mutateDelete, isLoading: isLoadingDelete } = useMutation(data => deleteFunction({ ...data, axios: axiosPrivate }), newConfig?.delete || config.delete)
-
-  return { mutateCreate, isLoadingCreate, mutateUpdate, isLoadingUpdate, mutateDelete, isLoadingDelete }
+  return { mutateCreate, mutateUpdate, mutateDelete }
 }
 
 export default useMutateCrud

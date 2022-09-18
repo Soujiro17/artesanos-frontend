@@ -4,10 +4,9 @@ import { ToastContainer } from 'react-toastify'
 import AuthProvider from './contexts/AuthContext'
 import 'react-toastify/dist/ReactToastify.css'
 import './index.scss'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { ReactQueryDevtools } from 'react-query/devtools'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import AppRouter from './routes'
-import APIProvider from './contexts/API'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,13 +24,9 @@ const render = ReactDOM.createRoot(rootContainer)
 render.render(
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
-      <APIProvider>
-        <AppRouter />
-        <ToastContainer autoClose={3000} />
-        {
-            import.meta.env.DEV && <ReactQueryDevtools />
-          }
-      </APIProvider>
+      <AppRouter />
+      <ToastContainer autoClose={3000} />
+      <ReactQueryDevtools initialIsOpen={false} />
     </AuthProvider>
   </QueryClientProvider>
 )

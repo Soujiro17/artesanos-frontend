@@ -2,13 +2,11 @@ import React from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { Layout, OrangeLine, Section, Spinner } from '../../components'
 import styles from './styles.module.scss'
-import useApi from '../../hooks/useApi'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
+import { getProductoById } from '../../api/productos'
 
 const Producto = () => {
   const { id } = useParams()
-
-  const { getProductoById } = useApi()
 
   // eslint-disable-next-line eqeqeq
   if (!id || id == 'undefined') return <Navigate to={-1} />

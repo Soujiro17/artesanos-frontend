@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-indent */
 import React, { useState, useMemo } from 'react'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { Link, useParams } from 'react-router-dom'
 import { Layout, OrangeLine, Section, Spinner, StackCircles, Map } from '../../components'
-import useApi from '../../hooks/useApi'
 import styles from './styles.module.scss'
+import { getArtesanoById } from '../../api/artesanos'
 
 const FotoConAnchorYText = ({ nombre = 'Producto no disponible', img, url, izq = false }) => {
   return (
@@ -36,9 +36,7 @@ const ArtesanoMapa = ({ emprendimiento }) => {
 const Artesano = () => {
   const params = useParams()
 
-  const api = useApi()
-
-  const { data: artesano, isLoading } = useQuery(['artesano', params.id], () => api.getArtesanoById({ _id: params.id }))
+  const { data: artesano, isLoading } = useQuery(['artesano', params.id], () => getArtesanoById({ _id: params.id }))
 
   const emprendimiento = artesano?.emprendimiento
   const productos = artesano?.emprendimiento?.productos

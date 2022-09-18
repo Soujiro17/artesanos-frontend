@@ -3,20 +3,18 @@ import React, { useState } from 'react'
 import Section from '../section'
 import styles from './styles.module.scss'
 import { Link } from 'react-router-dom'
-import useApi from '../../hooks/useApi'
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import Spinner from '../spinner'
 import OrangeLine from '../orangeLine'
 import StackCircles from '../stackCircles'
+import { getCategorias } from '../../api/categorias'
 
 const SectionCategories = () => {
-  const { getCategorias } = useApi()
-
   const [nombre, setNombre] = useState('')
 
   const handleNombre = (e) => setNombre(e.target.value)
 
-  const { data, isLoading, isError } = useQuery('categorias', () => getCategorias({ query: { pagination: false } }))
+  const { data, isLoading, isError } = useQuery(['categorias'], () => getCategorias({ query: { pagination: false } }))
 
   return (
     <>

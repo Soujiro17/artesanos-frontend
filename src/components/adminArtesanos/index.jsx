@@ -1,77 +1,38 @@
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { useMutation, useQuery } from 'react-query'
-import { toFormData } from '../../utilities/toFormData'
-import useApi from '../../hooks/useApi'
+import React from 'react'
+import { useQuery } from '@tanstack/react-query'
 import Spinner from '../spinner'
-import useMutatorConfig from '../../hooks/useMutatorConfig'
 import AlterRow from '../alterRow'
 import styles from './styles.module.scss'
+import { getArtesanos } from '../../api/artesanos'
+import withForm from '../withForm'
 
-const AdminArtesanos = () => {
-  const [isUpdating, setIsUpdating] = useState(false)
-  const [id, setId] = useState('')
+const AdminArtesanos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, form }) => {
+  const { register, formState: { errors }, handleSubmit } = form
 
-  const mutatorConfig = useMutatorConfig('Artesano', 'artesanos')
-
-  const { register, formState: { errors }, handleSubmit, setValue, reset } = useForm()
-
-  const api = useApi()
-
-  const { data, isLoading: isLoadingData } = useQuery('artesanos', () => api.getArtesanos({ query: { pagination: false, populate: true } }))
-
-  const { mutate: mutateCrear, isLoading: isLoadingCreate } = useMutation(api.crearArtesano, mutatorConfig.create)
-  const { mutate: mutateActualizar, isLoading: isLoadingUpdate } = useMutation(api.actualizarArtesano, mutatorConfig.update)
-  const { mutate: mutateEliminar, isLoading: isLoadingDelete } = useMutation(api.eliminarArtesano, mutatorConfig.delete)
-
-  const onSubmit = (data) => {
-    const img = data.foto[0]
-
-    const formData = toFormData({ ...data, foto: img })
-
-    if (id) mutateActualizar({ values: formData, _id: id })
-    else mutateCrear({ values: formData })
-
-    clearFields()
-  }
+  const { data, isLoading: isLoadingData } = useQuery(['artesanos'], () => getArtesanos({ query: { pagination: false, populate: true } }))
 
   const handleOnClickSet = ({ _id, nombres, apellidos, rut, emprendimiento }) => {
-    setValue('nombres', nombres)
-    setValue('apellidos', apellidos)
-    setValue('rut', rut)
-    setValue('nombre', emprendimiento?.nombre)
-    setValue('descripcion', emprendimiento?.descripcion)
-    setValue('direccion', emprendimiento?.direccion?.nombre)
-    setValue('telefono', emprendimiento?.telefono)
-    setIsUpdating(true)
-    setId(_id)
+    const parsedValues = {
+      _id,
+      nombre: emprendimiento?.nombre || `${nombres} ${apellidos}`,
+      descripcion: emprendimiento?.descripcion,
+      direccion: emprendimiento?.direccion?.nombre,
+      telefono: emprendimiento?.telefono,
+      nombres,
+      apellidos,
+      rut
+    }
+
+    onClickSet(parsedValues)
   }
 
   // // const crearArtesanos = () => {
   // //   artesanos.map(artesano => mutateCrear({ values: toFormData(artesano) }))
   // // }
 
-  const remove = (_id) => {
-    if (!window.confirm('Seguro que deseas eliminar este registro?')) return
-
-    if (_id === id) {
-      setIsUpdating(false)
-      setId('')
-    }
-
-    mutateEliminar({ _id })
-  }
-
-  const clearFields = () => {
-    reset()
-    setId('')
-    setIsUpdating(false)
-  }
-
   return (
     <>
       <div>
-        {(isLoadingCreate || isLoadingUpdate || isLoadingDelete) && <Spinner fullScreen />}
         <p>Crear Artesano</p>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.admin_form_sides}>
           <div className={styles.side}>
@@ -90,8 +51,8 @@ const AdminArtesanos = () => {
           </div>
 
           <div className={styles.botones}>
-            <button className={`${styles.btn_submit} btn btn-effect bg-cyan`} type='submit'>{isUpdating ? 'Actualizar artesano' : 'Agregar artesano'}</button>
-            <button className={`${styles.btn_submit} btn btn-effect bg-cyan`} onClick={clearFields}>Limpiar</button>
+            <button className={`${styles.btn_submit} btn btn-effect bg-cyan`} type='submit'>{idToUpdate ? 'Actualizar artesano' : 'Agregar artesano'}</button>
+            <button className={`${styles.btn_submit} btn btn-effect bg-cyan`} onClick={onClear}>Limpiar</button>
           </div>
         </form>
       </div>
@@ -115,7 +76,7 @@ const AdminArtesanos = () => {
                   <td>{item.nombres}</td>
                   <td>{item.apellidos}</td>
                   <td>{item.rut}</td>
-                  <AlterRow onClickEdit={() => handleOnClickSet({ ...item })} onClickRemove={() => remove(item._id)} />
+                  <AlterRow onClickEdit={() => handleOnClickSet({ ...item })} onClickRemove={() => onRemove(item._id)} />
                 </tr>
               )
             }
@@ -127,4 +88,4 @@ const AdminArtesanos = () => {
   )
 }
 
-export default AdminArtesanos
+export default withForm(AdminArtesanos)('artesanos')
