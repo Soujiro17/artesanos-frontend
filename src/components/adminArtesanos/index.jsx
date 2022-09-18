@@ -64,6 +64,8 @@ const AdminArtesanos = () => {
 
   const clearFields = () => {
     reset()
+    setId('')
+    setIsUpdating(false)
   }
 
   return (

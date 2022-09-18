@@ -18,6 +18,7 @@ import Presentacion from './presentacion'
 import FooterLogo from './footerLogo'
 import StackCircles from './stackCircles'
 import Layout from './layout'
+import SelectArtesanos from './selectArtesanos'
 
 export {
   Header,
@@ -39,5 +40,6 @@ export {
   Presentacion,
   FooterLogo,
   StackCircles,
-  Layout
+  Layout,
+  SelectArtesanos
 }

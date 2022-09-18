@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useMutation, useQueryClient } from 'react-query'
-import useApi from '../../hooks/useApi'
+import { useQueryClient } from 'react-query'
 import Spinner from '../spinner'
 import { toFormData } from '../../utilities/toFormData'
 import useMutatorConfig from '../../hooks/useMutatorConfig'
 import AlterRow from '../alterRow'
+import { actualizarCategoria, crearCategoria, eliminarCategoria } from '../../api/categorias'
+import useMutateCrud from '../../hooks/useMutateCrud'
 
 const AdminCategorias = () => {
   const [isUpdating, setIsUpdating] = useState(false)
@@ -15,22 +16,17 @@ const AdminCategorias = () => {
 
   const { register, formState: { errors }, handleSubmit, setValue } = useForm()
 
-  const api = useApi()
-
   const queryClient = useQueryClient()
-
   const data = queryClient.getQueryData('categorias')
 
-  const { mutate: mutateCrearCategria, isLoading: isLoadingCreate } = useMutation(api.crearCategoria, mutatorConfig.create)
-  const { mutate: mutateActualizarCategoria, isLoading: isLoadingUpdate } = useMutation(api.actualizarCategoria, mutatorConfig.update)
-  const { mutate: mutateEliminarCategoria, isLoading: isLoadingDelete } = useMutation(api.eliminarCategoria, mutatorConfig.delete)
+  const { mutateCreate, mutateUpdate, mutateDelete } = useMutateCrud(crearCategoria, actualizarCategoria, eliminarCategoria, mutatorConfig)
 
   const onSubmit = (data) => {
     const img = data.foto[0]
     const formData = toFormData({ ...data, foto: img })
 
-    if (id) mutateActualizarCategoria({ values: formData, _id: id })
-    else mutateCrearCategria({ values: formData })
+    if (id) mutateUpdate({ values: formData, _id: id })
+    else mutateCreate({ values: formData })
 
     clearFields()
   }
@@ -42,7 +38,7 @@ const AdminCategorias = () => {
   }
 
   const remove = (_id) => {
-    mutateEliminarCategoria({ _id })
+    mutateDelete({ _id })
   }
 
   const clearFields = () => {

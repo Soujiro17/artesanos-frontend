@@ -24,24 +24,6 @@ const APIProvider = ({ children }) => {
     return data
   }
 
-  const crearCategoria = async ({ values }) => {
-    const { data } = await axiosPrivate.post('/categoria', values)
-
-    return data
-  }
-
-  const actualizarCategoria = async ({ values, _id }) => {
-    const { data } = await axiosPrivate.put(`/categoria/${_id}`, values)
-
-    return data
-  }
-
-  const eliminarCategoria = async ({ _id }) => {
-    const { data } = await axiosPrivate.delete(`/categoria/${_id}`)
-
-    return data
-  }
-
   /* Artesanos */
 
   const getArtesanos = async ({ page = 1, limit = 10, query = {} }) => {
@@ -88,30 +70,6 @@ const APIProvider = ({ children }) => {
     return data
   }
 
-  const getProductosByEmprendimientoId = async ({ _id, page = 1, limit = 6, pagination = true }) => {
-    const { data } = await axiosPublic.get(`/producto?emprendimiento=${_id}&page=${page}&limit=${limit}&pagination=${pagination}`)
-
-    return data
-  }
-
-  const crearProducto = async ({ values }) => {
-    const { data } = await axiosPrivate.post('/producto', values)
-
-    return data
-  }
-
-  const actualizarProducto = async ({ values, _id }) => {
-    const { data } = await axiosPrivate.put(`/producto/${_id}`, values)
-
-    return data
-  }
-
-  const eliminarProducto = async ({ _id }) => {
-    const { data } = await axiosPrivate.delete(`/producto/${_id}`)
-
-    return data
-  }
-
   const getProductoById = async ({ _id }) => {
     const { data } = await axiosPrivate.get(`/producto/${_id}`)
 
@@ -142,9 +100,6 @@ const APIProvider = ({ children }) => {
       // Categorías
       getCategorias,
       getCategoriaById,
-      crearCategoria,
-      actualizarCategoria,
-      eliminarCategoria,
 
       // Artesanos
       getArtesanos,
@@ -157,10 +112,6 @@ const APIProvider = ({ children }) => {
       getProductos,
       getProductoById,
       getProductosByCategoriaId,
-      getProductosByEmprendimientoId,
-      crearProducto,
-      actualizarProducto,
-      eliminarProducto,
 
       // Direccion
       getDirecciones
