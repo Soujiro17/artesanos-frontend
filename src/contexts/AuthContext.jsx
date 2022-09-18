@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import useAxiosPrivate from '../hooks/useAxiosPrivate'
 
 import { axiosPublic } from '../services/axios'
 
@@ -6,6 +7,8 @@ export const AuthContext = React.createContext(null)
 
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(null)
+
+  const axiosPrivate = useAxiosPrivate()
 
   const login = async (user) => {
     const { data } = await axiosPublic.post('/auth', user)
@@ -26,7 +29,7 @@ const AuthProvider = ({ children }) => {
   }
 
   const refresh = async () => {
-    await axiosPublic.get('/auth/refresh', { withCredentials: true })
+    await axiosPrivate.get('/auth/refresh', { withCredentials: true })
       .then(res => setAuth(prev => ({ ...prev, accessToken: res.data.accessToken })))
       .catch(err => {
         console.log(err)
