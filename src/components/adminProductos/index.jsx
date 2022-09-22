@@ -1,54 +1,49 @@
 /* eslint-disable react/jsx-indent */
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import Spinner from '../spinner'
 import { SelectArtesanos } from '..'
-import useMutatorConfig from '../../hooks/useMutatorConfig'
 import AlterRow from '../alterRow'
 import { getProductosByEmprendimientoId } from '../../api/productos'
 import withForm from '../withForm'
+import Checkbox from '../checkbox'
+import FormInput from '../formInput'
 
-const AdminProductos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, form }) => {
-  const [selectedArtesano, setSelectedArtesano] = useState('')
+/*
+AuxId almacena almacena el id del artesano seleccionado
+de ver sus productos, para así hacer el refetch al actualizar
+*/
 
-  const { data, isLoadingData, refetch } = useQuery(['productos', selectedArtesano], () => getProductosByEmprendimientoId({ _id: selectedArtesano, pagination: false }), {
+const AdminProductos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, form, auxId, setAuxId }) => {
+  const { data, isLoadingData, refetch } = useQuery(['productos', auxId], () => getProductosByEmprendimientoId({ _id: auxId, pagination: false }), {
     enabled: false
   })
 
   const queryClient = useQueryClient()
   const categorias = queryClient.getQueryData(['categorias'])
 
-  const mutatorConfig = useMutatorConfig('Categoria', () => {
-    if (selectedArtesano === getValues('artesano')) {
-      queryClient.prefetchQuery(['productos', selectedArtesano])
-    }
-  })
+  const { register, formState: { errors }, handleSubmit } = form
 
-  const { register, formState: { errors }, handleSubmit, getValues } = form
-
-  const onChangeProductosByArtesanoId = (e) => setSelectedArtesano(e.target.value)
+  const onChangeProductosByArtesanoId = (e) => setAuxId(e.target.value)
 
   useEffect(() => {
-    if (selectedArtesano) {
+    if (auxId) {
       refetch()
     }
-  }, [selectedArtesano])
+  }, [auxId])
 
   return (
     <>
       <div className='form-container'>
         <p>Crear producto</p>
         <form onSubmit={handleSubmit(onSubmit)} className='admin-form'>
-          <input className={`${errors.nombre ? 'error-campo' : ''} input`} defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre producto' />
-          <input className={`${errors.precio ? 'error-campo' : ''} input`} defaultValue='' {...register('precio', { required: true })} type='number' placeholder='Precio producto' />
-          <input className='input' defaultValue='' {...register('stock')} type='number' placeholder='Stock producto' />
-          <textarea className='input' defaultValue='' {...register('descripcion')} placeholder='Descripción producto' maxLength={300} />
-          <div>
-            <input id='visible' defaultChecked {...register('visible')} type='checkbox' />
-            <label htmlFor='visible'>Visible</label>
-          </div>
-          <input defaultValue='' {...register('foto')} type='file' accept='image/*' />
-          <select className={`${errors.categoria ? 'error-campo' : ''} input`} defaultValue='' {...register('categoria', { required: true })}>
+          <FormInput name='nombre' errors={errors} register={register} placeholder='Nombre producto' />
+          <FormInput name='precio' errors={errors} register={register} placeholder='Precio producto' type='number' />
+          <FormInput name='stock' errors={errors} register={register} placeholder='Stock' type='number' />
+          <FormInput name='descripcion' errors={errors} register={register} placeholder='Este producto está hecho de...' isTextArea />
+          <Checkbox name='visible' errors={errors} register={register} label='Visible' />
+          <FormInput name='foto' errors={errors} register={register} type='file' accept='image/*' />
+          <select className={`${errors.categoria ? 'error-campo' : ''} input`} {...register('categoria', { required: true })}>
             <option value=''>Seleccionar categoría</option>
             {
               categorias?.docs?.map(categoria => (
@@ -56,14 +51,14 @@ const AdminProductos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, f
               ))
             }
           </select>
-          <SelectArtesanos form={form} />
+          <SelectArtesanos returnEmprendimientoId form={form} />
           <button className='btn btn-effect bg-cyan' type='submit'>{idToUpdate ? 'Actualizar producto' : 'Agregar producto'}</button>
           <button className='btn btn-effect bg-cyan' onClick={onClear}>Limpiar</button>
         </form>
       </div>
       <div>
         <p>Selecciona un artesano para ver sus productos</p>
-        <SelectArtesanos onChange={onChangeProductosByArtesanoId} returnEmprendimientoId />
+        <SelectArtesanos onChange={onChangeProductosByArtesanoId} returnEmprendimientoId isRequired />
         <div className='table-container'>
           <p className='no-data'>Mostrando {data?.totalDocs || 0} registros</p>
           <table>
@@ -73,7 +68,6 @@ const AdminProductos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, f
                 <th>Precio</th>
                 <th>Stock</th>
                 <th>Visible</th>
-                <th>SKU</th>
                 <th>Accion</th>
               </tr>
             </thead>

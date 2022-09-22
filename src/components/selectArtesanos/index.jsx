@@ -10,7 +10,7 @@ const SelectArtesanos = ({ form, isRequired = true, populate = true, paginate = 
   const content = (
     <>
       <option value=''>Seleccionar artesano</option>
-      {artesanos?.docs?.map(artesano => <option key={artesano._id} value={returnEmprendimientoId ? artesano.emprendimiento : artesano._id}>{artesano.emprendimiento?.nombre || `${artesano.nombres} ${artesano.apellidos}`}</option>)}
+      {artesanos?.docs?.map(artesano => <option key={artesano._id} value={returnEmprendimientoId ? artesano.emprendimiento?._id : artesano._id}>{artesano.emprendimiento?.nombre || `${artesano.nombres} ${artesano.apellidos}`}</option>)}
     </>
   )
 
@@ -19,7 +19,7 @@ const SelectArtesanos = ({ form, isRequired = true, populate = true, paginate = 
   const { formState: { errors }, register } = form
   const className = `${errors?.nombre ? 'error-campo' : ''} input`
 
-  return <select className={className} defaultValue='' {...register('artesano', { required: isRequired })}>{content}</select>
+  return <select className={className} defaultValue='' {...register(returnEmprendimientoId ? 'emprendimiento' : 'artesano', { required: isRequired })}>{content}</select>
 }
 
 export default SelectArtesanos

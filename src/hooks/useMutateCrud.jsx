@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query'
-import Spinner from '../components/spinner'
 import useAxiosPrivate from './useAxiosPrivate'
 
 const useMutateCrud = (createFunction, updateFunction, deleteFunction, config) => {
@@ -9,9 +8,7 @@ const useMutateCrud = (createFunction, updateFunction, deleteFunction, config) =
   const { mutate: mutateUpdate, isLoading: isLoadingUpdate } = useMutation(data => updateFunction({ ...data, axios: axiosPrivate }), config.update)
   const { mutate: mutateDelete, isLoading: isLoadingDelete } = useMutation(data => deleteFunction({ ...data, axios: axiosPrivate }), config.delete)
 
-  if (isLoadingCreate || isLoadingUpdate || isLoadingDelete) return <Spinner fullScreen />
-
-  return { mutateCreate, mutateUpdate, mutateDelete }
+  return { mutateCreate, mutateUpdate, mutateDelete, isLoadingCreate, isLoadingUpdate, isLoadingDelete }
 }
 
 export default useMutateCrud

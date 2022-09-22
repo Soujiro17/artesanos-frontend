@@ -1,29 +1,36 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-
+import { actualizarArtesano, crearArtesano, eliminarArtesano } from '../../api/artesanos'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { actualizarCategoria, crearCategoria, eliminarCategoria } from '../../api/categorias'
 import { actualizarProducto, crearProducto, eliminarProducto } from '../../api/productos'
 import useMutateCrud from '../../hooks/useMutateCrud'
 import useMutatorConfig from '../../hooks/useMutatorConfig'
 import { toFormData } from '../../utils/toFormData'
-
+import { productosSchema } from '../../data/schemas'
+import Spinner from '../spinner'
 const withForm = (Component) => (type) => (props) => {
   const [idToUpdate, setIdToUpdate] = useState('')
-
-  const form = useForm()
-
-  const { setValue, reset } = form
+  const [auxId, setAuxId] = useState('')
 
   let mutate
 
+  const schema = type === 'productos' ? productosSchema : type === 'artesanos' ? productosSchema : productosSchema
+
+  const form = useForm({
+    resolver: yupResolver(schema)
+  })
+
+  const { setValue, reset } = form
+
   if (type === 'productos') {
-    const mutateConfig = useMutatorConfig('Producto', 'productos')
+    const mutateConfig = useMutatorConfig('Producto', ['productos', auxId])
     mutate = useMutateCrud(crearProducto, actualizarProducto, eliminarProducto, mutateConfig)
   } else if (type === 'artesanos') {
-    const mutateConfig = useMutatorConfig('Categoria', 'categorias')
-    mutate = useMutateCrud(crearCategoria, actualizarCategoria, eliminarCategoria, mutateConfig)
+    const mutateConfig = useMutatorConfig('Artesano', ['artesanos'])
+    mutate = useMutateCrud(crearArtesano, actualizarArtesano, eliminarArtesano, mutateConfig)
   } else {
-    const mutateConfig = useMutatorConfig('Categoria', 'categorias')
+    const mutateConfig = useMutatorConfig('Categoria', ['categorias'])
     mutate = useMutateCrud(crearCategoria, actualizarCategoria, eliminarCategoria, mutateConfig)
   }
 
@@ -59,6 +66,9 @@ const withForm = (Component) => (type) => (props) => {
     reset()
     setIdToUpdate('')
   }
+
+  if (mutate.isLoadingCreate || mutate.isLoadingUpdate || mutate.isLoadingDelete) return <Spinner fullScreen />
+
   return (
     <Component
       {...props}
@@ -68,6 +78,8 @@ const withForm = (Component) => (type) => (props) => {
       onClickSet={onClickSet}
       onClear={onClear}
       idToUpdate={idToUpdate}
+      auxId={auxId}
+      setAuxId={setAuxId}
     />
   )
 }

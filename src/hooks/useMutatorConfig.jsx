@@ -5,32 +5,32 @@ const useMutatorConfig = (title, fetchName, fetchFunction) => {
   const queryClient = useQueryClient()
 
   const handleFunction = async () => {
-    await queryClient.prefetchQuery([fetchName], fetchFunction)
+    await queryClient.prefetchQuery(fetchName, fetchFunction)
   }
 
   const mutatorConfig = {
     create: {
-      onSuccess: () => {
+      onSuccess: async () => {
         toast.success(`${title} creada con éxito`)
-        handleFunction()
+        await handleFunction()
       },
       onError: (res) => {
         toast.error(res.response.data)
       }
     },
     update: {
-      onSuccess: () => {
+      onSuccess: async () => {
         toast.success(`${title} actualizada con éxito`)
-        handleFunction()
+        await handleFunction()
       },
       onError: (res) => {
         toast.error(res.response.data)
       }
     },
     delete: {
-      onSuccess: () => {
+      onSuccess: async () => {
         toast.success(`${title} eliminada con éxito`)
-        handleFunction()
+        await handleFunction()
       },
       onError: (res) => {
         toast.error(res.response.data)

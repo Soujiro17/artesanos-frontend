@@ -7,6 +7,7 @@ export const toFormData = (dic) => {
     if (typeof dic[el] === 'object' && dic === 'redes_sociales'){
       return data.append(el, JSON.stringify(dic[el]))
     }
+
     return data.append(el, dic[el])
   })
 
