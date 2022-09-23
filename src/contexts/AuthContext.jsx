@@ -15,8 +15,6 @@ const AuthProvider = ({ children }) => {
 
     if (data?.accessToken) {
       setAuth(data.accessToken)
-      // eslint-disable-next-line no-undef
-      sessionStorage.setItem('token', data.accessToken)
     }
 
     return data
@@ -29,7 +27,7 @@ const AuthProvider = ({ children }) => {
   }
 
   const refresh = async () => {
-    await axiosPrivate.get('/auth/refresh', { withCredentials: true })
+    await axiosPrivate.get('/auth/refresh')
       .then(res => setAuth(prev => ({ ...prev, accessToken: res.data.accessToken })))
       .catch(err => {
         console.log(err)

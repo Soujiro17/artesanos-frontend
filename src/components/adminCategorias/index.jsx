@@ -3,6 +3,8 @@ import { useQueryClient } from '@tanstack/react-query'
 import Spinner from '../spinner'
 import AlterRow from '../alterRow'
 import withForm from '../withForm'
+import Checkbox from '../checkbox'
+import FormInput from '../formInput'
 
 const AdminCategorias = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, form }) => {
   const { register, formState: { errors }, handleSubmit } = form
@@ -15,8 +17,9 @@ const AdminCategorias = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, 
       <div className='form-container'>
         <h2>Crear categoria</h2>
         <form onSubmit={handleSubmit(onSubmit)} className='admin-form'>
-          <input className={`${errors.nombre ? 'error-campo' : ''} input`} defaultValue='' {...register('nombre', { required: true })} placeholder='Nombre categoría' />
-          <input defaultValue={null} {...register('foto')} type='file' accept='image/*' />
+          <FormInput errors={errors} register={register} name='nombre' placeholder='Nombre categoría' />
+          <FormInput errors={errors} register={register} name='foto' accept='image/*' type='file' />
+          {idToUpdate && <Checkbox name='eliminarFoto' register={register} label='Eliminar foto' />}
           <button className='btn btn-effect bg-cyan' type='submit'>{idToUpdate ? 'Actualizar categoría' : 'Agregar categoría'}</button>
           <button className='btn btn-effect bg-cyan' onClick={onClear}>Limpiar</button>
         </form>
@@ -37,7 +40,7 @@ const AdminCategorias = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, 
               : data?.docs?.map(item =>
                 <tr key={item._id}>
                   <td>{item.nombre}</td>
-                  <AlterRow onClickEdit={() => onClickSet({ ...item })} onClickRemove={() => onRemove(item._id)} />
+                  <AlterRow path='categoria' id={item._id} onClickEdit={() => onClickSet({ ...item })} onClickRemove={() => onRemove(item._id)} />
                 </tr>
               )
             }

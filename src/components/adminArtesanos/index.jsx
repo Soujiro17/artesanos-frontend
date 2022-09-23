@@ -6,6 +6,7 @@ import styles from './styles.module.scss'
 import { getArtesanos } from '../../api/artesanos'
 import withForm from '../withForm'
 import FormInput from '../formInput'
+import Checkbox from '../checkbox'
 
 const AdminArtesanos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, form }) => {
   const { register, formState: { errors }, handleSubmit } = form
@@ -31,21 +32,22 @@ const AdminArtesanos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, f
   return (
     <>
       <div>
-        <p>Crear Artesano</p>
+        <h2 className='text-align-center'>Crear Artesano</h2>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.admin_form_sides}>
           <div className={styles.side}>
-            <input className={`${errors.nombres ? 'error-campo' : ''} input`} defaultValue='' {...register('nombres', { required: true })} placeholder='Nombres artesano' />
-            <input className={`${errors.apellidos ? 'error-campo' : ''} input`} defaultValue='' {...register('apellidos', { required: true })} placeholder='Apellidos artesano' />
-            <input className='input' defaultValue='' {...register('rut')} placeholder='ej: 111111111' />
-            <input defaultValue={null} {...register('foto')} type='file' accept='image/*' />
+            <FormInput name='nombres' errors={errors} register={register} placeholder='Nombres artesano' />
+            <FormInput name='apellidos' errors={errors} register={register} placeholder='Apellidos artesano' />
+            <FormInput name='rut' errors={errors} register={register} placeholder='ej: 11111111-1' />
+            <FormInput name='foto' errors={errors} register={register} type='file' accept='image/*' />
+            {idToUpdate && <Checkbox name='eliminarFoto' register={register} label='Eliminar foto' />}
           </div>
 
           <div className={styles.side}>
-            <input className='input' defaultValue='' {...register('nombre')} placeholder='Nombre emprendimiento' />
+            <FormInput name='nombre' errors={errors} register={register} placeholder='Nombre emprendimiento' />
             <FormInput errors={errors} register={register} name='descripcion' placeholder='... es una artesana que ha sido capaz...' isTextArea />
-            <input className='input' defaultValue='' {...register('direccion')} placeholder='Direccion' />
-            <input className='input' defaultValue='' {...register('telefono')} placeholder='Teléfono' />
-            <input className='input' defaultValue='' {...register('correo')} placeholder='Correo' />
+            <FormInput name='direccion' errors={errors} register={register} placeholder='Dirección' />
+            <FormInput name='telefono' errors={errors} register={register} placeholder='Teléfono' />
+            <FormInput name='correo' errors={errors} register={register} placeholder='Correo' />
           </div>
 
           <div className={styles.botones}>

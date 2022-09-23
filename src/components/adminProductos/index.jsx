@@ -35,7 +35,7 @@ const AdminProductos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, f
   return (
     <>
       <div className='form-container'>
-        <p>Crear producto</p>
+        <h2>Crear producto</h2>
         <form onSubmit={handleSubmit(onSubmit)} className='admin-form'>
           <FormInput name='nombre' errors={errors} register={register} placeholder='Nombre producto' />
           <FormInput name='precio' errors={errors} register={register} placeholder='Precio producto' type='number' />
@@ -43,6 +43,7 @@ const AdminProductos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, f
           <FormInput name='descripcion' errors={errors} register={register} placeholder='Este producto está hecho de...' isTextArea />
           <Checkbox name='visible' errors={errors} register={register} label='Visible' />
           <FormInput name='foto' errors={errors} register={register} type='file' accept='image/*' />
+          {idToUpdate && <Checkbox name='eliminarFoto' register={register} label='Eliminar foto' />}
           <select className={`${errors.categoria ? 'error-campo' : ''} input`} {...register('categoria', { required: true })}>
             <option value=''>Seleccionar categoría</option>
             {

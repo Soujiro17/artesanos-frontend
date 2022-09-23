@@ -7,7 +7,7 @@ import { actualizarProducto, crearProducto, eliminarProducto } from '../../api/p
 import useMutateCrud from '../../hooks/useMutateCrud'
 import useMutatorConfig from '../../hooks/useMutatorConfig'
 import { toFormData } from '../../utils/toFormData'
-import { artesanoSchema, productosSchema } from '../../data/schemas'
+import { artesanoSchema, categoriaSchema, productosSchema } from '../../data/schemas'
 import Spinner from '../spinner'
 
 const withForm = (Component) => (type) => (props) => {
@@ -27,7 +27,7 @@ const withForm = (Component) => (type) => (props) => {
   } else {
     const mutateConfig = useMutatorConfig('Categoria', ['categorias'])
     mutate = useMutateCrud(crearCategoria, actualizarCategoria, eliminarCategoria, mutateConfig)
-    schema = productosSchema
+    schema = categoriaSchema
   }
 
   const form = useForm({

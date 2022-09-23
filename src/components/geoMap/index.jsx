@@ -13,7 +13,9 @@ const MapComponent = ({ geolocation = false, data }) => {
   const [actualLon, setActualLon] = useState(0)
   const [actualAlt, setactualAlt] = useState(0)
 
-  const zoom = 13.5
+  const zoom = data ? 16 : 13.5
+
+  console.log(data)
 
   const queryClient = useQueryClient()
 

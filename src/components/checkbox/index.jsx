@@ -1,11 +1,12 @@
 import React from 'react'
+import styles from './styles.module.scss'
 
 const Checkbox = ({ register, name, label = '', ...rest }) => {
   return (
-    <div className={`${rest.className} checkbox`}>
-      <input id={name} {...register(name)} type='checkbox' />
+    <p>
+      <input className={`${rest.className} ${styles.checkbox}`} type='checkbox' id={name} {...register(name)} />
       <label htmlFor={name}>{label}</label>
-    </div>
+    </p>
   )
 }
 

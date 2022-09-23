@@ -1,0 +1,19 @@
+@import '../../constants/colors.scss';
+
+.file_label {
+    width: 100%;
+    height: 6rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+
+    p {
+        border-bottom: 1px dashed $black;
+    }
+}
+
+.hidden {
+    display: none;
+}

@@ -1,16 +1,22 @@
 import axios from 'axios'
 
-export const axiosPublic = axios.create({
+const axiosPublic = axios.create({
   baseURL: import.meta.env.VITE_URL_HOST,
   headers: {
     'Content-type': 'application/json'
   }
 })
 
-export const axiosPrivate = axios.create({
+axiosPublic.defaults.withCredentials = true
+
+const axiosPrivate = axios.create({
   baseURL: import.meta.env.VITE_URL_HOST,
   headers: {
     'Content-type': 'application/json'
   },
   withCredentials: true
 })
+
+axiosPrivate.defaults.withCredentials = true
+
+export { axiosPublic, axiosPrivate }
