@@ -5,6 +5,7 @@ import AlterRow from '../alterRow'
 import styles from './styles.module.scss'
 import { getArtesanos } from '../../api/artesanos'
 import withForm from '../withForm'
+import FormInput from '../formInput'
 
 const AdminArtesanos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, form }) => {
   const { register, formState: { errors }, handleSubmit } = form
@@ -18,6 +19,7 @@ const AdminArtesanos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, f
       descripcion: emprendimiento?.descripcion,
       direccion: emprendimiento?.direccion?.nombre,
       telefono: emprendimiento?.telefono,
+      redesSociales: emprendimiento?.redes_sociales,
       nombres,
       apellidos,
       rut
@@ -25,10 +27,6 @@ const AdminArtesanos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, f
 
     onClickSet(parsedValues)
   }
-
-  // // const crearArtesanos = () => {
-  // //   artesanos.map(artesano => mutateCrear({ values: toFormData(artesano) }))
-  // // }
 
   return (
     <>
@@ -44,7 +42,7 @@ const AdminArtesanos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, f
 
           <div className={styles.side}>
             <input className='input' defaultValue='' {...register('nombre')} placeholder='Nombre emprendimiento' />
-            <input className='input' defaultValue='' {...register('descripcion')} placeholder='Descripcion emprendimiento' />
+            <FormInput errors={errors} register={register} name='descripcion' placeholder='... es una artesana que ha sido capaz...' isTextArea />
             <input className='input' defaultValue='' {...register('direccion')} placeholder='Direccion' />
             <input className='input' defaultValue='' {...register('telefono')} placeholder='Teléfono' />
             <input className='input' defaultValue='' {...register('correo')} placeholder='Correo' />
@@ -63,6 +61,8 @@ const AdminArtesanos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, f
             <tr>
               <th>Nombres</th>
               <th>Apellidos</th>
+              <th>Nombre emprendimiento</th>
+              <th>Dirección</th>
               <th>RUT</th>
               <th>Accion</th>
             </tr>
@@ -75,8 +75,10 @@ const AdminArtesanos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, f
                 <tr key={item._id}>
                   <td>{item.nombres}</td>
                   <td>{item.apellidos}</td>
-                  <td>{item.rut}</td>
-                  <AlterRow onClickEdit={() => handleOnClickSet({ ...item })} onClickRemove={() => onRemove(item._id)} />
+                  <td>{item.emprendimiento?.nombre || '-'}</td>
+                  <td>{item.emprendimiento?.direccion?.nombre || '-'}</td>
+                  <td>{item.rut || '-'}</td>
+                  <AlterRow path='artesano' id={item._id} onClickEdit={() => handleOnClickSet({ ...item })} onClickRemove={() => onRemove(item._id)} />
                 </tr>
               )
             }

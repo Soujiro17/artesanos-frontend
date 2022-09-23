@@ -60,7 +60,7 @@ const Listar = ({ filtros: Filtros, title, path = '', fetchFunction, name = fals
                 ? (
                     data?.docs.map((doc, i) => (
                       <Link
-                        to={name ? `${path}${doc._id}?name=${doc.nombre}` : (path + (doc.url?.toLowerCase() || doc?._id))}
+                        to={name ? `${path}${doc._id}?name=${doc.nombre}` : doc.artesano ? `/artesano/${doc.artesano}` : (path + (doc.url?.toLowerCase() || doc?._id))}
                         className={styles.item_link}
                         key={doc._id || i}
                       >
@@ -69,7 +69,7 @@ const Listar = ({ filtros: Filtros, title, path = '', fetchFunction, name = fals
                           className={styles.item_img}
                           alt=''
                         />
-                        <div className={styles.item_name}>{doc.nombre || `${doc.nombres} ${doc.apellidos}`}</div>
+                        <div className={styles.item_name}>{doc.nombre || doc.emprendimiento.nombre || `${doc.nombres} ${doc.apellidos}`}</div>
                       </Link>
                     ))
                   )

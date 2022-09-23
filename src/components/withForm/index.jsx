@@ -7,32 +7,34 @@ import { actualizarProducto, crearProducto, eliminarProducto } from '../../api/p
 import useMutateCrud from '../../hooks/useMutateCrud'
 import useMutatorConfig from '../../hooks/useMutatorConfig'
 import { toFormData } from '../../utils/toFormData'
-import { productosSchema } from '../../data/schemas'
+import { artesanoSchema, productosSchema } from '../../data/schemas'
 import Spinner from '../spinner'
+
 const withForm = (Component) => (type) => (props) => {
   const [idToUpdate, setIdToUpdate] = useState('')
   const [auxId, setAuxId] = useState('')
 
-  let mutate
+  let mutate, schema
 
-  const schema = type === 'productos' ? productosSchema : type === 'artesanos' ? productosSchema : productosSchema
+  if (type === 'productos') {
+    const mutateConfig = useMutatorConfig('Producto', ['productos', auxId])
+    mutate = useMutateCrud(crearProducto, actualizarProducto, eliminarProducto, mutateConfig)
+    schema = productosSchema
+  } else if (type === 'artesanos') {
+    const mutateConfig = useMutatorConfig('Artesano', ['artesanos'])
+    mutate = useMutateCrud(crearArtesano, actualizarArtesano, eliminarArtesano, mutateConfig)
+    schema = artesanoSchema
+  } else {
+    const mutateConfig = useMutatorConfig('Categoria', ['categorias'])
+    mutate = useMutateCrud(crearCategoria, actualizarCategoria, eliminarCategoria, mutateConfig)
+    schema = productosSchema
+  }
 
   const form = useForm({
     resolver: yupResolver(schema)
   })
 
   const { setValue, reset } = form
-
-  if (type === 'productos') {
-    const mutateConfig = useMutatorConfig('Producto', ['productos', auxId])
-    mutate = useMutateCrud(crearProducto, actualizarProducto, eliminarProducto, mutateConfig)
-  } else if (type === 'artesanos') {
-    const mutateConfig = useMutatorConfig('Artesano', ['artesanos'])
-    mutate = useMutateCrud(crearArtesano, actualizarArtesano, eliminarArtesano, mutateConfig)
-  } else {
-    const mutateConfig = useMutatorConfig('Categoria', ['categorias'])
-    mutate = useMutateCrud(crearCategoria, actualizarCategoria, eliminarCategoria, mutateConfig)
-  }
 
   const onSubmit = (data) => {
     const img = data.foto[0]

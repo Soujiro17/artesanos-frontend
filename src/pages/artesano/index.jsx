@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-indent */
 import React, { useState, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Layout, OrangeLine, Section, Spinner, StackCircles, Map } from '../../components'
 import styles from './styles.module.scss'
 import { getArtesanoById } from '../../api/artesanos'
@@ -40,6 +40,8 @@ const Artesano = () => {
 
   const emprendimiento = artesano?.emprendimiento
   const productos = artesano?.emprendimiento?.productos
+
+  const navigate = useNavigate()
 
   const finalProducts = useMemo(() => {
     if (!productos) return null
@@ -93,7 +95,7 @@ const Artesano = () => {
                   </div>
                 </div>
                 <div className={styles.btn_div}>
-                  <button className='bg-cyan btn-effect btn'>Más productos</button>
+                  <button className='bg-cyan btn-effect btn' onClick={() => navigate(`/productos/${emprendimiento._id}`)}>Más productos</button>
                 </div>
                 <OrangeLine />
                 <div className={styles.sobre_emprendimiento}>

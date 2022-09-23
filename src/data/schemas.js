@@ -9,3 +9,15 @@ export const productosSchema = object().shape({
   foto: mixed().optional(),
   categoria: string().required().defined().trim()
 })
+
+export const artesanoSchema = object().shape({
+  nombres: string().required().defined().trim(),
+  apellidos: string().optional().trim(),
+  rut: string().optional().trim(),
+  foto: mixed().optional(),
+  nombre: string().optional().trim(),
+  descripcion: string().optional().trim(),
+  direccion: string().optional().trim(),
+  telefono: string().optional().trim(),
+  correo: string().optional().trim()
+})

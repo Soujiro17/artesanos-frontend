@@ -57,7 +57,7 @@ const MapComponent = ({ geolocation = false, data }) => {
 
       let nuevaDireccion
 
-      if (emprendimiento.direccion?.tieneDireccion) {
+      if (!emprendimiento.direccion?.tieneDireccion) {
         nuevaDireccion = ubicacionCercana()
       }
 
