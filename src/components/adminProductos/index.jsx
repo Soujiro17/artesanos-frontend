@@ -14,7 +14,7 @@ AuxId almacena almacena el id del artesano seleccionado
 de ver sus productos, para así hacer el refetch al actualizar
 */
 
-const AdminProductos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, form, auxId, setAuxId }) => {
+const AdminProductos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, form, auxId, setAuxId, foto }) => {
   const { data, isLoadingData, refetch } = useQuery(['productos', auxId], () => getProductosByEmprendimientoId({ _id: auxId, pagination: false }), {
     enabled: false
   })
@@ -42,8 +42,7 @@ const AdminProductos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, f
           <FormInput name='stock' errors={errors} register={register} placeholder='Stock' type='number' />
           <FormInput name='descripcion' errors={errors} register={register} placeholder='Este producto está hecho de...' isTextArea />
           <Checkbox name='visible' errors={errors} register={register} label='Visible' />
-          <FormInput name='foto' errors={errors} register={register} type='file' accept='image/*' />
-          {idToUpdate && <Checkbox name='eliminarFoto' register={register} label='Eliminar foto' />}
+          <FormInput name='foto' foto={foto} errors={errors} register={register} type='file' accept='image/*' />
           <select className={`${errors.categoria ? 'error-campo' : ''} input`} {...register('categoria', { required: true })}>
             <option value=''>Seleccionar categoría</option>
             {

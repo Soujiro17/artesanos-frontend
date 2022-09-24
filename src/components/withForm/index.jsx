@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { actualizarArtesano, crearArtesano, eliminarArtesano } from '../../api/artesanos'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { actualizarCategoria, crearCategoria, eliminarCategoria } from '../../api/categorias'
@@ -9,6 +9,7 @@ import useMutatorConfig from '../../hooks/useMutatorConfig'
 import { toFormData } from '../../utils/toFormData'
 import { artesanoSchema, categoriaSchema, productosSchema } from '../../data/schemas'
 import Spinner from '../spinner'
+import usePreview from '../../hooks/usePreview'
 
 const withForm = (Component) => (type) => (props) => {
   const [idToUpdate, setIdToUpdate] = useState('')
@@ -30,11 +31,9 @@ const withForm = (Component) => (type) => (props) => {
     schema = categoriaSchema
   }
 
-  const form = useForm({
-    resolver: yupResolver(schema)
-  })
+  const form = useForm({ resolver: yupResolver(schema) })
 
-  const { setValue, reset } = form
+  const { setValue, reset, control } = form
 
   const onSubmit = (data) => {
     const img = data.foto[0]
@@ -60,6 +59,7 @@ const withForm = (Component) => (type) => (props) => {
     if (typeof values === 'string') return
     Object.keys(values).map(key => {
       if (key === '_id') return setIdToUpdate(values[key])
+      if (key === 'foto') return setValue('foto', values[key].url)
       return setValue(key, values[key])
     })
   }
@@ -67,6 +67,12 @@ const withForm = (Component) => (type) => (props) => {
   const onClear = () => {
     reset()
     setIdToUpdate('')
+  }
+
+  const foto = usePreview(useWatch({ control, name: 'foto' }))
+
+  const onClearPicture = () => {
+    setValue('foto', null)
   }
 
   if (mutate.isLoadingCreate || mutate.isLoadingUpdate || mutate.isLoadingDelete) return <Spinner fullScreen />
@@ -82,6 +88,8 @@ const withForm = (Component) => (type) => (props) => {
       idToUpdate={idToUpdate}
       auxId={auxId}
       setAuxId={setAuxId}
+      foto={foto}
+      onClearPicture={onClearPicture}
     />
   )
 }
