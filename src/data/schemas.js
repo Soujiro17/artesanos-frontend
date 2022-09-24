@@ -4,7 +4,7 @@ export const productosSchema = object().shape({
   nombre: string().required().trim(),
   precio: number().integer().positive().min(0).required(),
   stock: number().integer().min(0).optional().default(0),
-  visible: boolean().optional().default(false),
+  visible: boolean().optional().default(true),
   descripcion: string().required().trim().max(300),
   eliminarFoto: boolean().optional().default(false),
   foto: mixed().optional(),
