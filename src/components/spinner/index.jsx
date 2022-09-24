@@ -7,7 +7,7 @@ const Spinner = ({ fullScreen = false }) => {
     <div className={styles.lds_ring}><div /><div /><div /><div /></div>
   )
 
-  if (!fullScreen) return <div className={styles.spinner_wrapper}>spinner</div>
+  if (!fullScreen) return <div className={styles.spinner_wrapper}>{spinner}</div>
 
   return ReactDOM.createPortal((
     <div className={fullScreen ? styles.fullscreen : ''}>

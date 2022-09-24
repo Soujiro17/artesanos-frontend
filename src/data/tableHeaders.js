@@ -9,3 +9,11 @@ export const artesanosHeaders = [
 export const categoriaHeaders = [
   'Nombre'
 ]
+
+export const productosHeaders = [
+  'Nombre',
+  'Precio',
+  'Stock',
+  'Categoría',
+  'Visible'
+]

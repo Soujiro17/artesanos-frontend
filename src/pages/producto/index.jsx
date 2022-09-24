@@ -25,7 +25,7 @@ const Producto = () => {
             </div>
             <div className={styles.producto_info}>
               <h2>Descripción del producto</h2>
-              <p className={styles.precio_sku_stock}>Precio ${producto?.precio?.toLocaleString()} | <span>Disponibilidad: {producto?.stock === null ? 'Consultar con artesano' : `${producto?.stock}`}</span></p>
+              <p className={styles.precio_sku_stock}>Precio: {producto?.precio ? `$${producto?.precio?.toLocaleString()}` : 'Consultar con el artesano'} | <span>Disponibilidad: {producto?.stock ? producto?.stock.toLocaleString() : 'Consultar con artesano'}</span></p>
               <p>{producto?.descripcion}</p>
               <OrangeLine />
               <h2>Emprendedor al que pertenece</h2>

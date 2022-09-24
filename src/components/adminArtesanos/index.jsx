@@ -36,13 +36,13 @@ const AdminArtesanos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, f
         <div className={styles.side}>
           <FormInput name='nombres' errors={errors} register={register} placeholder='Nombres artesano' />
           <FormInput name='apellidos' errors={errors} register={register} placeholder='Apellidos artesano' />
-          <FormInput name='rut' errors={errors} register={register} placeholder='ej: 11111111-1' />
+          <FormInput name='rut' errors={errors} register={register} placeholder='Rut' />
           <FormInput name='foto' errors={errors} register={register} foto={foto} type='file' accept='image/*' onClearPicture={onClearPicture} />
         </div>
 
         <div className={styles.side}>
           <FormInput name='nombre' errors={errors} register={register} placeholder='Nombre emprendimiento' />
-          <FormInput errors={errors} register={register} name='descripcion' placeholder='... es una artesana que ha sido capaz...' isTextArea />
+          <FormInput errors={errors} register={register} name='descripcion' placeholder='Descripción' isTextArea />
           <FormInput name='direccion' errors={errors} register={register} placeholder='Dirección' />
           <FormInput name='telefono' errors={errors} register={register} placeholder='Teléfono' />
           <FormInput name='correo' errors={errors} register={register} placeholder='Correo' />

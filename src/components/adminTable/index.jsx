@@ -22,6 +22,18 @@ const CategoriasRow = ({ nombre }) => {
   )
 }
 
+const ProductosRow = ({ nombre, precio, stock, categoria, visible }) => {
+  return (
+    <>
+      <td>{nombre}</td>
+      <td>${precio.toLocaleString()}</td>
+      <td>{stock.toLocaleString()}</td>
+      <td>{categoria?.nombre}</td>
+      <td>{visible ? 'Sí' : 'No'}</td>
+    </>
+  )
+}
+
 const AdminTable = ({ headers = [], data, isLoading, path, handleOnClickSet, onRemove }) => {
   return (
     <div className='table-container'>
@@ -38,10 +50,10 @@ const AdminTable = ({ headers = [], data, isLoading, path, handleOnClickSet, onR
         <tbody>
           {
         !data || isLoading
-          ? <tr><td colSpan={4}><Spinner /></td></tr>
+          ? <tr><td colSpan={path === 'artesano' ? 6 : path === 'categoria' ? 6 : 6}><Spinner /></td></tr>
           : data?.docs?.map(item =>
             <tr key={item._id}>
-              {path === 'artesano' ? <ArtesanosRow {...item} /> : path === 'categoria' ? <CategoriasRow {...item} /> : null}
+              {path === 'artesano' ? <ArtesanosRow {...item} /> : path === 'categoria' ? <CategoriasRow {...item} /> : <ProductosRow {...item} />}
               <AlterRow path={path} id={item._id} onClickEdit={() => handleOnClickSet({ ...item })} onClickRemove={() => onRemove(item._id)} />
             </tr>
           )

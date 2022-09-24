@@ -5,7 +5,7 @@ const usePreview = (file) => {
 
   const getBase64 = (file) => {
     if (/https|http/gi.test(file)) return setPreview(file)
-    if (!file) return setPreview('')
+    if (!file) return setPreview(false)
 
     const firstFile = file[0]
 

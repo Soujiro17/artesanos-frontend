@@ -78,7 +78,7 @@ const Artesano = () => {
             ? <Spinner />
             : <div className={styles.artesano}>
               <div className={styles.artesano_nombres}>
-                <p className={`${styles.artesano_nombre} color-p`}>{artesano?.nombres} <span className={`${styles.artesano_apellido} bb-gc`}>{artesano?.apellidos}</span>{emprendimiento?.nombre ? `- ${emprendimiento?.nombre}` : ''}</p>
+                <p className={`${styles.artesano_nombre} color-p`}>{artesano?.nombres}<span className={`${styles.artesano_apellido} bb-gc`}>{' '}{artesano?.apellidos}{' '}</span>{emprendimiento?.nombre ? `- ${emprendimiento?.nombre}` : ''}</p>
               </div>
               <div className={styles.artesano_datos}>
                 <div className={styles.artesano_datos_cont}>
