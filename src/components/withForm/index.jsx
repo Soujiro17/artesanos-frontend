@@ -36,7 +36,7 @@ const withForm = (Component) => (type) => (props) => {
   const { setValue, reset, control } = form
 
   const onSubmit = (data) => {
-    const img = data.foto[0]
+    const img = data.foto ? data.foto[0] : ''
     const formData = toFormData({ ...data, foto: img })
 
     if (idToUpdate) mutate.mutateUpdate({ values: formData, _id: idToUpdate })

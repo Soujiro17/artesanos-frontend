@@ -27,11 +27,11 @@ const AuthProvider = ({ children }) => {
   }
 
   const refresh = async () => {
-    await axiosPrivate.get('/auth/refresh')
-      .then(res => setAuth(prev => ({ ...prev, accessToken: res.data.accessToken })))
-      .catch(err => {
-        console.log(err)
-      })
+    const { data } = await axiosPrivate.get('/auth/refresh')
+
+    setAuth(data.accessToken)
+
+    return data.accessToken
   }
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const AuthProvider = ({ children }) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ auth, login, cerrarSesion }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ auth, login, cerrarSesion, refresh }}>{children}</AuthContext.Provider>
   )
 }
 

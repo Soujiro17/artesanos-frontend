@@ -6,7 +6,8 @@ const useAxiosPrivate = () => {
   const auth = useAuth()
 
   // eslint-disable-next-line no-undef
-  const token = auth?.accessToken || sessionStorage.getItem('token')
+
+  const token = auth?.auth
 
   useEffect(() => {
     const requestIntercept = axiosPrivate.interceptors.request.use(
@@ -27,8 +28,8 @@ const useAxiosPrivate = () => {
 
         if (err?.response?.status === 401 && !prevRequest?.sent) {
           prevRequest.sent = true
-          // const newAccessToken = useRefreshToken()
-          prevRequest.headers.Authorization = `Bearer ${token}`
+          const newAccessToken = await auth?.refresh()
+          prevRequest.headers.Authorization = `Bearer ${newAccessToken}`
           return axiosPrivate(prevRequest)
         }
 
@@ -40,7 +41,7 @@ const useAxiosPrivate = () => {
       axiosPrivate.interceptors.request.eject(requestIntercept)
       axiosPrivate.interceptors.response.eject(responseIntercept)
     }
-  }, [auth])
+  }, [auth?.auth])
 
   return axiosPrivate
 }
