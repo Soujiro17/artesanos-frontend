@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import './index.scss'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { disableReactDevTools } from '@fvilers/disable-react-devtools'
 import AppRouter from './routes'
 
 const queryClient = new QueryClient({
@@ -16,6 +17,10 @@ const queryClient = new QueryClient({
     }
   }
 })
+
+if (import.meta.env.VITE_NODE_ENV === 'production') {
+  disableReactDevTools()
+}
 
 const rootContainer = document.getElementById('root')
 

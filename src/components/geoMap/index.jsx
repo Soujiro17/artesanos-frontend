@@ -15,8 +15,6 @@ const MapComponent = ({ geolocation = false, data }) => {
 
   const zoom = data ? 16 : 13.5
 
-  console.log(data)
-
   const queryClient = useQueryClient()
 
   const emprendimientos = queryClient.getQueryData(['direcciones'])
