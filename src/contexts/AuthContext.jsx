@@ -23,6 +23,8 @@ const AuthProvider = ({ children }) => {
   const cerrarSesion = async () => {
     const { data } = await axiosPublic.get('/auth/cerrar-sesion')
 
+    setAuth(null)
+
     return data
   }
 

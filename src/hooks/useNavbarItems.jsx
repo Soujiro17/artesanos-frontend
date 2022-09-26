@@ -35,7 +35,7 @@ const useNavbarItems = () => {
         ? {
             name: 'Cerrar sesión',
             url: '/',
-            onClick: () => auth?.cerrarSesion()
+            onClick: auth?.cerrarSesion
           }
         : null
     ]
