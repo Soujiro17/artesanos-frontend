@@ -46,7 +46,7 @@
             max-height: 250px;
             min-height: 250px;
             min-width: 200px;
-            object-fit: cover;
+            object-fit: fill;
             object-position: center;
         }
         .categoria_nombre{
@@ -83,7 +83,7 @@
             text-transform: uppercase;
             font-weight: bolder;
         }
-    
+
         .search_group{
             display: flex;
             flex-wrap: wrap;

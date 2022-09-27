@@ -39,7 +39,7 @@ const SectionCategories = () => {
                               key={categoria._id}
                             >
                               <img
-                                src={categoria.picture_url || '/img/not_found_default.jpg'}
+                                src={categoria.foto?.url || '/img/not_found_default.jpg'}
                                 alt=''
                                 className={styles.categoria_img}
                               />

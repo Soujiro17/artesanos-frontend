@@ -87,7 +87,7 @@ const Artesano = () => {
                       finalProducts?.slice(0, 2)
                     }
                   </div>
-                  <img src={artesano?.foto?.url || '/img/not_found_default.jpg'} className={styles.artesano_foto} />
+                  <img src={artesano?.foto?.url || '/img/artesano_no_encontrado.png'} className={styles.artesano_foto} />
                   <div className={styles.artesano_productos_cont}>
                     {
                       finalProducts?.slice(2, 5)

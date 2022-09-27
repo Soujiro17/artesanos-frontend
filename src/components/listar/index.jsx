@@ -65,7 +65,7 @@ const Listar = ({ filtros: Filtros, title, path = '', fetchFunction, name = fals
                         key={doc._id || i}
                       >
                         <img
-                          src={doc.foto?.url || '/img/not_found_default.jpg'}
+                          src={doc.foto?.url || '/img/artesano_no_encontrado.png' || '/img/not_found_default.jpg'}
                           className={styles.item_img}
                           alt=''
                         />
