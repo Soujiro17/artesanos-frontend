@@ -61,6 +61,10 @@ const MapComponent = ({ geolocation = false, data }) => {
         nuevaDireccion = ubicacionCercana()
       }
 
+      if (typeof emprendimiento.direccion?.coordenadas[0] === 'object') {
+        nuevaDireccion = [emprendimiento.direccion?.coordenadas[0]?.$numberDecimal, emprendimiento.direccion?.coordenadas[1]?.$numberDecimal]
+      }
+
       return (
         <Marker icon={icon} position={nuevaDireccion || emprendimiento.direccion?.coordenadas} key={emprendimiento._id}>
           <Popup>
