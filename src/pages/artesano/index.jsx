@@ -1,10 +1,12 @@
 /* eslint-disable react/jsx-indent */
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Layout, OrangeLine, Section, Spinner, StackCircles, Map } from '../../components'
 import styles from './styles.module.scss'
 import { getArtesanoById } from '../../api/artesanos'
+import draftToHtml from 'draftjs-to-html'
+import parser from 'html-react-parser'
 
 const FotoConAnchorYText = ({ nombre = 'Producto no disponible', img, url, izq = false }) => {
   return (
@@ -34,6 +36,7 @@ const ArtesanoMapa = ({ emprendimiento }) => {
 }
 
 const Artesano = () => {
+  const [descripcion, setDescripcion] = useState('')
   const params = useParams()
 
   const { data: artesano, isLoading } = useQuery(['artesano', params.id], () => getArtesanoById({ _id: params.id }))
@@ -69,6 +72,16 @@ const Artesano = () => {
     return final
   }, [artesano])
 
+  useEffect(() => {
+    if (emprendimiento) {
+      try {
+        setDescripcion(parser(draftToHtml(JSON.parse(emprendimiento.descripcion))))
+      } catch (err) {
+        setDescripcion('')
+      }
+    }
+  }, [emprendimiento])
+
   return (
     <Layout>
       <>
@@ -101,7 +114,7 @@ const Artesano = () => {
                 <div className={styles.sobre_emprendimiento}>
                   <p className={styles.emprendimiento_title}>Sobre el emprendimiento</p>
                   <p className={styles.emprendimiento_text}>
-                    {emprendimiento?.descripcion}
+                    {descripcion || emprendimiento?.descripcion}
                   </p>
                 </div>
                 <ArtesanoMapa emprendimiento={emprendimiento} />

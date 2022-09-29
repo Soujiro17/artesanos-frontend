@@ -1,0 +1,17 @@
+@import '../../constants/colors.scss';
+
+.text_editor_toolbar {
+    height: 29%;
+}
+
+.text_editor_wrapper {
+    height: 300px;
+    border: 1px solid $black;
+}
+
+.text_editor {
+    height: 69% !important;
+    background-color: $white;
+    padding-left: .5rem;
+    padding-right: .5rem;
+}
