@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-indent */
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Layout, OrangeLine, Section, Spinner, StackCircles, Map } from '../../components'
@@ -36,7 +36,6 @@ const ArtesanoMapa = ({ emprendimiento }) => {
 }
 
 const Artesano = () => {
-  const [descripcion, setDescripcion] = useState('')
   const params = useParams()
 
   const { data: artesano, isLoading } = useQuery(['artesano', params.id], () => getArtesanoById({ _id: params.id }))
@@ -72,16 +71,6 @@ const Artesano = () => {
     return final
   }, [artesano])
 
-  useEffect(() => {
-    if (emprendimiento) {
-      try {
-        setDescripcion(parser(draftToHtml(JSON.parse(emprendimiento.descripcion))))
-      } catch (err) {
-        setDescripcion('')
-      }
-    }
-  }, [emprendimiento])
-
   return (
     <Layout>
       <>
@@ -108,13 +97,13 @@ const Artesano = () => {
                   </div>
                 </div>
                 <div className={styles.btn_div}>
-                  <button className='bg-cyan btn-effect btn' onClick={() => navigate(`/productos/${emprendimiento._id}`)}>Más productos</button>
+                  <button className='bg-cyan btn-effect btn' onClick={() => navigate(`/productos/${emprendimiento?._id}`)}>Más productos</button>
                 </div>
                 <OrangeLine />
                 <div className={styles.sobre_emprendimiento}>
                   <p className={styles.emprendimiento_title}>Sobre el emprendimiento</p>
                   <p className={styles.emprendimiento_text} />
-                    {descripcion || emprendimiento?.descripcion}
+                    {emprendimiento ? parser(draftToHtml(JSON.parse(emprendimiento.descripcion))) : null}
                 </div>
                 <ArtesanoMapa emprendimiento={emprendimiento} />
               </div>

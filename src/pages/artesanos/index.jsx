@@ -4,7 +4,13 @@ import { Listar } from '../../components'
 
 const Artesanos = () => {
   return (
-    <Listar title='Artesanos' fetchFunction={getEmprendimientos} />
+    <Listar
+      title='Artesanos'
+      pathToRedirectOnClick='artesano'
+      fetchFunction={getEmprendimientos}
+      customAttributeToRedirect='artesano'
+      notFoundImgPathName='/img/artesano_no_encontrado.png'
+    />
   )
 }
 

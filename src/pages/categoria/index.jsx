@@ -1,21 +1,22 @@
+import { useQuery } from '@tanstack/react-query'
 import React from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import { getCategoriaById } from '../../api/categorias'
 import { getProductosByCategoriaId } from '../../api/productos'
 import { Listar } from '../../components'
 
 const Categoria = () => {
   const params = useParams()
 
-  const [searchParams] = useSearchParams()
-  const title = searchParams.get('name')
+  const { data: categoria } = useQuery(['categoria', params.id], () => getCategoriaById({ _id: params.id }))
 
   return (
     <Listar
-      title={title}
-      path='/producto/'
+      title={categoria?.nombre}
+      pathToRedirectOnClick='producto'
       fetchFunction={getProductosByCategoriaId}
-      _id={params.id}
-      name
+      notFoundImgPathName='/img/producto_no_encontrado.png'
+      idToFetch={params.id}
     />
   )
 }
