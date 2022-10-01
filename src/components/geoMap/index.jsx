@@ -59,9 +59,7 @@ const MapComponent = ({ geolocation = false, data }) => {
 
       if (!emprendimiento.direccion?.tieneDireccion) {
         nuevaDireccion = ubicacionCercana()
-      }
-
-      if (typeof emprendimiento.direccion?.coordenadas[0] === 'object') {
+      } else if (typeof emprendimiento.direccion?.coordenadas[0] === 'object') {
         nuevaDireccion = [emprendimiento.direccion?.coordenadas[0]?.$numberDecimal, emprendimiento.direccion?.coordenadas[1]?.$numberDecimal]
       }
 
