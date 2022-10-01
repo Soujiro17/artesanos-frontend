@@ -13,7 +13,8 @@ const Categoria = () => {
     <Listar
       title={title}
       path='/producto/'
-      fetchFunction={() => getProductosByCategoriaId({ _id: params.id })}
+      fetchFunction={getProductosByCategoriaId}
+      _id={params.id}
       name
     />
   )
