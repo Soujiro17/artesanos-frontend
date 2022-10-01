@@ -1,5 +1,4 @@
 import React from 'react'
-import { convertFromRaw, convertToRaw } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'
 import styles from './styles.module.scss'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
@@ -10,7 +9,7 @@ const TextEditor = ({ name, setValue, value }) => {
   return (
     <>
       <Editor
-        contentState={value}
+        contentState={value ? typeof value === 'string' ? JSON.parse(value) : value : value}
         onContentStateChange={onEditorChange}
         toolbarClassName={styles.text_editor_toolbar || 'toolbarClassName'}
         wrapperClassName={styles.text_editor_wrapper}

@@ -113,9 +113,8 @@ const Artesano = () => {
                 <OrangeLine />
                 <div className={styles.sobre_emprendimiento}>
                   <p className={styles.emprendimiento_title}>Sobre el emprendimiento</p>
-                  <p className={styles.emprendimiento_text}>
+                  <p className={styles.emprendimiento_text} />
                     {descripcion || emprendimiento?.descripcion}
-                  </p>
                 </div>
                 <ArtesanoMapa emprendimiento={emprendimiento} />
               </div>

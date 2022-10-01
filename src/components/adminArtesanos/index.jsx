@@ -16,7 +16,7 @@ const AdminArtesanos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, f
     const parsedValues = {
       _id,
       nombre: emprendimiento?.nombre || `${nombres} ${apellidos}`,
-      descripcion: emprendimiento?.descripcion,
+      descripcion: JSON.parse(emprendimiento?.descripcion),
       direccion: emprendimiento?.direccion?.nombre,
       telefono: emprendimiento?.telefono,
       redesSociales: emprendimiento?.redes_sociales,
@@ -37,7 +37,7 @@ const AdminArtesanos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, f
           <FormInput name='nombres' errors={errors} register={register} placeholder='Nombres artesano' />
           <FormInput name='apellidos' errors={errors} register={register} placeholder='Apellidos artesano' />
           <FormInput name='rut' errors={errors} register={register} placeholder='Rut' />
-          <FormInput name='foto' errors={errors} register={register} foto={foto} type='file' accept='image/*' onClearPicture={onClearPicture} />
+          <FormInput name='foto' errors={errors} register={register} foto={foto} type='file' accept='image/*' onClearPicture={onClearPicture} artesano />
         </div>
 
         <div className={styles.side}>
