@@ -9,55 +9,44 @@ import OrangeLine from '../orangeLine'
 import StackCircles from '../stackCircles'
 import { getCategorias } from '../../api/categorias'
 
+const Categoria = ({ categoria }) => {
+  return (
+    <Link to={`/categoria/${categoria._id}`} className={styles.categoria_wrapper} key={categoria._id}>
+      <img src={categoria.foto?.url || '/img/categoria_no_encontrada.png'} alt='' className={styles.categoria_img} />
+      <div className={styles.categoria_nombre}>{categoria.nombre}</div>
+    </Link>
+  )
+}
+
+const Categorias = ({ nombre }) => {
+  const { data, isLoading, isError } = useQuery(['categorias'], () => getCategorias({ query: { pagination: false } }))
+
+  if (isLoading) return <Spinner />
+
+  if (isError) return <p className='error'>Error al cargar las categorías</p>
+
+  if (data?.length === 0) return <p className='error'>No hay categorías para mostrar</p>
+
+  return data?.docs?.filter(categoria => categoria.nombre.toLowerCase().includes(nombre.toLowerCase())).map((categoria) => <Categoria key={categoria._id} categoria={categoria} />)
+}
+
 const SectionCategories = () => {
   const [nombre, setNombre] = useState('')
 
   const handleNombre = (e) => setNombre(e.target.value)
 
-  const { data, isLoading, isError } = useQuery(['categorias'], () => getCategorias({ query: { pagination: false } }))
-
   return (
     <>
       <StackCircles left />
       <Section name='CATEGORÍAS'>
-        <div className={styles.header}>
-          <p>A-Z</p>
-        </div>
-        <div className={styles.content}>
-          {
-              isLoading
-                ? <Spinner />
-                : isError
-                  ? <p className='error'>Error al cargar las categorías</p>
-                  : <>
-                    {data?.docs?.length > 0
-                      ? (
-                          data?.docs?.filter(categoria => categoria.nombre.toLowerCase().includes(nombre.toLowerCase())).map((categoria) => (
-                            <Link
-                              to={`/categoria/${categoria._id}?name=${categoria.nombre.toLowerCase()}`}
-                              className={styles.categoria_wrapper}
-                              key={categoria._id}
-                            >
-                              <img
-                                src={categoria.foto?.url || '/img/not_found_default.jpg'}
-                                alt=''
-                                className={styles.categoria_img}
-                              />
-                              <div className={styles.categoria_nombre}>{categoria.nombre}</div>
-                            </Link>
-                          ))
-                        )
-                      : <p className='error'>No hay categorías para mostrar</p>}
-                  </>
-            }
-        </div>
+        <div className={styles.header}><p>A-Z</p></div>
+        <div className={styles.content}><Categorias nombre={nombre} /></div>
         <OrangeLine style={{ marginTop: '5rem', marginBottom: '5rem' }} />
         <footer className={styles.footer}>
           <div className={styles.footer_cont}>
             <p className={styles.search}>Buscar</p>
             <div className={styles.search_group}>
               <input placeholder='Categoría' className={`${styles.search_input} input`} onChange={handleNombre} />
-              <button className={`${styles.btn_buscar} btn btn-effect`}>Buscar</button>
             </div>
           </div>
         </footer>

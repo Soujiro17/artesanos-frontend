@@ -7,7 +7,8 @@ const Categorias = () => {
     <Listar
       title='Categorías'
       fetchFunction={getCategorias}
-      path='/categoria/'
+      pathToRedirectOnClick='categoria'
+      notFoundImgPathName='/img/categoria_no_encontrada.png'
     />
   )
 }

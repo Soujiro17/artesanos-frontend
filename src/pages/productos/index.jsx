@@ -9,7 +9,13 @@ const Productos = () => {
   if (!id) return <Navigate to='/' />
 
   return (
-    <Listar fetchFunction={getProductosByEmprendimientoId} title='Productos' path='/producto/' _id={id} />
+    <Listar
+      title='Productos'
+      pathToRedirectOnClick='producto'
+      fetchFunction={getProductosByEmprendimientoId}
+      notFoundImgPathName='/img/producto_no_encontrado.jpg'
+      idToFetch={id}
+    />
   )
 }
 

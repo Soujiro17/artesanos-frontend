@@ -7,7 +7,7 @@ export const getCategorias = async ({ page = 1, limit = 6, query = {} }) => {
   return data
 }
 
-export const getCategoriaById = async (_id) => {
+export const getCategoriaById = async ({ _id }) => {
   const { data } = await axiosPublic.get(`/categoria/${_id}`)
 
   return data
