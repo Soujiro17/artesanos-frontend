@@ -1,4 +1,3 @@
-import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import styles from './styles.module.scss'
 import { getArtesanos } from '../../api/artesanos'
@@ -6,9 +5,10 @@ import withForm from '../withForm'
 import FormInput from '../formInput'
 import AdminTable from '../adminTable'
 import { artesanosHeaders } from '../../data/tableHeaders'
+import TextEditor from '../textEditor'
 
 const AdminArtesanos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, form, foto, onClearPicture }) => {
-  const { register, formState: { errors }, handleSubmit } = form
+  const { register, formState: { errors }, handleSubmit, setValue, getValues } = form
 
   const { data, isLoading: isLoadingData } = useQuery(['artesanos'], () => getArtesanos({ query: { pagination: false, populate: true } }))
 
@@ -16,7 +16,7 @@ const AdminArtesanos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, f
     const parsedValues = {
       _id,
       nombre: emprendimiento?.nombre || `${nombres} ${apellidos}`,
-      descripcion: emprendimiento?.descripcion,
+      descripcion: JSON.parse(emprendimiento?.descripcion),
       direccion: emprendimiento?.direccion?.nombre,
       telefono: emprendimiento?.telefono,
       redesSociales: emprendimiento?.redes_sociales,
@@ -37,12 +37,13 @@ const AdminArtesanos = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, f
           <FormInput name='nombres' errors={errors} register={register} placeholder='Nombres artesano' />
           <FormInput name='apellidos' errors={errors} register={register} placeholder='Apellidos artesano' />
           <FormInput name='rut' errors={errors} register={register} placeholder='Rut' />
-          <FormInput name='foto' errors={errors} register={register} foto={foto} type='file' accept='image/*' onClearPicture={onClearPicture} />
+          <FormInput name='foto' errors={errors} register={register} foto={foto} type='file' accept='image/*' onClearPicture={onClearPicture} artesano />
         </div>
 
         <div className={styles.side}>
           <FormInput name='nombre' errors={errors} register={register} placeholder='Nombre emprendimiento' />
-          <FormInput errors={errors} register={register} name='descripcion' placeholder='Descripción' isTextArea />
+          <TextEditor name='descripcion' setValue={setValue} value={getValues('descripcion')} />
+          {/* <FormInput errors={errors} register={register} name='descripcion' placeholder='Descripción' isTextArea /> */}
           <FormInput name='direccion' errors={errors} register={register} placeholder='Dirección' />
           <FormInput name='telefono' errors={errors} register={register} placeholder='Teléfono' />
           <FormInput name='correo' errors={errors} register={register} placeholder='Correo' />

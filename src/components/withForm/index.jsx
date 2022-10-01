@@ -46,7 +46,7 @@ const withForm = (Component) => (type) => (props) => {
     if (idToUpdate) mutate.mutateUpdate({ values: formData, _id: idToUpdate })
     else mutate.mutateCreate({ values: formData })
 
-    // onClear()
+    onClear()
   }
 
   const onRemove = (_id) => {
