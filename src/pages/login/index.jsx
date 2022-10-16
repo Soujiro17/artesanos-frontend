@@ -52,7 +52,7 @@ const Login = () => {
         <form className={styles.login_form} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.logo}>
             <Link to='/'>
-              <img src='/logo.png' className={styles.logo_img} />
+              <img src={imgs.logo} alt='logo' className={styles.logo_img} />
             </Link>
           </div>
           <div className={styles.form_group}>
