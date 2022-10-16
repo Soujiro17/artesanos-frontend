@@ -2,6 +2,7 @@ import React from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import { getProductosByEmprendimientoId } from '../../api/productos'
 import { Listar } from '../../components'
+import { imgs } from '../../data/images'
 
 const Productos = () => {
   const { id } = useParams()
@@ -13,7 +14,7 @@ const Productos = () => {
       title='Productos'
       pathToRedirectOnClick='producto'
       fetchFunction={getProductosByEmprendimientoId}
-      notFoundImgPathName='/img/producto_no_encontrado.jpg'
+      notFoundImgPathName={imgs.producto_no_encontrado}
       idToFetch={id}
     />
   )

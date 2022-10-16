@@ -7,11 +7,12 @@ import { useQuery } from '@tanstack/react-query'
 import Spinner from '../spinner'
 import StackCircles from '../stackCircles'
 import { getCategorias } from '../../api/categorias'
+import { imgs } from '../../data/images'
 
 const Categoria = ({ categoria }) => {
   return (
     <Link to={`/categoria/${categoria._id}`} className={styles.categoria_wrapper} key={categoria._id}>
-      <img src={categoria.foto?.url || '/img/categoria_no_encontrada.png'} alt='' className={styles.categoria_img} />
+      <img src={categoria.foto?.url || imgs.categoria_no_encontrada} alt='categoria foto' className={styles.categoria_img} />
       <div className={styles.categoria_nombre}>{categoria.nombre}</div>
     </Link>
   )
@@ -42,7 +43,7 @@ const SectionCategories = () => {
         <div className={styles.content}><Categorias nombre={nombre} /></div>
       </Section>
       <section className={styles.filter}>
-        <img src='/home_circles.png' className={styles.circles_home} alt='circulos' />
+        <img src={imgs.buscar_categoria} className={styles.circles_home} alt='circulos' />
         <div className={styles.footer_cont}>
           <p className={styles.search}>¿No encuentras lo que buscas? <span>Escríbelo!</span></p>
           <p className={styles.input_text}>Busca aquí</p>

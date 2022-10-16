@@ -42,7 +42,7 @@ const AdminProductos = React.memo(({ onSubmit, onRemove, onClickSet, onClear, id
           <FormInput name='stock' errors={errors} register={register} placeholder='Stock' type='number' defaultValue={0} />
           <FormInput name='descripcion' errors={errors} register={register} placeholder='Descripción producto' isTextArea />
           <Checkbox name='visible' errors={errors} register={register} label='Visible' />
-          <FormInput name='foto' foto={foto} errors={errors} register={register} type='file' accept='image/*' onClearPicture={onClearPicture} />
+          <FormInput producto name='foto' foto={foto} errors={errors} register={register} type='file' accept='image/*' onClearPicture={onClearPicture} />
           <select className={`${errors.categoria ? 'error-campo' : ''} input`} {...register('categoria')}>
             <option value=''>Seleccionar categoría</option>
             {

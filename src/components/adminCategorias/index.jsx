@@ -17,7 +17,7 @@ const AdminCategorias = ({ onSubmit, onRemove, onClickSet, onClear, idToUpdate, 
         <h2>Crear categoria</h2>
         <form onSubmit={handleSubmit(onSubmit)} className='admin-form'>
           <FormInput errors={errors} register={register} name='nombre' placeholder='Nombre categoría' />
-          <FormInput errors={errors} register={register} name='foto' accept='image/*' type='file' foto={foto} onClearPicture={onClearPicture} />
+          <FormInput categoria errors={errors} register={register} name='foto' accept='image/*' type='file' foto={foto} onClearPicture={onClearPicture} />
           <button className='btn btn-effect bg-cyan' type='submit'>{idToUpdate ? 'Actualizar categoría' : 'Agregar categoría'}</button>
           <button className='btn btn-effect bg-cyan' onClick={onClear}>Limpiar</button>
         </form>

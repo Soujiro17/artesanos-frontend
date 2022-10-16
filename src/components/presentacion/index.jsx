@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './styles.module.scss'
+import { imgs } from '../../data/images'
 
 const Presentacion = () => {
   return (
@@ -17,7 +18,7 @@ const Presentacion = () => {
           </div>
         </div>
       </div>
-      <img className={styles.presentacion_img} alt='presentacion imagen' src='#' style={{ backgroundColor: 'gray' }} />
+      <img className={styles.presentacion_img} alt='presentacion imagen' src={imgs.presentacion} style={{ backgroundColor: 'gray' }} />
     </div>
   )
 }
