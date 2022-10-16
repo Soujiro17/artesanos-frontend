@@ -16,7 +16,7 @@ const Presentacion = () => {
           </div>
           <OrangeLine className={styles.orange_line} />
         </div>
-        <img src='/home_circles.png' className={styles.circles_home} alt='circulos'/>
+        {/* <img src='/home_circles.png' className={styles.circles_home} alt='circulos'/> */}
       </div>
     </div>
   )
