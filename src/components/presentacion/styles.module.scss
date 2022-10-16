@@ -12,6 +12,7 @@
         height: 100%;
         width: 80%;
         display: flex;
+        gap: 2rem;
 
         .presentacion_left {
             height: 100%;
@@ -34,18 +35,41 @@
             .presentacion_subtitle_wrapper {
                 width: 100%;
                 display: flex;
-                align-items: center;
-                justify-content: center;
+                flex-direction: column;
 
                 .presentacion_subtitle {
                     font-size: calc(1rem + .1vw);
-                    text-align: justify;
-                    color: $accent;
+                    color: $black;
+                }
+
+                .link_to_artesanos {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-decoration: none;
+                    width: fit-content;
+                    transition: .2s all;
+
+                    &:hover {
+                        scale: 1.02;
+                    }
                 }
             }
         }
-
     }
+}
+
+.presentacion_img {
+    position: absolute;
+    right: 0%;
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    object-fit: contain;
+    object-position: center;
+    width: 40%;
+    height: 50%;
 }
 
 .orange_line {
@@ -77,6 +101,10 @@
                     }
                 }
             }
+        }
+
+        .presentacion_img {
+            display: none;
         }
     }
 

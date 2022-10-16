@@ -36,7 +36,7 @@ const Navbar = () => {
             </ul>
           </div>
           <div className={styles.list_icon} onClick={handleOpenMenu}>
-            <img src='/icons/list.svg' className={styles.list_svg} />
+            <img src='/icons/list.svg' className={styles.list_svg} alt='burger' />
           </div>
         </div>
         <OrangeLine className={styles.orange_line} />

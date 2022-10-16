@@ -1,5 +1,5 @@
 import React from 'react'
-import OrangeLine from '../orangeLine'
+import { Link } from 'react-router-dom'
 import styles from './styles.module.scss'
 
 const Presentacion = () => {
@@ -12,12 +12,12 @@ const Presentacion = () => {
             <h1 className={`${styles.presentacion_title} text-align-right`}><span className='bb-gc'>a</span> Conect <span className='bb-gc'>Arte</span></h1>
             <div className={styles.presentacion_subtitle_wrapper}>
               <p className={styles.presentacion_subtitle}>Página de la municipalidad de San Miguel en <br /> ayuda de los emprendedores locales</p>
+              <Link to='/artesanos' className={`btn accent ${styles.link_to_artesanos}`}>Comienza aquí</Link>
             </div>
           </div>
-          <OrangeLine className={styles.orange_line} />
         </div>
-        {/* <img src='/home_circles.png' className={styles.circles_home} alt='circulos'/> */}
       </div>
+      <img className={styles.presentacion_img} alt='presentacion imagen' src='#' style={{ backgroundColor: 'gray' }} />
     </div>
   )
 }
