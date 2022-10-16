@@ -22,6 +22,7 @@ const AuthProvider = ({ children }) => {
 
   const cerrarSesion = async () => {
     const { data } = await axiosPublic.get('/auth/cerrar-sesion')
+      .catch(err => { console.log(err) })
 
     setAuth(null)
 
@@ -30,6 +31,7 @@ const AuthProvider = ({ children }) => {
 
   const refresh = async () => {
     const { data } = await axiosPrivate.get('/auth/refresh')
+      .catch(err => { console.log(err) })
 
     setAuth(data.accessToken)
 

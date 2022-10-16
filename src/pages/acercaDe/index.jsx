@@ -1,5 +1,6 @@
 import React from 'react'
 import { Layout, OrangeLine, Section, StackCircles } from '../../components'
+import { imgs } from '../../data/images'
 import styles from './styles.module.scss'
 
 const AcercaDe = () => {
@@ -10,9 +11,9 @@ const AcercaDe = () => {
           <h2 className={`color-p ${styles.acerca_de_title}`}>Acerca de Nosotros</h2>
           <div className={styles.acerca_de_content}>
             <div className={styles.logo_wrapper}>
-              <img src='/circulo_azul.png' alt='circle' className={`${styles.circle} ${styles.blue_circle}`} />
-              <img src='/circulo_rayas.png' alt='circle' className={`${styles.circle} ${styles.gray_circle}`} />
-              <img src='/san_miguel.jpg' alt='san miguel' className={styles.logo} />
+              <img src={imgs.acerca_de_nosotros_circulo_azul} alt='circle' className={`${styles.circle} ${styles.blue_circle}`} />
+              <img src={imgs.acerca_de_nosotros_circulo_rayado} alt='circle' className={`${styles.circle} ${styles.gray_circle}`} />
+              <img src={imgs.acerca_de_nosotros} alt='san miguel' className={styles.logo} />
             </div>
             <div className={styles.acerca_de_info}>
               <h2>Sobre el proyecto</h2>

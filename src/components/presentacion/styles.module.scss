@@ -1,82 +1,111 @@
 @import '../../constants/colors.scss';
 
-.container{
+.container {
     min-height: 80vh;
     height: 80vh;
     display: flex;
     justify-content: center;
     position: relative;
     overflow: hidden;
-    .presentacion{
+
+    .presentacion {
         height: 100%;
         width: 80%;
         display: flex;
-        .presentacion_left{
+        gap: 2rem;
+
+        .presentacion_left {
             height: 100%;
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: center;
             width: 55%;
-            .presentacion_header_wrapper{
+
+            .presentacion_header_wrapper {
                 width: 100%;
             }
-            .presentacion_title{
+
+            .presentacion_title {
                 font-size: calc(2rem + 3vw);
                 margin: 0%;
                 color: $primary;
             }
-            .presentacion_subtitle_wrapper{
+
+            .presentacion_subtitle_wrapper {
                 width: 100%;
                 display: flex;
-                align-items: center;
-                justify-content: center;
-                .presentacion_subtitle{
+                flex-direction: column;
+
+                .presentacion_subtitle {
                     font-size: calc(1rem + .1vw);
-                    text-align: justify;
-                    color: $accent;
+                    color: $black;
+                }
+
+                .link_to_artesanos {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-decoration: none;
+                    width: fit-content;
+                    transition: .2s all;
+
+                    &:hover {
+                        scale: 1.02;
+                    }
                 }
             }
-        }
-        .circles_home{
-            margin-left: 2rem;
-            object-fit: contain;
-            overflow: hidden;
         }
     }
 }
 
-.orange_line{
+.presentacion_img {
+    position: absolute;
+    right: 0%;
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    object-fit: contain;
+    object-position: center;
+    width: 40%;
+    height: 50%;
+}
+
+.orange_line {
     position: absolute;
     bottom: 0%;
 }
 
 @media only screen and (max-width: 785px) {
-    .container{
-        .presentacion{
-            .presentacion_left{
+    .container {
+        .presentacion {
+            .presentacion_left {
                 height: 100%;
                 position: relative;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 width: 100%;
-                .presentacion_subtitle_wrapper{
+
+                .presentacion_subtitle_wrapper {
                     width: 100%;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    .presentacion_subtitle{
+
+                    .presentacion_subtitle {
                         font-size: calc(1rem + .1vw);
                         text-align: justify;
                         color: $accent;
                     }
                 }
             }
-            .circles_home{
-                display: none;
-            }
+        }
+
+        .presentacion_img {
+            display: none;
         }
     }
-    
+
 }

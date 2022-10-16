@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 import { OrangeLine, Spinner } from '../../components'
 import useAuth from '../../hooks/useAuth'
 import styles from './styles.module.scss'
+import { imgs } from '../../data/images'
 
 const Login = () => {
   const {
@@ -40,8 +41,8 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-      <img className={styles.circulo_azul} src='/circulo_azul.png' />
-      <img className={styles.circulo_rayas} src='/circulo_rayas.png' />
+      <img className={styles.circulo_azul} alt='circulo_azul' src={imgs.acerca_de_nosotros_circulo_azul} />
+      <img className={styles.circulo_rayas} alt='circulo_rayas' src={imgs.acerca_de_nosotros_circulo_rayado} />
       {loginMutation?.isLoading && <Spinner fullScreen />}
       <div className={styles.wrapper}>
         <div className={styles.login_header}>
@@ -65,7 +66,6 @@ const Login = () => {
                 className={`${styles.input} input ${errors.email ? 'input-error' : ''}`}
                 {...register('email', { required: true })}
               />
-              {/* {errors.email && <span>Email es requerido</span>} */}
             </div>
             <div className={styles.group}>
               <label className={styles.label} htmlFor='password'>Contraseña</label>
@@ -77,13 +77,11 @@ const Login = () => {
                 className={`${styles.input} input ${errors.password ? 'input-error' : ''}`}
                 {...register('password', { required: true })}
               />
-              {/* {errors.password && <span>Contraseña es requerida</span>} */}
             </div>
             <button type='submit' className='btn accent'>
               ENTRAR
             </button>
           </div>
-          {/* <p>Olvidaste tu contraseña?</p> */}
         </form>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { getEmprendimientos } from '../../api/emprendimientos'
 import { Listar } from '../../components'
+import { imgs } from '../../data/images'
 
 const Artesanos = () => {
   return (
@@ -9,7 +10,7 @@ const Artesanos = () => {
       pathToRedirectOnClick='artesano'
       fetchFunction={getEmprendimientos}
       customAttributeToRedirect='artesano'
-      notFoundImgPathName='/img/artesano_no_encontrado.png'
+      notFoundImgPathName={imgs.artesano_no_encontrado}
     />
   )
 }

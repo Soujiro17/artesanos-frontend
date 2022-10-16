@@ -5,6 +5,7 @@ import useNavbarItems from '../../hooks/useNavbarItems'
 import { Link } from 'react-router-dom'
 import OrangeLine from '../orangeLine'
 import clsx from 'clsx'
+import { imgs } from '../../data/images'
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false)
@@ -25,7 +26,7 @@ const Navbar = () => {
           <div className={styles.nav_wrapper}>
             <div className={styles.logo}>
               <Link to='/'>
-                <img src='/logo.png' alt='logo' className={styles.logo_img} />
+                <img src={imgs.logo} alt='logo' className={styles.logo_img} />
               </Link>
             </div>
             <ul className={navItemsList}>
@@ -36,7 +37,7 @@ const Navbar = () => {
             </ul>
           </div>
           <div className={styles.list_icon} onClick={handleOpenMenu}>
-            <img src='/icons/list.svg' className={styles.list_svg} />
+            <img src='/icons/list.svg' className={styles.list_svg} alt='burger' />
           </div>
         </div>
         <OrangeLine className={styles.orange_line} />

@@ -6,6 +6,7 @@ import ListarHeader from '../listarHeader'
 import Spinner from '../spinner'
 import StackCircles from '../stackCircles'
 import styles from './styles.module.scss'
+import Section from '../section'
 
 /*
     Agregar media query para mostrar los nombres de los artesanos
@@ -27,10 +28,12 @@ const ListarItem = ({ item, pathToRedirectOnClick, customAttributeToRedirect, no
   const urlToRedirect = ('/' + pathToRedirectOnClick + '/' + (customAttributeToRedirect ? item[customAttributeToRedirect] : item?._id)) || '#'
 
   return (
-    <Link to={urlToRedirect} className={styles.item_link} key={item._id}>
-      <img src={item.foto?.url || notFoundImgPathName} className={styles.item_img} alt='' />
-      <div className={styles.item_name}>{item?.nombre || item?.emprendimiento?.nombre}</div>
-    </Link>
+    <div className={styles.item_wrapper}>
+      <Link to={urlToRedirect} className={styles.item_link} key={item._id}>
+        <img src={item.foto?.url || notFoundImgPathName} className={styles.item_img} alt='' />
+        <div className={styles.item_name}>{item?.nombre || item?.emprendimiento?.nombre}</div>
+      </Link>
+    </div>
   )
 }
 
@@ -78,17 +81,20 @@ const Listar = ({ title, pathToRedirectOnClick = '', customAttributeToRedirect =
 
   return (
     <Layout>
-      {title && <ListarHeader title={title} />}
-      <StackCircles left />
-      <div className={styles.listar}>
-        <div className={styles.items}>
-          {isLoading ? <Spinner /> : items?.length > 0 ? items : <p className='error'>No hay elementos para mostrar</p>}
+      <Section>
+
+        {title && <ListarHeader title={title} />}
+        <StackCircles left />
+        <div className={styles.listar}>
+          <div className={styles.items}>
+            {isLoading ? <Spinner /> : items?.length > 0 ? items : <p className='error'>No hay elementos para mostrar</p>}
+          </div>
+          <div className={styles.paginas}>
+            <ListarPaginas data={data} page={page} setPage={setPage} />
+            <StackCircles right />
+          </div>
         </div>
-        <div className={styles.paginas}>
-          <ListarPaginas data={data} page={page} setPage={setPage} />
-          <StackCircles right />
-        </div>
-      </div>
+      </Section>
     </Layout>
   )
 }

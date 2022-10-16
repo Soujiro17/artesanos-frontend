@@ -7,12 +7,13 @@ import styles from './styles.module.scss'
 import { getArtesanoById } from '../../api/artesanos'
 import draftToHtml from 'draftjs-to-html'
 import parser from 'html-react-parser'
+import { imgs } from '../../data/images'
 
 const FotoConAnchorYText = ({ nombre = 'Producto no disponible', img, url, izq = false }) => {
   return (
     <Link to={url || '#'} className={`${styles.anchor_img} ${izq ? styles.izq : ''}`}>
       <div className={styles.producto_foto_group}>
-        <img className={`${styles.foto}`} src={img || '/img/not_found_default.jpg'} />
+        <img className={`${styles.foto}`} src={img || imgs.producto_no_encontrado} />
         <p className={styles.producto_nombre}>{nombre}</p>
       </div>
     </Link>
@@ -89,7 +90,7 @@ const Artesano = () => {
                       finalProducts?.slice(0, 2)
                     }
                   </div>
-                  <img src={artesano?.foto?.url || '/img/artesano_no_encontrado.png'} className={styles.artesano_foto} />
+                  <img src={artesano?.foto?.url || imgs.artesano_no_encontrado} className={styles.artesano_foto} />
                   <div className={styles.artesano_productos_cont}>
                     {
                       finalProducts?.slice(2, 5)

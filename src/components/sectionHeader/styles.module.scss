@@ -1,14 +1,14 @@
 @import '../../constants/colors.scss';
 
-.section_header{
-    height: 250px;
+.section_header {
+    height: fit-content;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 
-    .name{
-        margin-top: 6%;
+    .name {
+        margin-top: 2rem;
         font-size: calc(1.5rem + .4vh);
         text-transform: uppercase;
         letter-spacing: .4vw;

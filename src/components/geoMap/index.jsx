@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import Spinner from '../spinner'
 import styles from './styles.module.scss'
 import { Link } from 'react-router-dom'
+import { imgs } from '../../data/images'
 
 const MapComponent = ({ geolocation = false, data }) => {
   const [errorPass, setErrorPass] = useState(true)
@@ -21,7 +22,7 @@ const MapComponent = ({ geolocation = false, data }) => {
 
   const createIcon = (value) => {
     return L.icon({
-      iconUrl: value || '/san_miguel.jpg',
+      iconUrl: value || imgs.acerca_de_nosotros,
       iconSize: [35, 35],
       className: styles.icon_classname
     })
