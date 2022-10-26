@@ -1,111 +1,110 @@
-@import '../../constants/colors.scss';
+@import "../../constants/colors.scss";
 
 .container {
-    min-height: 80vh;
-    height: 80vh;
+  min-height: 80vh;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+
+  .presentacion {
+    height: 100%;
+    width: 80%;
     display: flex;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
+    gap: 2rem;
 
-    .presentacion {
-        height: 100%;
-        width: 80%;
+    .presentacion_left {
+      height: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 55%;
+
+      .presentacion_header_wrapper {
+        width: 100%;
+      }
+
+      .presentacion_title {
+        font-size: calc(2rem + 3vw);
+        margin: 0%;
+        color: $primary;
+      }
+
+      .presentacion_subtitle_wrapper {
+        width: 100%;
         display: flex;
-        gap: 2rem;
+        flex-direction: column;
 
-        .presentacion_left {
-            height: 100%;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: 55%;
-
-            .presentacion_header_wrapper {
-                width: 100%;
-            }
-
-            .presentacion_title {
-                font-size: calc(2rem + 3vw);
-                margin: 0%;
-                color: $primary;
-            }
-
-            .presentacion_subtitle_wrapper {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-
-                .presentacion_subtitle {
-                    font-size: calc(1rem + .1vw);
-                    color: $black;
-                }
-
-                .link_to_artesanos {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    text-decoration: none;
-                    width: fit-content;
-                    transition: .2s all;
-
-                    &:hover {
-                        scale: 1.02;
-                    }
-                }
-            }
+        .presentacion_subtitle {
+          font-size: calc(1rem + 0.1vw);
+          color: $black;
         }
+
+        .link_to_artesanos {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+          width: fit-content;
+          transition: 0.2s all;
+
+          &:hover {
+            scale: 1.02;
+          }
+        }
+      }
     }
+  }
 }
 
 .presentacion_img {
-    position: absolute;
-    right: 0%;
-    top: 0;
-    bottom: 0;
-    margin-top: auto;
-    margin-bottom: auto;
-    object-fit: contain;
-    object-position: center;
-    width: 40%;
-    height: 50%;
+  position: absolute;
+  right: 0%;
+  top: 0;
+  bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  object-fit: cover;
+  object-position: center;
+  width: 40%;
+  height: 50%;
 }
 
 .orange_line {
-    position: absolute;
-    bottom: 0%;
+  position: absolute;
+  bottom: 0%;
 }
 
 @media only screen and (max-width: 785px) {
-    .container {
-        .presentacion {
-            .presentacion_left {
-                height: 100%;
-                position: relative;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                width: 100%;
+  .container {
+    .presentacion {
+      .presentacion_left {
+        height: 100%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
 
-                .presentacion_subtitle_wrapper {
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
+        .presentacion_subtitle_wrapper {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
 
-                    .presentacion_subtitle {
-                        font-size: calc(1rem + .1vw);
-                        text-align: justify;
-                        color: $accent;
-                    }
-                }
-            }
+          .presentacion_subtitle {
+            font-size: calc(1rem + 0.1vw);
+            text-align: justify;
+            color: $accent;
+          }
         }
-
-        .presentacion_img {
-            display: none;
-        }
+      }
     }
 
+    .presentacion_img {
+      display: none;
+    }
+  }
 }
