@@ -87,9 +87,8 @@ const MapComponent = ({ geolocation = false, data }) => {
         },
         () => {
           setTimeout(() => {
-            toast.error("Error al obtener la ubicación");
-            setErrorPass(false);
-          });
+            setErrorPass(false)
+          })
         }
       );
     }
